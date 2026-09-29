@@ -6356,6 +6356,8 @@ const SAL_VAR_MAP_SUIVI = {
   'FEUI CHENE BLONDE':'Feuille de Chêne Blonde','FEUILLE DE CHENE ROUGE':'Feuille de Chêne Rouge',
   'LAITUE ROUGE-ROUGETTE':'Laitue Rouge/Rougette','LAITUE VERTE':'Laitue Verte',
   'SUCRINE':'Sucrine','ROMAINE':'Romaine',
+  // Alias — certains fichiers (ex. STAT_APPORT_2026) n'utilisent que le nom court de la variété
+  'ROUGETTE':'Laitue Rouge/Rougette',
 };
 const DIV_VAR_MAP_SUIVI = {
   'BLETTE MINI PIED':'Blette Mini Pied','BLETTE FEUILLE COULEUR':'Blette Feuille Couleur',
@@ -6367,7 +6369,30 @@ const DIV_VAR_MAP_SUIVI = {
   'CHOU RAVE ROUGE':'Chou Rave Rouge','CHOU RAVE VERT':'Chou Rave Vert',
   'BROCOLIS':'Brocolis','CHOU FLEUR':'Chou Fleur','CHOU POINTU':'Chou Pointu','PET SAI':'Pet Saï',
   'PRIMEUR':'Pomme de Terre Primeur',
+  // Ajouts — variétés suivies dans le planning mais absentes du mapping d'origine
+  'CHOU LISSE ROUGE':'Chou Lisse Rouge','CHOU LISSE VERT':'Chou Lisse Vert',
 };
+
+// Résout la variété standard à partir des colonnes Produit + Variete d'un fichier importé.
+// Gère deux formats : (1) la colonne Variete contient déjà le libellé complet ("CEBETTE BOTTE"),
+// comme dans STAT_APPORT_2025 ; (2) Produit et Variete sont séparés ("CEBETTE" / "BOTTE"),
+// comme dans STAT_APPORT_2026 — il faut alors recombiner ou se rabattre sur le Produit seul.
+function resolveSuiviVariete(prod, varUp, map) {
+  if(map[varUp]) return map[varUp];
+  const combo = (prod + ' ' + varUp).replace(/\s+/g,' ').trim();
+  if(map[combo]) return map[combo];
+  if(map[prod]) return map[prod];
+  // Cas "CHOU RAVE" / "CHOU LISSE" avec suffixe variable (ex. "ROUGE NON CMS", "VERT NON CMS")
+  if(prod === 'CHOU RAVE' && varUp.startsWith('ROUGE')) return map['CHOU RAVE ROUGE'];
+  if(prod === 'CHOU RAVE' && varUp.startsWith('VERT')) return map['CHOU RAVE VERT'];
+  if(prod === 'CHOU LISSE' && varUp.startsWith('ROUGE')) return map['CHOU LISSE ROUGE'];
+  if(prod === 'CHOU LISSE' && varUp.startsWith('VERT')) return map['CHOU LISSE VERT'];
+  // Normalisation singulier/pluriel "JEUNE(S) POUSSE(S)"
+  const normProd = prod.replace('JEUNES POUSSES','JEUNE POUSSE').replace('JEUNE POUSSES','JEUNE POUSSE');
+  const comboNorm = (normProd + ' ' + varUp).replace(/\s+/g,' ').trim();
+  if(map[comboNorm]) return map[comboNorm];
+  return undefined;
+}
 // Alias de nom de producteur — certains fichiers utilisent une forme juridique différente
 // (ex. "EC PRODUCTION EARL" au lieu de "EC PRODUCTION SCEA") pour le même producteur.
 const PROD_NAME_ALIASES = { 'EC PRODUCTION EARL': 'EC PRODUCTION SCEA' };
@@ -6437,7 +6462,7 @@ function importSuiviFile(input) {
 
         // Salades
         if(prod === 'SALADE') {
-          const varStd = SAL_VAR_MAP_SUIVI[varUp];
+          const varStd = resolveSuiviVariete(prod, varUp, SAL_VAR_MAP_SUIVI);
           if(!varStd) continue;
           const pcs = parseFloat(row[cols.pcs]||0) || 0;
           if(pcs <= 0) continue;
@@ -6447,7 +6472,7 @@ function importSuiviFile(input) {
         }
         // Diversification
         else {
-          const varStd = DIV_VAR_MAP_SUIVI[varUp];
+          const varStd = resolveSuiviVariete(prod, varUp, DIV_VAR_MAP_SUIVI);
           if(!varStd) continue;
           const col = DIV_KG_VARS.includes(varStd) ? cols.poids : cols.pcs;
           const vol = parseFloat(row[col]||0) || 0;
