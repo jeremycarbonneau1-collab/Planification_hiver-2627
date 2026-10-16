@@ -1,0 +1,1661 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2a2d2b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tours de culture">
+<title>Tours de Culture UNI-VERT</title>
+<style>*{box-sizing:border-box}html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : carnet de terrain — bandeau anthracite, onglets, fiches empilées, une colonne sur mobile */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --sunken:#e8eae2; --line:#d5d8cc;
+  --fg:#1f2320; --muted:#5d645c;
+  --brand:#2a2d2b; --brand-fg:#f3f4ef;
+  --accent:#d9531a; --accent-soft:#fbe5d9;
+  --ok:#2f7d46; --ok-soft:#dcefe1;
+  --warn:#b07a00; --warn-soft:#f6ebc8;
+  --crit:#c0322b; --crit-soft:#f7dcd9;
+  --info:#2d5f8a; --info-soft:#dbe7f2;
+  --scrim:rgba(15,17,16,.88);
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#181a19; --surface:#222523; --sunken:#1c1f1d; --line:#353a36;
+  --fg:#e9ebe5; --muted:#a2a99f; --brand:#0f1110; --brand-fg:#e9ebe5;
+  --accent:#ff7a3d; --accent-soft:#3b2519;
+  --ok:#6cc58a; --ok-soft:#1e3326; --warn:#e5b43e; --warn-soft:#382f16; --crit:#ff6b62; --crit-soft:#3d1f1d;
+  --info:#7fb3e0; --info-soft:#1c2a37;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#181a19; --surface:#222523; --sunken:#1c1f1d; --line:#353a36;
+  --fg:#e9ebe5; --muted:#a2a99f; --brand:#0f1110; --brand-fg:#e9ebe5;
+  --accent:#ff7a3d; --accent-soft:#3b2519;
+  --ok:#6cc58a; --ok-soft:#1e3326; --warn:#e5b43e; --warn-soft:#382f16; --crit:#ff6b62; --crit-soft:#3d1f1d;
+  --info:#7fb3e0; --info-soft:#1c2a37;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45}
+header.top{background:var(--brand);color:var(--brand-fg);padding:14px 16px 0;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top-in{max-width:980px;margin:0 auto}
+.brandline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.wordmark{font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.14em;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:600;font-size:26px;margin:0;letter-spacing:.01em}
+.who{margin-left:auto;font-size:12px;opacity:.75}
+nav.tabs{display:flex;flex-wrap:wrap;gap:0 2px;margin-top:8px}
+nav.tabs button{font-family:var(--f-display);font-size:16px;font-weight:600;letter-spacing:.03em;background:none;border:0;color:var(--brand-fg);opacity:.65;padding:8px 12px 10px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{opacity:1;border-bottom-color:var(--accent)}
+nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+nav.tabs .cnt{font-family:var(--f-mono);font-size:11px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;margin-left:4px;vertical-align:2px}
+main{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:18px 60px}
+.banner{background:var(--warn-soft);color:var(--fg);border:1px solid var(--line);padding:10px 12px;border-radius:6px;margin-bottom:14px;font-size:14px}
+h2{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0 0 4px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:18px;margin:0;letter-spacing:.02em}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.kpi b{display:block;font-family:var(--f-mono);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.kpi.crit b{color:var(--crit)} .kpi.warn b{color:var(--warn)}
+section.block{margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;border-left:5px solid var(--line);min-width:0}
+.card.ok{border-left-color:var(--ok)} .card.vigilance{border-left-color:var(--warn)} .card.critique{border-left-color:var(--crit)} .card.info{border-left-color:var(--info)}
+.list{display:flex;flex-direction:column;gap:10px}
+.meta{font-size:13px;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-size:12.5px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--sunken);color:var(--fg);white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.vigilance{background:var(--warn-soft);color:var(--warn)} .pill.critique{background:var(--crit-soft);color:var(--crit)}
+.pill.acc{background:var(--accent-soft);color:var(--accent)} .pill.info{background:var(--info-soft);color:var(--info)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.empty{background:var(--sunken);border:1px dashed var(--line);border-radius:6px;padding:20px;color:var(--muted)}
+label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:8px 10px}
+textarea{min-height:80px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
+fieldset{border:1px solid var(--line);border-radius:6px;padding:12px;margin:14px 0 0;background:var(--surface);min-width:0}
+legend{font-family:var(--f-display);font-weight:600;font-size:17px;padding:0 6px}
+.btn{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:5px;padding:8px 14px;cursor:pointer}
+.btn:hover{border-color:var(--fg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.small{padding:4px 10px;font-size:13px}
+.btn.danger{color:var(--crit)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.etat-pick{display:flex;gap:6px;flex-wrap:wrap}
+.etat-pick input{position:absolute;opacity:0;width:1px;height:1px}
+.etat-pick label{margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:var(--fg);border:1px solid var(--line);border-radius:99px;padding:6px 14px;cursor:pointer;background:var(--surface)}
+.etat-pick input:checked+label.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.etat-pick input:checked+label.vigilance{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+.etat-pick input:checked+label.critique{background:var(--crit-soft);border-color:var(--crit);color:var(--crit)}
+.etat-pick input:focus-visible+label{outline:2px solid var(--accent)}
+.lines{display:flex;flex-direction:column;gap:8px}
+.line{display:grid;grid-template-columns:150px minmax(0,1fr) 110px 34px;gap:6px;align-items:center}
+.line.preco{grid-template-columns:150px minmax(0,1fr) 34px}
+.line.act{grid-template-columns:minmax(0,1fr) 150px 140px 34px}
+@media (max-width:620px){.line,.line.preco,.line.act{grid-template-columns:1fr 1fr}.line>input[type=text]{grid-column:1/-1;order:-1}.line .x{justify-self:end}}
+.x{border:0;background:none;color:var(--muted);font-size:20px;cursor:pointer}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 3fr 28px;gap:8px;align-items:center;font-size:14px}
+.bar .track{background:var(--sunken);height:10px;border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent)}
+.bar .fill.rav{background:var(--warn)} .bar .fill.def{background:var(--info)}
+.bar .n{font-family:var(--f-mono);font-size:12.5px;text-align:right}
+.verif-btns{display:flex;gap:6px;flex-wrap:wrap}
+.verif-btns .btn.sel{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+pre.bilan{background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:12px;white-space:pre-wrap;font-family:var(--f-mono);font-size:12.5px;max-height:420px;overflow:auto}
+.svc{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.svc button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:5px 14px;cursor:pointer}
+.svc button[aria-pressed="true"]{background:var(--brand);color:var(--brand-fg);border-color:var(--brand)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:var(--brand-fg);padding:10px 16px;border-radius:6px;font-weight:600;z-index:30;max-width:calc(100% - 32px)}
+.confirm{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.tblwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+/* photos */
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;margin-top:8px}
+.ph{position:relative;aspect-ratio:1;max-width:100%;border-radius:5px;overflow:hidden;background:var(--sunken);border:1px solid var(--line)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.ph .rm{position:absolute;top:3px;right:3px;background:var(--scrim);color:#fff;border:0;border-radius:99px;width:24px;height:24px;cursor:pointer;font-size:15px;line-height:1}
+.ph .up{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:var(--muted)}
+.ph input{position:absolute;left:0;right:0;bottom:0;border:0;border-radius:0;padding:3px 5px;font-size:11px;background:var(--scrim);color:#fff}
+.shoot{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.shoot input{position:absolute;opacity:0;width:1px;height:1px}
+.lightbox{position:fixed;inset:0;background:var(--scrim);display:grid;place-items:center;z-index:40;padding:20px;cursor:zoom-out}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:4px}
+.lightbox p{color:#fff;margin:8px 0 0;text-align:center}
+/* plan d'action */
+.thread{display:flex;flex-direction:column;gap:8px;margin-top:10px;padding-left:10px;border-left:2px solid var(--line)}
+.msg{font-size:14px}
+.msg .h{font-size:12.5px;color:var(--muted)}
+.msg .h b{color:var(--fg)}
+.reply{display:grid;grid-template-columns:160px minmax(0,1fr);gap:8px;margin-top:10px}
+@media (max-width:620px){.reply{grid-template-columns:1fr}}
+.reply textarea{min-height:56px}
+.linkp{background:var(--sunken);border-radius:5px;padding:8px 10px;margin-top:8px;font-size:13.5px}
+.serre{border:1px solid var(--line);border-left:5px solid var(--line);border-radius:6px;padding:10px;background:var(--bg)}
+.serre.ok{border-left-color:var(--ok)}.serre.vigilance{border-left-color:var(--warn)}.serre.critique{border-left-color:var(--crit)}
+.serre .g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.serre .g4b{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:8px}
+@media (max-width:620px){.serre .g4,.serre .g4b{grid-template-columns:1fr 1fr}}
+.serre input,.serre select{padding:6px 8px;font-size:14px}
+.serre label{font-size:11px}
+.stbl td,.stbl th{font-size:13px}
+.suivi-pts{list-style:none;padding:0;margin:6px 0 0;display:flex;flex-direction:column;gap:4px}
+.suivi-pts label{display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:14px;color:var(--fg);font-weight:400;margin:0}
+.suivi-pts input{width:auto;margin-top:3px}
+.suivi-pts .done{text-decoration:line-through;color:var(--muted)}
+.newact{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:14px}
+/* alertes */
+.al-head{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.al-text{white-space:pre-wrap;margin:8px 0 0;max-width:75ch}
+.al-text.clamp{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font:inherit;font-size:13px;cursor:pointer;margin-top:4px}
+.species{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.species button{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:6px 12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.species button .n{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.species button[aria-pressed="true"]{background:var(--brand);color:var(--brand-fg);border-color:var(--brand)}
+.species button[aria-pressed="true"] .n{color:var(--brand-fg);opacity:.8}
+.species button .dot{width:8px;height:8px;border-radius:50%;background:var(--crit)}
+.month{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 0 2px}
+@media (max-width:700px){header.top{position:static}}
+.localbar label.btn{text-transform:none;letter-spacing:0;color:var(--fg);margin:0;font-size:13px}
+/* dictee */
+.vox{border-color:var(--accent);background:var(--accent-soft)}
+.vox textarea{width:100%;min-height:110px}
+.vox-mic{display:inline-flex;align-items:center;gap:8px}
+.vox-dot{width:10px;height:10px;border-radius:50%;background:#fff;opacity:.85}
+.vox-mic.rec{background:var(--crit);border-color:var(--crit)}
+.vox-mic.rec .vox-dot{animation:voxp 1s infinite}
+@keyframes voxp{50%{opacity:.2}}
+.vox-res{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--ok-soft);color:var(--ok);font-size:14px}
+.vox-hit{outline:2px solid var(--accent)!important;outline-offset:1px;transition:outline-color .3s}
+@media (prefers-reduced-motion:reduce){.vox-mic.rec .vox-dot{animation:none}}
+.localbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
+
+/* planning */
+.pltbl{border-collapse:separate;border-spacing:0;font-size:12.5px;width:max-content;min-width:100%}
+.pltbl th,.pltbl td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.pltbl th{position:sticky;top:0;background:var(--surface);font-family:var(--f-mono);font-size:11px;color:var(--muted);text-transform:none;letter-spacing:0}
+.pltbl td:first-child,.pltbl th:first-child{text-align:left;position:sticky;left:0;background:var(--surface);z-index:1;max-width:240px;overflow:hidden;text-overflow:ellipsis}
+.pltbl td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;min-width:38px}
+.pltbl .cur{outline:2px solid var(--accent);outline-offset:-2px}
+.pltbl tr.tot td{font-weight:700;background:var(--sunken)}
+.pltbl td .u{font-size:10.5px;color:var(--muted);font-weight:400}
+.plwrap{overflow:auto;max-height:70vh;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.plnote{background:var(--info-soft);border-radius:5px;padding:6px 10px;margin-top:8px;font-size:13.5px}
+/* producteurs */
+.prodgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.prodcard{cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.prodcard:hover{border-color:var(--fg)}
+.prodcard:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:4px 16px;margin-top:8px;font-size:14px}
+.facts span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em;display:block}
+.sel{user-select:all}
+a{color:var(--accent)}
+a.plink{color:inherit;text-decoration:none;border-bottom:1px dotted var(--muted)}
+a.plink:hover{color:var(--accent)}
+/* météo */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 10px 6px;margin-top:8px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:420px;height:auto}
+.chart text{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin:4px 2px 0}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.delta-up{color:var(--info)} .delta-down{color:var(--warn)}
+.kpi small{display:block;font-size:12.5px;margin-top:2px;color:var(--muted)}
+details.block>summary{cursor:pointer;font-family:var(--f-display);font-weight:600;font-size:18px}
+.steps{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.steps .row a{font-weight:600}
+.siteline{display:grid;grid-template-columns:minmax(0,1fr) 100px 100px 34px;gap:6px;align-items:center}
+@media (max-width:520px){.siteline{grid-template-columns:1fr 1fr}.siteline input:first-child{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top"><div class="top-in">
+  <div class="brandline"><span class="wordmark">UNI-VERT</span><h1>Tours de culture</h1><span class="who" id="who"></span></div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="bilan" aria-selected="true">Bilan semaine</button>
+    <button role="tab" data-tab="saisie" aria-selected="false">Nouveau passage</button>
+    <button role="tab" data-tab="plan" aria-selected="false">Plan d'action<span class="cnt" id="cntPlan" hidden></span></button>
+    <button role="tab" data-tab="planning" aria-selected="false">Planning</button>
+    <button role="tab" data-tab="alertes" aria-selected="false">Alertes</button>
+    <button role="tab" data-tab="producteurs" aria-selected="false">Producteurs</button>
+    <button role="tab" data-tab="meteo" aria-selected="false">Météo & pluie</button>
+    <button role="tab" data-tab="suivi" aria-selected="false">Suivi</button>
+    <button role="tab" data-tab="passages" aria-selected="false">Historique par espèce</button>
+  </nav>
+</div></header>
+
+<main>
+  <div class="banner" id="banner" hidden></div>
+
+  <!-- BILAN -->
+  <section data-view="bilan">
+    <div class="row" style="justify-content:space-between">
+      <div><h2 id="bilanTitle">Bilan de la semaine</h2><p class="sub" id="bilanSub">Points critiques, défauts, maladies, ravageurs et actions.</p></div>
+      <div style="min-width:180px"><label for="weekSel">Semaine</label><select id="weekSel"></select></div>
+    </div>
+    <label>Vue par service</label>
+    <div class="svc" id="svc">
+      <button data-svc="technique" aria-pressed="true">Technique</button>
+      <button data-svc="direction" aria-pressed="false">Direction</button>
+      <button data-svc="commercial" aria-pressed="false">Commercial</button>
+      <button data-svc="qualite" aria-pressed="false">Qualité</button>
+      <button data-svc="achats" aria-pressed="false">Achats / planif</button>
+    </div>
+    <div id="bilanBody"></div>
+  </section>
+
+  <!-- SAISIE -->
+  <section data-view="saisie" hidden>
+    <h2 id="formTitle">Nouveau passage</h2>
+    <p class="sub">Un passage = une parcelle visitée. À remplir sur place, depuis le téléphone.</p>
+    <form id="form" autocomplete="off">
+      <div class="grid2">
+        <div><label for="f_date">Date</label><input id="f_date" type="date" required></div>
+        <div><label for="f_prod">Producteur</label><input id="f_prod" list="dl_prod" required placeholder="Nom de l'exploitation"></div>
+        <div><label for="f_parc">Parcelle / tunnel</label><input id="f_parc" list="dl_parc" placeholder="ex. Tunnel 3, Mas Nord"></div>
+        <div><label for="f_cult">Culture</label><input id="f_cult" list="dl_cult" placeholder="ex. Tomate, Salade (ou remplie par les serres)"></div>
+        <div><label for="f_stade">Stade</label><select id="f_stade"><option value="">—</option><option>Plantation</option><option>Végétatif</option><option>Floraison</option><option>Nouaison</option><option>Grossissement</option><option>Récolte</option><option>Fin de culture</option></select></div>
+        <div><label for="f_pole">Pôle</label><select id="f_pole"><option>Occitanie / Costières</option><option>Corse (CAPIC)</option></select></div>
+        <div><label for="f_pluie">Pluviomètre relevé (mm)</label><input id="f_pluie" type="number" step="0.5" min="0" inputmode="decimal" placeholder="Laisser vide si pas de relevé"></div>
+      </div>
+      <fieldset><legend>État général</legend>
+        <div class="etat-pick">
+          <input type="radio" name="etat" id="e_ok" value="ok" checked><label for="e_ok" class="ok">RAS</label>
+          <input type="radio" name="etat" id="e_vig" value="vigilance"><label for="e_vig" class="vigilance">Vigilance</label>
+          <input type="radio" name="etat" id="e_crit" value="critique"><label for="e_crit" class="critique">Critique</label>
+        </div>
+      </fieldset>
+      <fieldset><legend>Serres / tunnels visités</legend>
+        <p class="meta" style="margin:0 0 8px">Une fiche par serre ou tunnel : culture, stade, état, et les observations plante, climat, sol, sanitaire. L'état général du passage prend l'état le plus grave des serres.</p>
+        <div id="serreList" class="list"></div>
+        <div class="row" style="margin-top:8px"><button type="button" class="btn small" id="addSerre">+ Ajouter une serre</button><button type="button" class="btn small" id="dupSerre">Dupliquer la dernière</button></div>
+        <datalist id="dl_serre"></datalist>
+      </fieldset>
+      <fieldset id="fsPhotos"><legend>Photos</legend>
+        <div class="row">
+          <label class="btn small shoot" for="f_photo">📷 Prendre / ajouter des photos<input id="f_photo" type="file" accept="image/*" capture="environment" multiple></label>
+          <span class="meta" id="photoHint">Les photos sont réduites avant envoi. Une légende courte aide les autres services.</span>
+        </div>
+        <div class="photos" id="photoGrid"></div>
+      </fieldset>
+      <fieldset><legend>Défauts constatés</legend>
+        <p class="meta" style="margin:0 0 8px">Défauts sur fruits, légumes ou plants, avec la part estimée de la production touchée.</p>
+        <div class="lines" id="defLines"></div>
+        <div style="margin-top:8px"><button type="button" class="btn small" id="addDef">+ Ajouter un défaut</button></div>
+      </fieldset>
+      <fieldset><legend>Observations sanitaires</legend>
+        <div class="lines" id="probLines"></div>
+        <div style="margin-top:8px"><button type="button" class="btn small" id="addProb">+ Ajouter une observation</button></div>
+      </fieldset>
+      <fieldset><legend>Préconisations</legend>
+        <p class="meta" style="margin:0 0 8px">Chaque préconisation part dans la checklist de vérification du passage suivant.</p>
+        <div class="lines" id="precoLines"></div>
+        <div style="margin-top:8px"><button type="button" class="btn small" id="addPreco">+ Ajouter une préconisation</button></div>
+      </fieldset>
+      <fieldset><legend>Plan d'action</legend>
+        <p class="meta" style="margin:0 0 8px">Une action = qui doit faire quoi, pour quand. Le service concerné pourra répondre dans l'onglet Plan d'action.</p>
+        <div class="lines" id="actLines"></div>
+        <div style="margin-top:8px"><button type="button" class="btn small" id="addAct">+ Ajouter une action</button></div>
+        <div class="meta" id="actExisting" style="margin-top:8px"></div>
+      </fieldset>
+      <fieldset><legend>Plan de suivi</legend>
+        <div class="grid2">
+          <div><label for="f_suiviDate">Prochain passage prévu</label><input id="f_suiviDate" type="date"></div>
+          <div><label for="f_suiviObj">Objectif du suivi</label><input id="f_suiviObj" type="text" placeholder="ex. Vérifier l'efficacité du lâcher, recompter les chenilles"></div>
+        </div>
+        <div style="margin-top:10px"><label for="f_suiviPts">Points à contrôler au prochain passage (un par ligne)</label><textarea id="f_suiviPts" placeholder="Tunnel 9 : reprise de vigueur après vinasse&#10;Tunnel 7 : adventices désherbées&#10;Comptage chenilles rangée 3"></textarea></div>
+      </fieldset>
+      <fieldset><legend>Prévision récolte (commercial / planif)</legend>
+        <div class="grid2">
+          <div><label for="f_recDeb">Début récolte estimé</label><input id="f_recDeb" type="date"></div>
+          <div><label for="f_vol">Volume estimé (t)</label><input id="f_vol" type="number" step="0.1" min="0" inputmode="decimal"></div>
+          <div><label for="f_ecart">Écart vs prévu</label><select id="f_ecart"><option value="">—</option><option value="avance">En avance</option><option value="conforme">Conforme</option><option value="retard">En retard</option><option value="perte">Perte de volume</option></select></div>
+          <div><label for="f_qual">Qualité attendue</label><select id="f_qual"><option value="">—</option><option>Extra / Cat I</option><option>Cat II</option><option>Déclassement probable</option></select></div>
+        </div>
+      </fieldset>
+      <fieldset><legend>Notes</legend>
+        <label for="f_obs">Observations libres</label>
+        <textarea id="f_obs" placeholder="Irrigation, auxiliaires vus, état du sol, échange avec le producteur…"></textarea>
+        <div style="margin-top:10px"><label for="f_bloq">Point bloquant à remonter</label><input id="f_bloq" type="text" placeholder="ex. manque de main-d'œuvre récolte, filet anti-insectes déchiré"></div>
+      </fieldset>
+      <div class="row" style="margin-top:16px">
+        <button type="submit" class="btn primary" id="saveBtn">Enregistrer le passage</button>
+        <button type="button" class="btn" id="resetBtn">Vider le formulaire</button>
+      </div>
+    </form>
+    <datalist id="dl_prod"></datalist><datalist id="dl_parc"></datalist><datalist id="dl_cult"></datalist><datalist id="dl_nom"></datalist>
+  </section>
+
+  <!-- PLAN D'ACTION -->
+  <section data-view="plan" hidden>
+    <div class="row" style="justify-content:space-between">
+      <div><h2>Plan d'action</h2><p class="sub">Actions issues des tours de culture. Chaque service répond, met à jour le statut et joint une photo si besoin.</p></div>
+      <button class="btn primary" id="newActBtn">+ Nouvelle action</button>
+    </div>
+    <form class="newact" id="newActForm" hidden autocomplete="off">
+      <div class="grid2">
+        <div style="grid-column:1/-1"><label for="na_titre">Action</label><input id="na_titre" type="text" required placeholder="ex. Remplacer le filet du tunnel 3 avant lâcher"></div>
+        <div><label for="na_svc">Responsable</label><select id="na_svc"></select></div>
+        <div><label for="na_ech">Échéance</label><input id="na_ech" type="date"></div>
+        <div style="grid-column:1/-1"><label for="na_pass">Passage lié (facultatif)</label><select id="na_pass"></select></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn primary" type="submit">Créer l'action</button><button class="btn" type="button" id="naCancel">Annuler</button></div>
+    </form>
+    <div class="grid2" style="margin-bottom:14px">
+      <div><label for="pSvc">Service</label><select id="pSvc"><option value="">Tous</option></select></div>
+      <div><label for="pStat">Statut</label><select id="pStat"><option value="ouvertes">Ouvertes</option><option value="retard">En retard</option><option value="fait">Terminées</option><option value="">Toutes</option></select></div>
+      <div><label for="pMe">Je réponds en tant que</label><select id="pMe"></select></div>
+    </div>
+    <div id="planBody" class="list"></div>
+  </section>
+
+  <!-- PLANNING -->
+  <section data-view="planning" hidden>
+    <h2>Planning automne-hiver des adhérents</h2>
+    <p class="sub" id="plSub">Apports prévus par semaine, par producteur et par variété. Salades en pièces, diversification en kg ou en pièces / bottes selon le produit.</p>
+    <div class="grid2" style="margin-bottom:12px">
+      <div><label for="plCamp">Campagne</label><select id="plCamp"><option value="2026-2027">2026-2027 · prévisions</option><option value="2025-2026">2025-2026 · prévu et réalisé</option></select></div>
+      <div><label for="plVue">Vue</label><select id="plVue"><option value="esp">Par espèce</option><option value="prod">Par producteur</option></select></div>
+      <div id="plEspWrap"><label for="plEsp">Espèce</label><select id="plEsp"></select></div>
+      <div id="plProdWrap" hidden><label for="plProd">Producteur</label><select id="plProd"></select></div>
+      <div><label for="plVar">Variété / produit</label><select id="plVar"></select></div>
+    </div>
+    <div id="plBody"></div>
+  </section>
+
+  <!-- ALERTES -->
+  <section data-view="alertes" hidden>
+    <div class="row" style="justify-content:space-between">
+      <div><h2>Alertes techniques</h2><p class="sub">Messages collectifs envoyés aux producteurs par groupe de culture : alertes sanitaires, conseils, météo, essais, réunions et commandes groupées.</p></div>
+      <button class="btn primary" id="newAlBtn">+ Nouvelle alerte</button>
+    </div>
+    <form class="newact" id="alForm" hidden autocomplete="off">
+      <div class="grid2">
+        <div><label for="al_date">Date</label><input id="al_date" type="date" required></div>
+        <div><label for="al_groupe">Groupe</label><select id="al_groupe"></select></div>
+        <div><label for="al_cat">Catégorie</label><select id="al_cat"></select></div>
+        <div><label for="al_niv">Niveau</label><select id="al_niv"><option value="alerte">Alerte</option><option value="vigilance">Vigilance</option><option value="info" selected>Info / conseil</option></select></div>
+        <div style="grid-column:1/-1"><label for="al_titre">Titre</label><input id="al_titre" type="text" required placeholder="ex. Forte pression chenilles en blette"></div>
+        <div style="grid-column:1/-1"><label for="al_texte">Message</label><textarea id="al_texte" placeholder="Situation, préconisations, dose, timing…"></textarea></div>
+        <div><label for="al_cibles">Ravageurs / maladies (séparés par des virgules)</label><input id="al_cibles" type="text" placeholder="ex. Pucerons, Chenilles"></div>
+        <div><label for="al_prods">Producteurs concernés (facultatif, séparés par des virgules)</label><input id="al_prods" type="text" list="dl_prod"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label class="btn small shoot" for="al_photo">📷 Ajouter des photos<input id="al_photo" type="file" accept="image/*" multiple></label><span class="meta" id="alPhState"></span>
+      </div>
+      <div class="photos" id="alPhGrid"></div>
+      <div class="row" style="margin-top:10px"><button class="btn primary" type="submit">Publier l'alerte</button><button class="btn" type="button" id="alCancel">Annuler</button><span class="meta">Elle apparaît ici et dans le bilan de la semaine. Pensez à la relayer sur le groupe WhatsApp.</span></div>
+    </form>
+    <div class="grid2" style="margin-bottom:14px">
+      <div><label for="alfG">Groupe</label><select id="alfG"></select></div>
+      <div><label for="alfC">Catégorie</label><select id="alfC"></select></div>
+      <div><label for="alfN">Niveau</label><select id="alfN"><option value="">Tous</option><option value="alerte">Alerte</option><option value="vigilance">Vigilance</option><option value="info">Info / conseil</option></select></div>
+      <div><label for="alfT">Recherche</label><input id="alfT" type="search" placeholder="pucerons, Bt, brémia…"></div>
+    </div>
+    <div id="alCount" class="meta" style="margin-bottom:8px"></div>
+    <div id="alBody" class="list"></div>
+  </section>
+
+  <!-- PRODUCTEURS -->
+  <section data-view="producteurs" hidden>
+    <div id="prodListWrap">
+      <div class="row" style="justify-content:space-between">
+        <div><h2>Producteurs</h2><p class="sub">Fiche de chaque producteur : parcelles, historique des passages, défauts, actions et pluviométrie.</p></div>
+        <button class="btn primary" id="newProdBtn">+ Nouveau producteur</button>
+      </div>
+      <div class="grid2" style="margin-bottom:14px">
+        <div><label for="prSearch">Recherche</label><input id="prSearch" type="search" placeholder="Nom, commune, culture…"></div>
+        <div><label for="prPole">Pôle</label><select id="prPole"><option value="">Tous</option><option>Occitanie / Costières</option><option>Corse (CAPIC)</option></select></div>
+        <div><label for="prSort">Trier par</label><select id="prSort"><option value="recent">Dernier passage</option><option value="nom">Nom</option><option value="etat">État le plus critique</option></select></div>
+      </div>
+    </div>
+    <form id="prodForm" class="newact" hidden autocomplete="off">
+      <h3 id="prodFormTitle" style="margin-bottom:10px">Nouveau producteur</h3>
+      <div class="grid2">
+        <div><label for="pf_nom">Nom / exploitation</label><input id="pf_nom" type="text" required></div>
+        <div><label for="pf_pole">Pôle</label><select id="pf_pole"><option>Occitanie / Costières</option><option>Corse (CAPIC)</option></select></div>
+        <div><label for="pf_commune">Commune</label><input id="pf_commune" type="text"></div>
+        <div><label for="pf_tel">Téléphone</label><input id="pf_tel" type="tel"></div>
+        <div><label for="pf_mail">E-mail</label><input id="pf_mail" type="email"></div>
+        <div><label for="pf_surf">Surface (ha)</label><input id="pf_surf" type="number" step="0.1" min="0" inputmode="decimal"></div>
+        <div><label for="pf_site">Secteur météo</label><select id="pf_site"></select></div>
+        <div><label for="pf_cult">Cultures principales</label><input id="pf_cult" type="text" placeholder="ex. Tomate, Courgette, Salade"></div>
+      </div>
+      <div class="grid2" style="margin-top:12px">
+        <div><label for="pf_parc">Parcelles (une par ligne)</label><textarea id="pf_parc" placeholder="Tunnel 3 — Tomate — 0,2 ha&#10;Plein champ Nord — Courgette — 1,5 ha"></textarea></div>
+        <div><label for="pf_notes">Notes</label><textarea id="pf_notes" placeholder="Certification, irrigation, contraintes, interlocuteur…"></textarea></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn primary" type="submit">Enregistrer la fiche</button><button class="btn" type="button" id="pfCancel">Annuler</button></div>
+    </form>
+    <div id="prodList" class="prodgrid"></div>
+    <div id="prodFiche" hidden></div>
+  </section>
+
+  <!-- MÉTÉO -->
+  <section data-view="meteo" hidden>
+    <div class="row" style="justify-content:space-between">
+      <div><h2>Météo comparative</h2><p class="sub">Année en cours comparée à l'année précédente à la même date, et relevés des pluviomètres producteurs.</p></div>
+      <div style="min-width:220px"><label for="mSite">Secteur</label><select id="mSite"></select></div>
+    </div>
+    <div id="meteoBody"></div>
+
+    <section class="block">
+      <h3>Relevés pluviomètre</h3>
+      <form id="pluvioForm" class="newact" style="margin-top:8px" autocomplete="off">
+        <div class="grid2">
+          <div><label for="pl_date">Date du relevé</label><input id="pl_date" type="date" required></div>
+          <div><label for="pl_prod">Producteur / lieu</label><input id="pl_prod" list="dl_prod" required placeholder="Nom du producteur"></div>
+          <div><label for="pl_mm">Pluie (mm)</label><input id="pl_mm" type="number" step="0.5" min="0" inputmode="decimal" required></div>
+          <div><label for="pl_deb">Cumul depuis le (facultatif)</label><input id="pl_deb" type="date"></div>
+        </div>
+        <div class="row" style="margin-top:10px"><button class="btn primary" type="submit">Enregistrer le relevé</button><span class="meta">Sans date de début, le cumul part du relevé précédent du même producteur.</span></div>
+      </form>
+      <div id="pluvioBody"></div>
+    </section>
+
+    <details class="block" id="importBox">
+      <summary>Mettre à jour les données météo</summary>
+      <div class="steps">
+        <p class="meta" style="margin:0">Les données viennent d'Open-Meteo (modèle, pas une station). Trois gestes : ouvrir le lien, tout copier, coller ci-dessous. À refaire une fois par semaine pour l'année en cours, une seule fois pour l'année précédente.</p>
+        <div><b>1. Ouvrir les données du secteur <span id="impSiteName"></span></b><div class="row" style="margin-top:6px" id="impLinks"></div></div>
+        <div><b>2. Coller le texte affiché (ou charger le fichier)</b>
+          <textarea id="mPaste" style="margin-top:6px" placeholder='{"latitude":43.68,"longitude":4.43,…,"daily":{…}}'></textarea>
+          <div class="row" style="margin-top:6px"><label class="btn small shoot" for="mFile">Charger un fichier .json<input id="mFile" type="file" accept=".json,application/json,text/plain"></label></div></div>
+        <div><b>3. Importer</b><div class="row" style="margin-top:6px"><button class="btn primary" type="button" id="mImport">Importer dans le secteur</button><span class="meta" id="importMsg"></span></div></div>
+      </div>
+    </details>
+
+    <details class="block">
+      <summary>Secteurs météo</summary>
+      <p class="meta">Un secteur = un point de coordonnées. Rattachez chaque producteur à son secteur dans sa fiche.</p>
+      <div class="lines" id="siteLines"></div>
+      <div class="row" style="margin-top:8px"><button class="btn small" type="button" id="addSite">+ Ajouter un secteur</button><button class="btn small primary" type="button" id="saveSites">Enregistrer les secteurs</button></div>
+    </details>
+  </section>
+
+  <!-- SUIVI -->
+  <section data-view="suivi" hidden>
+    <h2>Plans de suivi</h2>
+    <p class="sub">Prochains passages prévus et points à contrôler, puis préconisations à vérifier.</p>
+    <div id="suiviPlans" class="list" style="margin-bottom:22px"></div>
+    <h2>Préconisations à vérifier</h2>
+    <div class="row" style="margin-bottom:12px">
+      <div style="min-width:200px"><label for="suiviFilter">Afficher</label>
+        <select id="suiviFilter"><option value="todo">À vérifier</option><option value="done">Déjà vérifiées</option><option value="all">Toutes</option></select></div>
+    </div>
+    <div id="suiviBody" class="list"></div>
+  </section>
+
+  <!-- HISTORIQUE -->
+  <section data-view="passages" hidden>
+    <h2>Historique par espèce</h2>
+    <p class="sub">Tous les passages et toutes les alertes techniques, classés par espèce cultivée. Choisissez une espèce pour voir son historique complet.</p>
+    <div class="species" id="spList" role="tablist" aria-label="Espèces"></div>
+    <div id="spSummary"></div>
+    <div class="grid2" style="margin:14px 0">
+      <div><label for="hType">Afficher</label><select id="hType"><option value="">Passages et alertes</option><option value="p">Passages seulement</option><option value="a">Alertes seulement</option></select></div>
+      <div><label for="hProd">Producteur</label><select id="hProd"><option value="">Tous</option></select></div>
+      <div><label for="hEtat">État / niveau</label><select id="hEtat"><option value="">Tous</option><option value="critique">Critique / alerte</option><option value="vigilance">Vigilance</option><option value="ok">RAS / info</option></select></div>
+      <div><label for="hTxt">Recherche</label><input id="hTxt" type="search" placeholder="défaut, maladie, ravageur…"></div>
+    </div>
+    <div id="histBody" class="list"></div>
+  </section>
+</main>
+<div class="toast" id="toast" hidden></div>
+<div class="lightbox" id="lightbox" hidden><div><img id="lbImg" alt=""><p id="lbCap"></p></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+/* ===== Configuration Supabase — à renseigner une fois avant déploiement ===== */
+window.TDC_SB=Object.assign({
+  url:"https://faygcvywxxkejznldcvr.supabase.co",
+  key:"sb_publishable_0bHJpYozJ0gzl-cQAbVX6A_toPHtNmD",
+  email:"equipe.terrain@uni-vert.fr",   // compte d'équipe ; le code d'accès = son mot de passe
+  table:"tdc_docs",
+  bucket:"tdc-photos"
+},(function(){try{return JSON.parse(localStorage.getItem("tdc_sb_cfg")||"{}")}catch(e){return {}}})());
+/* écran de connexion commun (code d'accès) */
+window.tdcLogin=function(sb,title){return new Promise(async resolve=>{
+  const C=window.TDC_SB;
+  if(sb)try{const {data}=await sb.auth.getSession();if(data&&data.session)return resolve(data.session)}catch(e){}
+  const ov=document.createElement("div");
+  ov.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(20,22,21,.92);display:flex;align-items:center;justify-content:center;padding:16px";
+  ov.innerHTML=`<form style="background:#fff;color:#222;max-width:360px;width:100%;border-radius:12px;padding:20px;font:15px system-ui,sans-serif;display:grid;gap:10px">
+   <b style="font-size:18px">${title||"Tours de culture"}</b><span style="color:#666;font-size:13px">Saisissez le code d'accès de l'équipe.</span>
+   ${C.key?"":`<input name="k" placeholder="Clé publique Supabase (anon)" required style="padding:10px;border:1px solid #ccc;border-radius:8px">`}
+   ${C.email?"":`<input name="e" type="email" placeholder="E-mail du compte d'équipe" required style="padding:10px;border:1px solid #ccc;border-radius:8px">`}
+   <input name="p" type="password" placeholder="Code d'accès" autocomplete="current-password" required style="padding:10px;border:1px solid #ccc;border-radius:8px">
+   <button style="padding:10px;border:0;border-radius:8px;background:#2a7a3b;color:#fff;font-weight:600">Entrer</button>
+   <span data-msg style="color:#b3261e;font-size:13px"></span></form>`;
+  document.body.appendChild(ov);
+  const f=ov.querySelector("form");
+  f.onsubmit=async ev=>{ev.preventDefault();const msg=f.querySelector("[data-msg]");msg.textContent="Connexion…";
+    if(f.k||f.e){const o={};if(f.k)o.key=f.k.value.trim();if(f.e)o.email=f.e.value.trim();Object.assign(C,o);
+      try{const s=JSON.parse(localStorage.getItem("tdc_sb_cfg")||"{}");localStorage.setItem("tdc_sb_cfg",JSON.stringify(Object.assign(s,o)))}catch(e){}
+      if(f.k){location.reload();return}}
+    const {data,error}=await sb.auth.signInWithPassword({email:C.email,password:f.p.value});
+    if(error){msg.textContent="Code incorrect ou connexion impossible ("+error.message+")";return}
+    ov.remove();resolve(data.session)};
+})};
+</script>
+<script>
+/* ===== Version partagée : données Supabase (table tdc_docs + bucket photos) ===== */
+(function(){
+  const C=window.TDC_SB;
+  const clone=o=>o==null?o:JSON.parse(JSON.stringify(o));
+  const photoUrl=id=>C.url+"/storage/v1/object/public/"+C.bucket+"/"+encodeURIComponent(id);
+  const blobCache={};
+  window.LOCAL_BLOBS=new Proxy(blobCache,{get:(t,k)=>typeof k!=="string"?undefined:(t[k]||photoUrl(k))});
+  const store={};               // collection -> {id: data}
+  const listeners=[];
+  let sb=null,status="connexion";
+  const setStatus=s=>{status=s;window.dispatchEvent(new CustomEvent("tdc-status",{detail:s}))};
+  window.tdcStatus=()=>status;
+  const rid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+  const hex32=()=>Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,"0")).join("");
+
+  async function fetchAll(){let from=0;const n=1000;const tmp={};
+    for(;;){const {data,error}=await sb.from(C.table).select("coll,id,data").order("coll").order("id").range(from,from+n-1);
+      if(error)throw error;for(const r of data){(tmp[r.coll]=tmp[r.coll]||{})[r.id]=r.data}
+      if(data.length<n)break;from+=n}
+    const changed=[];for(const c of new Set([...Object.keys(store),...Object.keys(tmp)])){
+      if(JSON.stringify(store[c]||{})!==JSON.stringify(tmp[c]||{})){store[c]=tmp[c]||{};changed.push(c)}}
+    return changed}
+  function applyRow(ev,row,old){
+    const c=(row&&row.coll)||(old&&old.coll),id=(row&&row.id)||(old&&old.id);if(!c||!id)return;
+    store[c]=store[c]||{};if(ev==="DELETE")delete store[c][id];else store[c][id]=row.data;notify(c)}
+
+  const ready=(async()=>{
+    if(!C.key||!window.supabase){await tdcLogin(null);return new Promise(()=>{})}
+    sb=supabase.createClient(C.url,C.key,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"tdc_auth"}});
+    window.tdcSupabase=sb;
+    await tdcLogin(sb);
+    try{await fetchAll();setStatus("ok")}catch(e){console.error(e);setStatus("erreur")}
+    sb.channel("tdc-docs").on("postgres_changes",{event:"*",schema:"public",table:C.table},p=>applyRow(p.eventType,p.new,p.old))
+      .subscribe(s=>{if(s==="SUBSCRIBED")setStatus("ok");else if(s==="CHANNEL_ERROR"||s==="TIMED_OUT")setStatus("hors-ligne")});
+    sb.auth.onAuthStateChange((ev)=>{if(ev==="SIGNED_OUT")location.reload()});
+    /* au retour sur l'onglet (téléphone en veille), on resynchronise */
+    document.addEventListener("visibilitychange",async()=>{if(document.visibilityState!=="visible")return;
+      try{(await fetchAll()).forEach(notify);setStatus("ok")}catch(e){setStatus("hors-ligne")}});
+  })();
+
+  function snapDoc(c,id){const d=(store[c]||{})[id];return {id,exists:!!d,data:()=>d?clone(d):undefined,metadata:{fromCache:false,hasPendingWrites:false}}}
+  function runQuery(c,q){let ids=Object.keys(store[c]||{});
+    for(const [f,op,v] of q.where){ids=ids.filter(id=>{const x=store[c][id][f];return op==="=="?x===v:op==="!="?x!==v:op===">"?x>v:op===">="?x>=v:op==="<"?x<v:op==="<="?x<=v:op==="in"?v.includes(x):op==="array-contains"?(x||[]).includes(v):true})}
+    if(q.order){const[f,dir]=q.order;ids.sort((a,b)=>{const x=store[c][a][f],y=store[c][b][f];if(x===y)return 0;if(x==null)return 1;if(y==null)return -1;return (x<y?-1:1)*(dir==="desc"?-1:1)})}else ids.sort();
+    if(q.lim)ids=ids.slice(0,q.lim);const docs=ids.map(id=>snapDoc(c,id));return {docs,size:docs.length,empty:!docs.length,docChanges:()=>docs.map((d,i)=>({type:"added",doc:d,oldIndex:-1,newIndex:i})),metadata:{fromCache:false,hasPendingWrites:false}}}
+  const pend={};
+  function notify(c){clearTimeout(pend[c]);pend[c]=setTimeout(()=>{for(const l of listeners){if(l.coll!==c)continue;try{l.kind==="q"?l.next(runQuery(c,l.q)):l.next(snapDoc(c,l.id))}catch(e){console.error(e)}}},30)}
+  async function write(c,id,data){
+    const prev=(store[c]||{})[id];store[c]=store[c]||{};
+    if(data===null)delete store[c][id];else store[c][id]=clone(data);notify(c);
+    const r=data===null?await sb.from(C.table).delete().eq("coll",c).eq("id",id)
+      :await sb.from(C.table).upsert({coll:c,id,data:clone(data),updated_at:new Date().toISOString()});
+    if(r.error){if(prev===undefined)delete store[c][id];else store[c][id]=prev;notify(c);setStatus("erreur");
+      try{toast("Enregistrement impossible : "+r.error.message)}catch(e){}throw {code:"unavailable",message:r.error.message}}}
+  function makeQuery(c,q){return {
+    where:(f,op,v)=>makeQuery(c,{...q,where:[...q.where,[f,op,v]]}),
+    orderBy:(f,dir)=>makeQuery(c,{...q,order:[f,dir||"asc"]}),
+    limit:n=>makeQuery(c,{...q,lim:n}),
+    get:async()=>runQuery(c,q),
+    onSnapshot:(next)=>{const l={kind:"q",coll:c,q,next};listeners.push(l);setTimeout(()=>next(runQuery(c,q)),0);return ()=>{const i=listeners.indexOf(l);if(i>=0)listeners.splice(i,1)}}}}
+  function docRef(c,id){return {id,path:c+"/"+id,
+    get:async()=>snapDoc(c,id),
+    set:async d=>write(c,id,d),
+    update:async d=>{const cur=(store[c]||{})[id];if(!cur)throw {code:"invalid_argument",message:"absent"};const m=(a,b)=>{for(const[k,v] of Object.entries(b)){if(v&&typeof v==="object"&&!Array.isArray(v)&&a[k]&&typeof a[k]==="object"&&!Array.isArray(a[k]))m(a[k],v);else a[k]=v}return a};await write(c,id,m(clone(cur),d))},
+    delete:async()=>write(c,id,null),
+    onSnapshot:(next)=>{const l={kind:"d",coll:c,id,next};listeners.push(l);setTimeout(()=>next(snapDoc(c,id)),0);return ()=>{const i=listeners.indexOf(l);if(i>=0)listeners.splice(i,1)}},
+    collection:sub=>collRef(c+"/"+id+"/"+sub)}}
+  function collRef(c){const q=makeQuery(c,{where:[],order:null,lim:null});return Object.assign(q,{path:c,doc:id=>docRef(c,id||rid()),add:async d=>{const id=rid();await write(c,id,d);return docRef(c,id)}})}
+  const dbApi={collection:p=>collRef(p),doc:p=>{const i=p.lastIndexOf("/");return docRef(p.slice(0,i),p.slice(i+1))}};
+
+  /* identité : compte d'équipe partagé, chacun signe avec son nom */
+  const myName=()=>{try{return localStorage.getItem("tdc_nom")||""}catch(e){return ""}};
+  const userApi={id:async()=>myName()?"nom:"+myName():"",can:async()=>true,canEdit:()=>true,isOwner:()=>true,
+    me:async()=>({id:myName()?"nom:"+myName():"",name:myName()}),
+    profiles:async ids=>Object.fromEntries((ids||[]).map(i=>[i,{id:i,name:String(i).startsWith("nom:")?String(i).slice(4):String(i).startsWith("n:")?String(i).slice(2):""}]))};
+  const assetsApi={
+    upload:async(b,o)=>{const id=hex32();const ct=(o&&o.contentType)||b.type||"image/jpeg";
+      const {error}=await sb.storage.from(C.bucket).upload(id,b,{contentType:ct,cacheControl:"31536000",upsert:false});
+      if(error){try{toast("Photo non envoyée : "+error.message)}catch(e){}throw error}
+      return {id,url:photoUrl(id),sizeBytes:b.size,contentType:ct}},
+    list:async()=>({assets:[],usage:{}}),delete:async()=>{}};
+  window.claude={use:async name=>{await ready;return name==="db"?dbApi:name==="user"?userApi:name==="assets"?assetsApi:null}};
+
+  /* sauvegarde JSON de toutes les données partagées */
+  window.localBackup=async function(){await ready;
+    const out={format:"tours-culture-univert",version:2,exportedAt:new Date().toISOString(),data:store,photosBucket:C.url+"/storage/v1/object/public/"+C.bucket+"/"};
+    const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(out)],{type:"application/json"}));a.download="tours-de-culture-sauvegarde-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)};
+  window.localSetName=function(n){try{localStorage.setItem("tdc_nom",n)}catch(e){}try{myId=n?"nom:"+n:""}catch(e){}};
+  window.tdcLogout=async()=>{try{await sb.auth.signOut()}catch(e){}try{localStorage.removeItem("tdc_auth")}catch(e){}location.reload()};
+})();
+</script>
+<script>
+const PROB_TYPES=[["maladie","Maladie"],["ravageur","Ravageur"],["auxiliaire","Auxiliaire (présence)"],["carence","Carence / physio"],["adventice","Adventices"],["autre","Autre"]];
+const DEF_TYPES=[["calibre","Calibre hors norme"],["coloration","Coloration"],["blessure","Blessure / choc"],["deformation","Déformation"],["pourriture","Pourriture / moisissure"],["insecte","Piqûre / attaque insecte"],["eclatement","Éclatement / fente"],["brulure","Brûlure / coup de soleil"],["montaison","Montée en graine"],["autre","Autre"]];
+const PRECO_TYPES=[["traitement","Traitement (UAB)"],["lacher","Lâcher d'auxiliaires"],["prophylaxie","Prophylaxie"],["irrigation","Irrigation"],["fertilisation","Fertilisation"],["travail","Travail du sol / désherbage"],["autre","Autre"]];
+const SERVICES=["Producteur","Technique","Direction","Commercial","Qualité","Achats / planif","Station / conditionnement"];
+const INTENS=[["1","Faible"],["2","Moyenne"],["3","Forte"]];
+const VERIF=[["efficace","Efficace"],["partiel","Partiel"],["inefficace","Inefficace"],["non_applique","Non appliquée"]];
+const ASTAT=[["a_faire","À faire"],["en_cours","En cours"],["fait","Fait"]];
+const ETAT_LBL={ok:"RAS",vigilance:"Vigilance",critique:"Critique"};
+const lbl=(arr,v)=>(arr.find(a=>a[0]===v)||[,v])[1];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const blob=id=>(window.LOCAL_BLOBS&&LOCAL_BLOBS[id])||"/_blob/"+encodeURIComponent(id);
+
+let db=null,col=null,acol=null,rcol=null,user=null,assets=null,canWrite=true,myId=null;
+let passages=[],actions=[],reponses=[];let loaded=false,editingId=null,svc="technique";
+let formPhotos=[]; const names={};
+
+/* --- dates --- */
+function isoWeek(dstr){const d=new Date(dstr+"T12:00:00");const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=t.getUTCFullYear();const w=Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7);return y+"-S"+String(w).padStart(2,"0")}
+function weekRange(key){const [y,w]=key.split("-S").map(Number);const s=new Date(Date.UTC(y,0,4));const day=s.getUTCDay()||7;s.setUTCDate(s.getUTCDate()-day+1+(w-1)*7);const e=new Date(s);e.setUTCDate(s.getUTCDate()+6);const f=d=>d.toLocaleDateString("fr-FR",{day:"numeric",month:"short",timeZone:"UTC"});return f(s)+" – "+f(e)}
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const fmtDate=s=>s?new Date(s+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"}):"";
+const fmtTs=ms=>new Date(ms).toLocaleString("fr-FR",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+const overdue=a=>a.statut!=="fait"&&a.echeance&&a.echeance<today();
+
+/* --- interface générale --- */
+function showTab(t){document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));document.querySelectorAll("[data-view]").forEach(v=>v.hidden=v.dataset.view!==t);try{localStorage.setItem("tdc_tab",t)}catch(e){};window.scrollTo(0,0)}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2800)}
+function banner(m){const b=$("#banner");b.textContent=m||"";b.hidden=!m}
+function openPhoto(id,cap){$("#lbImg").src=blob(id);$("#lbCap").textContent=cap||"";$("#lightbox").hidden=false}
+$("#lightbox").onclick=()=>$("#lightbox").hidden=true;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#lightbox").hidden=true});
+document.addEventListener("click",e=>{const im=e.target.closest("[data-photo]");if(im){openPhoto(im.dataset.photo,im.dataset.cap)}});
+const who=id=>names[id]||"";
+
+/* --- photos --- */
+async function compress(file){
+  try{const bmp=await createImageBitmap(file);const max=1600;const r=Math.min(1,max/Math.max(bmp.width,bmp.height));
+    const c=document.createElement("canvas");c.width=Math.round(bmp.width*r);c.height=Math.round(bmp.height*r);c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    return await new Promise(res=>c.toBlob(b=>res(b||file),"image/jpeg",0.8));}catch(e){return file}
+}
+async function uploadPhoto(file){
+  if(!assets)throw {code:"no_assets"};
+  const b=await compress(file);const type=b.type&&b.type.startsWith("image/")?b.type:"image/jpeg";
+  const r=await assets.upload(b,{contentType:type});return r.id;
+}
+function photoErr(e){const c=e&&e.code;toast(c==="unsupported_type"?"Format de photo non pris en charge (essayez JPEG)":c==="quota_or_state"?"Stockage photo plein":c==="no_assets"?"Ajout de photos réservé à l'équipe technique":"Envoi de la photo impossible, réessayez")}
+function photosHTML(list,editable){return (list||[]).map((p,i)=>`<div class="ph">${p.id?`<img src="${blob(p.id)}" alt="${esc(p.legende||"Photo")}" loading="lazy" data-photo="${esc(p.id)}" data-cap="${esc(p.legende)}">`:`<span class="up">Envoi…</span>`}${editable?`<button type="button" class="rm" data-rm="${i}" aria-label="Retirer la photo">×</button><input type="text" data-cap="${i}" value="${esc(p.legende)}" placeholder="Légende" aria-label="Légende">`:""}</div>`).join("")}
+function renderFormPhotos(){const g=$("#photoGrid");g.innerHTML=photosHTML(formPhotos,true);
+  g.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{formPhotos.splice(+b.dataset.rm,1);renderFormPhotos()});
+  g.querySelectorAll("input[data-cap]").forEach(i=>i.oninput=()=>{formPhotos[+i.dataset.cap].legende=i.value})}
+$("#f_photo").addEventListener("change",async e=>{const files=[...e.target.files];e.target.value="";
+  for(const f of files){const slot={id:"",legende:""};formPhotos.push(slot);renderFormPhotos();
+    try{slot.id=await uploadPhoto(f)}catch(err){formPhotos.splice(formPhotos.indexOf(slot),1);photoErr(err)}renderFormPhotos()}});
+
+/* --- formulaire passage --- */
+function selectHTML(opts,val,id,cls){return `<select ${id?`id="${id}"`:""} ${cls?`class="${cls}"`:""}>`+opts.map(o=>`<option value="${esc(o[0])}" ${o[0]===val?"selected":""}>${esc(o[1])}</option>`).join("")+"</select>"}
+let seq=0;
+function addLine(box,html,orig){const el=document.createElement("div");el.className=html.cls;el.innerHTML=html.h+`<button type="button" class="x" aria-label="Retirer">×</button>`;el._orig=orig||{};el.querySelector(".x").onclick=()=>el.remove();$(box).appendChild(el)}
+const addProbLine=(p={})=>{const id="p"+(++seq);addLine("#probLines",{cls:"line",h:selectHTML(PROB_TYPES,p.type||"maladie",id+"_t")+`<input type="text" id="${id}_n" list="dl_nom" placeholder="ex. Mildiou, Tuta absoluta, Aleurode" value="${esc(p.nom)}">`+selectHTML(INTENS,String(p.intensite||"2"),id+"_i")},p)};
+const addDefLine=(p={})=>{const id="d"+(++seq);addLine("#defLines",{cls:"line",h:selectHTML(DEF_TYPES,p.type||"calibre",id+"_t")+`<input type="text" id="${id}_n" placeholder="Précision : ex. fruits creux, taches liégeuses" value="${esc(p.detail)}">`+`<input type="number" id="${id}_p" min="0" max="100" step="1" inputmode="numeric" placeholder="% touché" value="${p.pct??""}" aria-label="Pourcentage touché">`},p)};
+const addPrecoLine=(p={})=>{const id="c"+(++seq);addLine("#precoLines",{cls:"line preco",h:selectHTML(PRECO_TYPES,p.type||"traitement",id+"_t")+`<input type="text" id="${id}_d" placeholder="Produit, dose, cible / auxiliaire, densité…" value="${esc(p.detail)}">`},p)};
+const addActLine=(p={})=>{const id="a"+(++seq);addLine("#actLines",{cls:"line act",h:`<input type="text" id="${id}_t" placeholder="ex. Changer le filet du tunnel 3" value="${esc(p.titre)}">`+selectHTML(SERVICES.map(s=>[s,s]),p.service||"Producteur",id+"_s")+`<input type="date" id="${id}_e" value="${esc(p.echeance)}" aria-label="Échéance">`},p)};
+$("#addProb").onclick=()=>addProbLine();$("#addDef").onclick=()=>addDefLine();$("#addPreco").onclick=()=>addPrecoLine();$("#addAct").onclick=()=>addActLine();
+
+function resetForm(){editingId=null;$("#form").reset();$("#f_date").value=today();["#probLines","#defLines","#precoLines","#actLines","#serreList"].forEach(s=>$(s).innerHTML="");$("#actExisting").textContent="";formPhotos=[];renderFormPhotos();$("#formTitle").textContent="Nouveau passage";$("#saveBtn").textContent="Enregistrer le passage";try{localStorage.removeItem("tdc_draft")}catch(e){}}
+$("#resetBtn").onclick=resetForm;
+
+function readForm(){
+  const rows=s=>[...$(s).children];
+  const probs=rows("#probLines").map(l=>{const s=l.querySelectorAll("select");return {type:s[0].value,nom:l.querySelector("input").value.trim(),intensite:Number(s[1].value)}}).filter(p=>p.nom);
+  const defauts=rows("#defLines").map(l=>{const i=l.querySelectorAll("input");return {type:l.querySelector("select").value,detail:i[0].value.trim(),pct:i[1].value===""?null:Number(i[1].value)}}).filter(d=>d.detail||d.pct!=null);
+  const precos=rows("#precoLines").map(l=>{const o=l._orig||{};return {id:o.id||Math.random().toString(36).slice(2,10),type:l.querySelector("select").value,detail:l.querySelector("input").value.trim(),statut:o.statut||"a_verifier",verifNote:o.verifNote||"",verifDate:o.verifDate||""}}).filter(p=>p.detail);
+  const newActs=rows("#actLines").map(l=>{const i=l.querySelectorAll("input");return {titre:i[0].value.trim(),service:l.querySelector("select").value,echeance:i[1].value}}).filter(a=>a.titre);
+  const date=$("#f_date").value;
+  return {date,semaine:isoWeek(date),producteur:$("#f_prod").value.trim(),parcelle:$("#f_parc").value.trim(),culture:$("#f_cult").value.trim(),stade:$("#f_stade").value,pole:$("#f_pole").value,
+    etat:(document.querySelector("input[name=etat]:checked")||{}).value||"ok",problemes:probs,defauts,precos,
+    photos:formPhotos.filter(p=>p.id).map(p=>({id:p.id,legende:p.legende||""})),
+    recolte:{debut:$("#f_recDeb").value,volume:$("#f_vol").value===""?null:Number($("#f_vol").value),ecart:$("#f_ecart").value,qualite:$("#f_qual").value},
+    observations:$("#f_obs").value.trim(),bloquant:$("#f_bloq").value.trim(),_newActs:newActs,serres:readSerres(),
+    suivi:{date:$("#f_suiviDate").value,objectif:$("#f_suiviObj").value.trim(),points:$("#f_suiviPts").value.split("\n").map(t=>t.trim()).filter(Boolean).map(t=>({txt:t,fait:false}))}};
+}
+function fillForm(p){resetForm();editingId=p._id||null;$("#f_date").value=p.date||today();$("#f_prod").value=p.producteur||"";$("#f_parc").value=p.parcelle||"";$("#f_cult").value=p.culture||"";$("#f_stade").value=p.stade||"";$("#f_pole").value=p.pole||"Occitanie / Costières";
+  const r=document.querySelector(`input[name=etat][value="${p.etat||"ok"}"]`);if(r)r.checked=true;
+  (p.problemes||[]).forEach(addProbLine);(p.defauts||[]).forEach(addDefLine);(p.precos||[]).forEach(addPrecoLine);(p._newActs||[]).forEach(addActLine);
+  formPhotos=(p.photos||[]).map(x=>({...x}));renderFormPhotos();
+  const rc=p.recolte||{};$("#f_recDeb").value=rc.debut||"";$("#f_vol").value=rc.volume??"";$("#f_ecart").value=rc.ecart||"";$("#f_qual").value=rc.qualite||"";$("#f_obs").value=p.observations||"";$("#f_bloq").value=p.bloquant||"";
+  (p.serres||[]).forEach(addSerre);const su=p.suivi||{};$("#f_suiviDate").value=su.date||"";$("#f_suiviObj").value=su.objectif||"";$("#f_suiviPts").value=(su.points||[]).map(x=>x.txt).join("\n");$("#f_prod").dispatchEvent(new Event("change"));
+  if(editingId){const n=actions.filter(a=>a.passageId===editingId).length;$("#actExisting").textContent=n?`${n} action(s) déjà liée(s) à ce passage, à suivre dans l'onglet Plan d'action.`:"";$("#formTitle").textContent="Modifier le passage";$("#saveBtn").textContent="Enregistrer les modifications";showTab("saisie")}}
+
+function writeErr(err){if(err&&err.code==="invalid_argument"){canWrite=false;applyWrite();toast("Votre accès est en lecture seule")}else if(err&&err.code==="quota_exceeded")toast("Base pleine : supprimez d'anciens passages");else toast("Échec de l'enregistrement, réessayez")}
+
+$("#form").addEventListener("submit",async e=>{e.preventDefault();
+  if(!col){toast("Enregistrement indisponible ici");return}
+  if(formPhotos.some(p=>!p.id)){toast("Attendez la fin de l'envoi des photos");return}
+  const data=readForm();
+  if(!data.culture&&data.serres.length)data.culture=[...new Set(data.serres.map(x=>x.culture).filter(Boolean))].join(", ");
+  if(data.serres.length){const worst=data.serres.reduce((a,x)=>ETAT_ORD[x.etat||"ok"]>ETAT_ORD[a]?x.etat:a,data.etat);data.etat=worst;if(!data.parcelle)data.parcelle=data.serres.map(x=>x.nom).filter(Boolean).join(", ")}
+  if(editingId){const old=passages.find(p=>p._id===editingId);if(old&&old.suivi&&old.suivi.points){const done=Object.fromEntries(old.suivi.points.map(x=>[x.txt,x]));data.suivi.points=data.suivi.points.map(x=>done[x.txt]?{...x,fait:done[x.txt].fait,faitLe:done[x.txt].faitLe||""}:x)}}
+  if(!data.producteur||!data.culture||!data.date){toast("Date, producteur et culture (ou une serre avec sa culture) sont obligatoires");return}
+  const newActs=data._newActs;delete data._newActs;
+  const btn=$("#saveBtn");btn.disabled=true;
+  try{
+    let id=editingId;
+    if(id){const old=passages.find(p=>p._id===id)||{};data.createdAt=old.createdAt||Date.now();data.auteur=old.auteur||myId||"";data.updatedAt=Date.now();await col.doc(id).set(data)}
+    else{data.createdAt=Date.now();data.auteur=myId||"";const ref=col.doc();id=ref.id;await ref.set(data)}
+    for(const a of newActs){await acol.add({...a,statut:"a_faire",passageId:id,producteur:data.producteur,culture:data.culture,parcelle:data.parcelle,createdAt:Date.now(),auteur:myId||""})}
+    const mm=$("#f_pluie").value;if(mm!==""&&plcol){await plcol.add({date:data.date,mm:Number(mm),producteur:data.producteur,debut:"",source:"passage",auteur:myId||"",createdAt:Date.now()})}
+    toast(newActs.length?`Passage et ${newActs.length} action(s) enregistrés`:(editingId?"Passage modifié":"Passage enregistré"));
+    resetForm();showTab(newActs.length?"plan":"bilan");
+  }catch(err){writeErr(err)}finally{btn.disabled=false}
+});
+let draftT;$("#form").addEventListener("input",()=>{clearTimeout(draftT);draftT=setTimeout(()=>{if(editingId)return;try{localStorage.setItem("tdc_draft",JSON.stringify(readForm()))}catch(e){}},600)});
+
+
+/* --- serres / tunnels --- */
+const SERRE_ETATS=[["ok","RAS"],["vigilance","Vigilance"],["critique","Critique"]];
+const STADES=["","Plantation","Végétatif","Floraison","Nouaison","Grossissement","Récolte","Fin de culture"];
+function addSerre(x={}){const el=document.createElement("div");el.className="serre "+(x.etat||"ok");const k="s"+(++seq);
+  el.innerHTML=`<div class="row" style="justify-content:space-between;margin-bottom:6px"><b>Serre / tunnel</b><button type="button" class="x" aria-label="Retirer la serre">×</button></div>
+  <div class="g4"><div><label for="${k}n">N° / nom</label><input id="${k}n" data-f="nom" list="dl_serre" value="${esc(x.nom)}" placeholder="ex. Tunnel 9"></div>
+  <div><label for="${k}c">Culture / variété</label><input id="${k}c" data-f="culture" list="dl_cult" value="${esc(x.culture)}"></div>
+  <div><label for="${k}s">Stade</label><select id="${k}s" data-f="stade">${STADES.map(o=>`<option ${o===(x.stade||"")?"selected":""}>${o}</option>`).join("")}</select></div>
+  <div><label for="${k}e">État</label><select id="${k}e" data-f="etat">${SERRE_ETATS.map(([v,l])=>`<option value="${v}" ${v===(x.etat||"ok")?"selected":""}>${l}</option>`).join("")}</select></div></div>
+  <div class="g4b"><div><label for="${k}p">Plante</label><input id="${k}p" data-f="plante" value="${esc(x.plante)}" placeholder="vigueur, couleur…"></div>
+  <div><label for="${k}cl">Climat</label><input id="${k}cl" data-f="climat" value="${esc(x.climat)}" placeholder="aération, portes…"></div>
+  <div><label for="${k}so">Sol</label><input id="${k}so" data-f="sol" value="${esc(x.sol)}" placeholder="humidité, structure…"></div>
+  <div><label for="${k}sa">Sanitaire</label><input id="${k}sa" data-f="sanitaire" value="${esc(x.sanitaire)}" placeholder="RAS, pucerons…"></div></div>`;
+  el.querySelector(".x").onclick=()=>el.remove();el.querySelector('[data-f="etat"]').onchange=e=>{el.className="serre "+e.target.value};
+  $("#serreList").appendChild(el)}
+function readSerres(){return [...$("#serreList").children].map(el=>{const o={};el.querySelectorAll("[data-f]").forEach(i=>o[i.dataset.f]=i.value.trim());return o}).filter(o=>o.nom||o.culture||o.plante||o.sanitaire)}
+$("#addSerre").onclick=()=>addSerre();
+$("#dupSerre").onclick=()=>{const L=readSerres();const last=L[L.length-1]||{};addSerre({culture:last.culture,stade:last.stade,climat:last.climat,sol:last.sol})};
+$("#f_prod").addEventListener("change",()=>{const f=(typeof producteurs!=="undefined"?producteurs:[]).find(p=>p.nom===$("#f_prod").value);const fromP=passages.filter(p=>p.producteur===$("#f_prod").value).flatMap(p=>(p.serres||[]).map(x=>x.nom));
+  $("#dl_serre").innerHTML=[...new Set([...((f&&f.parcelles)||[]),...fromP].filter(Boolean))].map(v=>`<option value="${esc(v)}">`).join("")});
+const ETAT_ORD={ok:0,vigilance:1,critique:2};
+function serresTable(S){if(!(S||[]).length)return "";return `<div class="tblwrap" style="margin-top:8px"><table class="stbl"><thead><tr><th>Serre</th><th>Culture</th><th>État</th><th>Plante</th><th>Climat</th><th>Sol</th><th>Sanitaire</th></tr></thead><tbody>${S.map(x=>`<tr><td><b>${esc(x.nom||"—")}</b>${x.stade?`<div class="meta">${esc(x.stade)}</div>`:""}</td><td>${esc(x.culture||"")}</td><td><span class="pill ${x.etat||"ok"}">${ETAT_LBL[x.etat||"ok"]}</span></td><td>${esc(x.plante||"")}</td><td>${esc(x.climat||"")}</td><td>${esc(x.sol||"")}</td><td>${esc(x.sanitaire||"")}</td></tr>`).join("")}</tbody></table></div>`}
+function suiviHTML(p,interactive){const s=p.suivi;if(!s||(!s.date&&!(s.points||[]).length&&!s.objectif))return "";const late=s.date&&s.date<today()&&(s.points||[]).some(x=>!x.fait);
+  return `<div class="plnote" style="${late?"background:var(--crit-soft)":""}"><b>Plan de suivi</b>${s.date?` · prochain passage ${fmtDate(s.date)}${late?" (dépassé)":""}`:""}${s.objectif?`<div>${esc(s.objectif)}</div>`:""}
+   ${(s.points||[]).length?`<ul class="suivi-pts">${s.points.map((x,i)=>`<li><label><input type="checkbox" data-sp="${p._id}" data-i="${i}" ${x.fait?"checked":""} ${interactive&&canWrite?"":"disabled"}><span class="${x.fait?"done":""}">${esc(x.txt)}</span></label></li>`).join("")}</ul>`:""}</div>`}
+document.addEventListener("change",async e=>{const c=e.target.closest("[data-sp]");if(!c||!col)return;const p=passages.find(x=>x._id===c.dataset.sp);if(!p||!p.suivi)return;
+  const pts=p.suivi.points.map((x,i)=>i===+c.dataset.i?{...x,fait:c.checked,faitLe:c.checked?today():""}:x);try{await col.doc(p._id).update({suivi:{...p.suivi,points:pts}});toast(c.checked?"Point contrôlé":"Point remis à faire")}catch(err){writeErr(err)}});
+
+/* --- plan d'action --- */
+$("#na_svc").innerHTML=SERVICES.map(s=>`<option>${s}</option>`).join("");
+$("#pSvc").innerHTML=`<option value="">Tous</option>`+SERVICES.map(s=>`<option>${s}</option>`).join("");
+$("#pMe").innerHTML=SERVICES.map(s=>`<option>${s}</option>`).join("");
+try{const m=localStorage.getItem("tdc_me");if(m)$("#pMe").value=m}catch(e){}
+$("#pMe").onchange=()=>{try{localStorage.setItem("tdc_me",$("#pMe").value)}catch(e){}};
+$("#pSvc").onchange=renderPlan;$("#pStat").onchange=renderPlan;
+$("#newActBtn").onclick=()=>{const f=$("#newActForm");f.hidden=!f.hidden;$("#na_pass").innerHTML=`<option value="">Aucun</option>`+passages.slice(0,60).map(p=>`<option value="${p._id}">${esc(fmtDate(p.date)+" · "+p.producteur+" — "+p.culture)}</option>`).join("");if(!f.hidden)$("#na_titre").focus()};
+$("#naCancel").onclick=()=>{$("#newActForm").reset();$("#newActForm").hidden=true};
+$("#newActForm").addEventListener("submit",async e=>{e.preventDefault();if(!acol)return;const t=$("#na_titre").value.trim();if(!t)return;
+  const pid=$("#na_pass").value;const p=passages.find(x=>x._id===pid)||{};
+  try{await acol.add({titre:t,service:$("#na_svc").value,echeance:$("#na_ech").value,statut:"a_faire",passageId:pid||"",producteur:p.producteur||"",culture:p.culture||"",parcelle:p.parcelle||"",createdAt:Date.now(),auteur:myId||""});
+    $("#newActForm").reset();$("#newActForm").hidden=true;toast("Action créée")}catch(err){writeErr(err)}});
+
+function actionCard(a){
+  const p=passages.find(x=>x._id===a.passageId);
+  const reps=reponses.filter(r=>r.actionId===a._id).sort((x,y)=>x.date-y.date);
+  const late=overdue(a);const days=a.echeance?Math.round((new Date(a.echeance+"T12:00:00")-new Date(today()+"T12:00:00"))/864e5):null;
+  const cls=a.statut==="fait"?"ok":late?"critique":a.statut==="en_cours"?"info":"vigilance";
+  const statPill=`<span class="pill ${cls}">${a.statut==="fait"?"Fait":late?"En retard":lbl(ASTAT,a.statut)}</span>`;
+  return `<article class="card ${cls}" data-aid="${a._id}">
+   <div class="row" style="justify-content:space-between;align-items:flex-start"><div style="min-width:0;flex:1"><h3>${esc(a.titre)}</h3>
+   <div class="meta"><span class="pill acc">${esc(a.service)}</span> ${a.echeance?`· échéance ${fmtDate(a.echeance)} <span class="mono">${a.statut==="fait"?"":days<0?"J+"+(-days):"J-"+days}</span>`:"· sans échéance"}${a.auteur&&who(a.auteur)?" · créée par "+esc(who(a.auteur)):""}</div></div>${statPill}</div>
+   ${(a.producteur||p)?`<div class="linkp"><b>${esc(a.producteur||p.producteur)}</b> — ${esc(a.culture||p.culture)}${(a.parcelle||(p&&p.parcelle))?" · "+esc(a.parcelle||p.parcelle):""}${p?` · passage du ${fmtDate(p.date)} <span class="pill ${p.etat}">${ETAT_LBL[p.etat]}</span>`:""}
+     ${p&&(p.defauts||[]).length?`<div class="chips">${p.defauts.map(d=>`<span class="pill info">${esc(lbl(DEF_TYPES,d.type))}${d.pct!=null?" "+d.pct+" %":""}</span>`).join("")}</div>`:""}
+     ${p&&(p.photos||[]).length?`<div class="photos">${photosHTML(p.photos.slice(0,6),false)}</div>`:""}</div>`:""}
+   <div class="verif-btns" style="margin-top:10px">${ASTAT.map(([k,l])=>`<button class="btn small ${a.statut===k?"sel":""}" data-st="${k}" ${canWrite?"":"disabled"}>${l}</button>`).join("")}${canWrite?`<button class="btn small danger" data-adel>Supprimer</button>`:""}</div>
+   <div class="thread">${reps.length?reps.map(r=>`<div class="msg"><div class="h"><b>${esc(r.service)}</b>${who(r.auteur)?" · "+esc(who(r.auteur)):""} · ${fmtTs(r.date)}${r.statut?` · <span class="pill">${esc(lbl(ASTAT,r.statut))}</span>`:""}</div><div style="white-space:pre-wrap">${esc(r.texte)}</div>${r.photo?`<div class="photos">${photosHTML([{id:r.photo,legende:""}],false)}</div>`:""}</div>`).join(""):`<div class="meta">Pas encore de réponse.</div>`}</div>
+   ${canWrite?`<div class="reply"><div><label for="rs_${a._id}">Nouveau statut</label>${selectHTML([["","Inchangé"],...ASTAT],"","rs_"+a._id)}</div><div><label for="rt_${a._id}">Réponse</label><textarea id="rt_${a._id}" placeholder="Ce qui a été fait, ce qui bloque, la date prévue…"></textarea></div></div>
+   <div class="row" style="margin-top:8px"><button class="btn primary small" data-send>Répondre</button>${assets?`<label class="btn small shoot" for="rp_${a._id}">📷 Joindre une photo<input id="rp_${a._id}" type="file" accept="image/*" capture="environment"></label><span class="meta" data-phstate></span>`:""}</div>`:""}
+  </article>`}
+
+function renderPlan(){
+  const body=$("#planBody");const open=actions.filter(a=>a.statut!=="fait");
+  const c=$("#cntPlan");c.textContent=open.length;c.hidden=!open.length;
+  if(!loaded){body.innerHTML=`<p class="meta">Chargement…</p>`;return}
+  const fs=$("#pSvc").value,st=$("#pStat").value;
+  const L=actions.filter(a=>(!fs||a.service===fs)&&(st===""||(st==="ouvertes"&&a.statut!=="fait")||(st==="fait"&&a.statut==="fait")||(st==="retard"&&overdue(a))))
+    .sort((x,y)=>(x.statut==="fait")-(y.statut==="fait")||(x.echeance||"9").localeCompare(y.echeance||"9"));
+  if(!L.length){body.innerHTML=`<div class="empty">${actions.length?"Aucune action pour ces filtres.":"Aucune action pour l'instant. Les actions se créent depuis un passage (rubrique Plan d'action) ou avec le bouton Nouvelle action. Le service responsable répond ici et fait évoluer le statut."}</div>`;return}
+  body.innerHTML=L.map(actionCard).join("");
+  body.querySelectorAll("article[data-aid]").forEach(card=>{const id=card.dataset.aid;let pendingPhoto="";
+    card.querySelectorAll("[data-st]").forEach(b=>b.onclick=async()=>{try{await acol.doc(id).update({statut:b.dataset.st,updatedAt:Date.now()});toast("Statut mis à jour")}catch(e){writeErr(e)}});
+    const del=card.querySelector("[data-adel]");if(del)del.onclick=()=>{const box=del.parentElement;box.innerHTML=`<span class="confirm">Supprimer cette action et ses réponses ? <button class="btn small danger" data-yes>Oui, supprimer</button><button class="btn small" data-no>Annuler</button></span>`;
+      box.querySelector("[data-no]").onclick=renderPlan;box.querySelector("[data-yes]").onclick=async()=>{try{for(const r of reponses.filter(r=>r.actionId===id))await rcol.doc(r._id).delete();await acol.doc(id).delete();toast("Action supprimée")}catch(e){writeErr(e)}}};
+    const fi=card.querySelector("input[type=file]");if(fi)fi.onchange=async()=>{const f=fi.files[0];fi.value="";if(!f)return;const s=card.querySelector("[data-phstate]");s.textContent="Envoi de la photo…";try{pendingPhoto=await uploadPhoto(f);s.textContent="Photo prête"}catch(e){s.textContent="";photoErr(e)}};
+    const send=card.querySelector("[data-send]");if(send)send.onclick=async()=>{const t=card.querySelector("textarea").value.trim();const ns=card.querySelector("select").value;
+      if(!t&&!ns&&!pendingPhoto){toast("Écrivez une réponse ou choisissez un statut");return}
+      send.disabled=true;try{await rcol.add({actionId:id,texte:t,statut:ns,photo:pendingPhoto,service:$("#pMe").value,auteur:myId||"",date:Date.now()});if(ns)await acol.doc(id).update({statut:ns,updatedAt:Date.now()});toast("Réponse envoyée")}catch(e){writeErr(e);send.disabled=false}};
+  });
+}
+
+/* --- bilan --- */
+function weeksAvailable(){const s=new Set(passages.map(p=>p.semaine).filter(Boolean));s.add(isoWeek(today()));return [...s].sort().reverse()}
+function renderWeekSel(){const sel=$("#weekSel");const cur=sel.value||isoWeek(today());sel.innerHTML=weeksAvailable().map(w=>`<option value="${w}" ${w===cur?"selected":""}>${w.replace("-S"," · semaine ")} (${weekRange(w)})</option>`).join("")}
+$("#weekSel").onchange=renderBilan;
+document.querySelectorAll("#svc button").forEach(b=>b.onclick=()=>{svc=b.dataset.svc;document.querySelectorAll("#svc button").forEach(x=>x.setAttribute("aria-pressed",x===b));try{localStorage.setItem("tdc_svc",svc)}catch(e){};renderBilan()});
+function countBy(items,key){const m={};items.forEach(i=>{const k=key(i);if(k)m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+function barsHTML(entries,cls=""){if(!entries.length)return `<p class="meta">Rien de signalé.</p>`;const max=entries[0][1];return `<div class="bars">`+entries.slice(0,8).map(([k,n])=>`<div class="bar"><span>${esc(k)}</span><div class="track"><div class="fill ${cls}" style="width:${n/max*100}%"></div></div><span class="n">${n}</span></div>`).join("")+`</div>`}
+
+function passageCard(p,compact){
+  const probs=(p.problemes||[]).map(x=>`<span class="pill ${x.intensite>=3?"critique":x.intensite==2?"vigilance":""}">${esc(x.nom)} · ${lbl(PROB_TYPES,x.type).split(" ")[0].toLowerCase()}</span>`).join("");
+  const defs=(p.defauts||[]).map(d=>`<span class="pill info">${esc(lbl(DEF_TYPES,d.type))}${d.pct!=null?" "+d.pct+" %":""}${d.detail&&!compact?" · "+esc(d.detail):""}</span>`).join("");
+  const precos=(p.precos||[]).map(x=>`<li>${esc(lbl(PRECO_TYPES,x.type))} : ${esc(x.detail)} ${x.statut!=="a_verifier"?`<span class="pill ${x.statut==="efficace"?"ok":x.statut==="partiel"?"vigilance":"critique"}">${lbl(VERIF,x.statut)}</span>`:`<span class="pill">à vérifier</span>`}</li>`).join("");
+  const acts=actions.filter(a=>a.passageId===p._id);const actOpen=acts.filter(a=>a.statut!=="fait").length;
+  const rc=p.recolte||{};const rec=[rc.debut?"récolte ~"+fmtDate(rc.debut):"",rc.volume!=null?rc.volume+" t":"",rc.ecart?({avance:"en avance",conforme:"conforme",retard:"en retard",perte:"perte de volume"})[rc.ecart]:"",rc.qualite||""].filter(Boolean).join(" · ");
+  return `<article class="card ${p.etat}"><div class="row" style="justify-content:space-between;align-items:flex-start"><div style="min-width:0;flex:1"><h3><a href="#producteurs" class="plink" data-fiche="${esc(p.producteur)}">${esc(p.producteur)}</a> — ${esc(p.culture)}</h3><div class="meta">${fmtDate(p.date)}${p.parcelle?" · "+esc(p.parcelle):""}${p.stade?" · "+esc(p.stade):""}${p.pole?" · "+esc(p.pole):""}</div></div><span class="pill ${p.etat}">${ETAT_LBL[p.etat]||p.etat}</span></div>
+  ${defs?`<div class="chips">${defs}</div>`:""}${probs?`<div class="chips">${probs}</div>`:""}
+  ${!compact?serresTable(p.serres):((p.serres||[]).length?`<p class="meta" style="margin:6px 0 0">${p.serres.length} serre(s) : ${p.serres.map(x=>`${esc(x.nom||"?")} <span class="pill ${x.etat||"ok"}">${ETAT_LBL[x.etat||"ok"]}</span>`).join(" ")}</p>`:"")}
+  ${suiviHTML(p,!compact)}
+  ${(p.photos||[]).length?`<div class="photos">${photosHTML(compact?p.photos.slice(0,4):p.photos,false)}</div>`:""}
+  ${!compact&&precos?`<ul style="margin:8px 0 0;padding-left:18px">${precos}</ul>`:""}
+  ${p.bloquant?`<p style="margin:8px 0 0"><b style="color:var(--crit)">Bloquant :</b> ${esc(p.bloquant)}</p>`:""}
+  ${acts.length?`<p class="meta" style="margin:6px 0 0">Plan d'action : ${acts.length} action(s), ${actOpen} ouverte(s) · <a href="#plan" data-goplan>voir</a></p>`:""}
+  ${!compact&&rec?`<p class="meta" style="margin:6px 0 0">Récolte : ${esc(rec)}</p>`:""}
+  ${window.planHint?planHint(p):""}
+  ${!compact&&p.observations?`<p style="margin:6px 0 0;white-space:pre-wrap">${esc(p.observations)}</p>`:""}
+  ${!compact&&canWrite?`<div class="row" style="margin-top:10px"><button class="btn small" data-edit="${p._id}">Modifier / ajouter une action</button><button class="btn small danger" data-del="${p._id}">Supprimer</button></div>`:""}
+  </article>`}
+function emptyState(){return `<div class="empty"><h3 style="margin-bottom:6px">Aucun passage pour l'instant</h3>Les passages saisis dans l'onglet <b>Nouveau passage</b> apparaîtront ici, regroupés par semaine : état des parcelles, photos, défauts, maladies et ravageurs, préconisations, plan d'action et prévisions de récolte.<div style="margin-top:12px"><button class="btn primary" data-go="saisie">Saisir le premier passage</button></div></div>`}
+
+function renderBilan(){
+  const body=$("#bilanBody");
+  if(!loaded){body.innerHTML=`<p class="meta">Chargement des passages…</p>`;return}
+  const wk=$("#weekSel").value||isoWeek(today());
+  $("#bilanTitle").textContent="Bilan semaine "+wk.split("-S")[1];$("#bilanSub").textContent=weekRange(wk)+" · à partager chaque vendredi.";
+  if(!passages.length){body.innerHTML=emptyState();bindCardActions(body);return}
+  const W=passages.filter(p=>p.semaine===wk);
+  const crit=W.filter(p=>p.etat==="critique"),vig=W.filter(p=>p.etat==="vigilance");
+  const allProbs=W.flatMap(p=>(p.problemes||[]).map(x=>({...x,p})));
+  const mal=countBy(allProbs.filter(x=>x.type==="maladie"),x=>x.nom),rav=countBy(allProbs.filter(x=>x.type==="ravageur"),x=>x.nom);
+  const defs=countBy(W.flatMap(p=>p.defauts||[]),d=>lbl(DEF_TYPES,d.type));
+  const pending=passages.flatMap(p=>(p.precos||[]).filter(x=>x.statut==="a_verifier"&&p.semaine<=wk).map(x=>({...x,p})));
+  const verified=passages.flatMap(p=>(p.precos||[]).filter(x=>x.verifDate&&isoWeek(x.verifDate)===wk).map(x=>({...x,p})));
+  const openA=actions.filter(a=>a.statut!=="fait"),lateA=actions.filter(overdue);
+  const bloq=W.filter(p=>p.bloquant);
+  let h=`<div class="kpis"><div class="kpi"><b>${W.length}</b><span>Passages</span></div><div class="kpi"><b>${new Set(W.map(p=>p.producteur)).size}</b><span>Producteurs vus</span></div><div class="kpi crit"><b>${crit.length}</b><span>Parcelles critiques</span></div><div class="kpi warn"><b>${pending.length}</b><span>Préco à vérifier</span></div><div class="kpi ${lateA.length?"crit":""}"><b>${openA.length}</b><span>Actions ouvertes${lateA.length?` · ${lateA.length} en retard`:""}</span></div></div>`;
+  h+=window.bilanExtra?bilanExtra(wk,svc):"";
+  const sCrit=`<section class="block"><h3>Points critiques et bloquants</h3><div class="list" style="margin-top:8px">${[...crit,...vig.filter(p=>p.bloquant)].length?[...crit,...vig.filter(p=>p.bloquant)].map(p=>passageCard(p,true)).join(""):`<p class="meta">Aucun point critique cette semaine.</p>`}</div></section>`;
+  const sSan=`<section class="block grid2"><div><h3>Maladies</h3><div style="margin-top:8px">${barsHTML(mal)}</div></div><div><h3>Ravageurs</h3><div style="margin-top:8px">${barsHTML(rav,"rav")}</div></div></section>`;
+  const sDef=`<section class="block"><h3>Défauts constatés</h3><div style="margin-top:8px">${barsHTML(defs,"def")}</div></section>`;
+  const sAct=`<section class="block"><div class="row" style="justify-content:space-between"><h3>Plan d'action</h3><button class="btn small" data-go="plan">Ouvrir le plan d'action</button></div>${openA.length?`<div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Action</th><th>Responsable</th><th>Échéance</th><th>Statut</th></tr></thead><tbody>${openA.sort((x,y)=>(x.echeance||"9").localeCompare(y.echeance||"9")).slice(0,15).map(a=>`<tr><td>${esc(a.titre)}${a.producteur?`<div class="meta">${esc(a.producteur)} — ${esc(a.culture)}</div>`:""}</td><td>${esc(a.service)}</td><td class="mono">${a.echeance?fmtDate(a.echeance):"—"}</td><td><span class="pill ${overdue(a)?"critique":a.statut==="en_cours"?"info":"vigilance"}">${overdue(a)?"En retard":lbl(ASTAT,a.statut)}</span></td></tr>`).join("")}</tbody></table></div>`:`<p class="meta">Aucune action ouverte.</p>`}</section>`;
+  const sImpact=`<section class="block"><h3>Impact des préconisations vérifiées cette semaine</h3>${verified.length?`<div class="chips">${VERIF.map(([k,l])=>{const n=verified.filter(v=>v.statut===k).length;return n?`<span class="pill ${k==="efficace"?"ok":k==="partiel"?"vigilance":"critique"}">${l} : ${n}</span>`:""}).join("")}</div>`:`<p class="meta">Pas encore de vérification cette semaine.</p>`}</section>`;
+  const rows=W.filter(p=>p.recolte&&(p.recolte.debut||p.recolte.volume!=null||p.recolte.ecart)).sort((a,b)=>(a.recolte.debut||"9").localeCompare(b.recolte.debut||"9"));
+  const ecl={avance:"En avance",conforme:"Conforme",retard:"En retard",perte:"Perte de volume"};
+  const sRec=`<section class="block"><h3>Prévisions de récolte</h3>${rows.length?`<div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Producteur</th><th>Culture</th><th>Début</th><th>Volume</th><th>Écart</th><th>Qualité</th></tr></thead><tbody>${rows.map(p=>`<tr><td>${esc(p.producteur)}</td><td>${esc(p.culture)}</td><td class="mono">${p.recolte.debut?fmtDate(p.recolte.debut):"—"}</td><td class="mono">${p.recolte.volume!=null?p.recolte.volume+" t":"—"}</td><td>${p.recolte.ecart?`<span class="pill ${p.recolte.ecart==="retard"||p.recolte.ecart==="perte"?"critique":p.recolte.ecart==="avance"?"vigilance":"ok"}">${ecl[p.recolte.ecart]}</span>`:"—"}</td><td>${esc(p.recolte.qualite||"—")}</td></tr>`).join("")}</tbody></table></div>`:`<p class="meta">Aucune prévision renseignée cette semaine.</p>`}</section>`;
+  const trts=W.flatMap(p=>(p.precos||[]).filter(x=>x.type==="traitement").map(x=>({...x,p})));
+  const sQual=`<section class="block"><h3>Traitements préconisés (traçabilité bio)</h3>${trts.length?`<div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Producteur</th><th>Culture</th><th>Préconisation</th><th>Statut</th></tr></thead><tbody>${trts.map(x=>`<tr><td>${esc(x.p.producteur)}</td><td>${esc(x.p.culture)}</td><td>${esc(x.detail)}</td><td>${x.statut==="a_verifier"?"À vérifier":lbl(VERIF,x.statut)}</td></tr>`).join("")}</tbody></table></div>`:`<p class="meta">Aucun traitement préconisé cette semaine.</p>`}</section>`;
+  const declass=W.filter(p=>(p.recolte&&p.recolte.qualite==="Déclassement probable")||(p.defauts||[]).some(d=>(d.pct||0)>=10));
+  const sDecl=`<section class="block"><h3>Risques qualité à la récolte</h3><p class="meta" style="margin:2px 0 0">Déclassement annoncé ou défaut touchant 10 % ou plus.</p><div class="list" style="margin-top:8px">${declass.length?declass.map(p=>passageCard(p,true)).join(""):`<p class="meta">Aucun risque signalé.</p>`}</div></section>`;
+  const lach=W.flatMap(p=>(p.precos||[]).filter(x=>x.type==="lacher"||x.type==="traitement").map(x=>({...x,p})));
+  const sAch=`<section class="block"><h3>Besoins en intrants et auxiliaires</h3>${lach.length?`<ul style="padding-left:18px">${lach.map(x=>`<li>${esc(x.p.producteur)} (${esc(x.p.culture)}) : ${esc(lbl(PRECO_TYPES,x.type))} — ${esc(x.detail)}</li>`).join("")}</ul>`:`<p class="meta">Aucun besoin remonté cette semaine.</p>`}</section>`;
+  const sAll=`<section class="block"><h3>Tous les passages de la semaine</h3><div class="list" style="margin-top:8px">${W.map(p=>passageCard(p,false)).join("")||`<p class="meta">—</p>`}</div></section>`;
+  const sTxt=`<section class="block"><div class="row" style="justify-content:space-between"><h3>Message du vendredi</h3><button class="btn small" id="copyBilan">Copier le texte</button></div><p class="meta">À coller dans un mail ou sur WhatsApp.</p><pre class="bilan" id="bilanTxt">${esc(bilanText(wk,W,crit,mal,rav,defs,pending,bloq,rows,openA))}</pre></section>`;
+  if(!W.length) h+=`<div class="empty">Aucun passage saisi sur cette semaine.</div>`+(openA.length?sAct:"");
+  else if(svc==="technique") h+=sCrit+sDef+sSan+sAct+sImpact+sAll+sTxt;
+  else if(svc==="direction") h+=sCrit+sAct+sDef+sSan+sImpact+sRec+sTxt;
+  else if(svc==="commercial") h+=sRec+sDecl+sAct+sCrit;
+  else if(svc==="qualite") h+=sDef+sDecl+sSan+sQual+sAct+sImpact;
+  else if(svc==="achats") h+=sRec+sAch+sAct;
+  body.innerHTML=h;
+  const cb=$("#copyBilan");if(cb)cb.onclick=async()=>{const t=$("#bilanTxt").textContent;try{await navigator.clipboard.writeText(t);toast("Bilan copié")}catch(e){const r=document.createRange();r.selectNodeContents($("#bilanTxt"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Texte sélectionné : copiez-le")}};
+  bindCardActions(body);
+}
+function bilanText(wk,W,crit,mal,rav,defs,pending,bloq,rows,openA){
+  const L=[];L.push(`BILAN TOURS DE CULTURE — semaine ${wk.split("-S")[1]} (${weekRange(wk)})`);L.push(`${W.length} passage(s) · ${new Set(W.map(p=>p.producteur)).size} producteur(s) · ${crit.length} parcelle(s) critique(s)`);L.push("");
+  L.push("POINTS CRITIQUES");if(crit.length)crit.forEach(p=>L.push(`- ${p.producteur} / ${p.culture}${p.parcelle?" ("+p.parcelle+")":""} : ${[...(p.problemes||[]).map(x=>x.nom),...(p.defauts||[]).map(d=>lbl(DEF_TYPES,d.type)+(d.pct!=null?" "+d.pct+"%":""))].join(", ")||p.observations||"voir fiche"}`));else L.push("- Aucun");
+  L.push("");L.push("DÉFAUTS : "+(defs.length?defs.map(([k,n])=>`${k} (${n})`).join(", "):"aucun"));
+  L.push("MALADIES : "+(mal.length?mal.map(([k,n])=>`${k} (${n})`).join(", "):"aucune"));L.push("RAVAGEURS : "+(rav.length?rav.map(([k,n])=>`${k} (${n})`).join(", "):"aucun"));
+  if(bloq.length){L.push("");L.push("POINTS BLOQUANTS");bloq.forEach(p=>L.push(`- ${p.producteur} : ${p.bloquant}`))}
+  L.push("");L.push(`PLAN D'ACTION : ${openA.length} action(s) ouverte(s)`);openA.slice(0,12).forEach(a=>L.push(`- [${a.service}] ${a.titre}${a.producteur?" ("+a.producteur+")":""}${a.echeance?" — pour le "+fmtDate(a.echeance):""}${overdue(a)?" — EN RETARD":""}`));
+  L.push("");L.push(`PRÉCONISATIONS À VÉRIFIER : ${pending.length}`);pending.slice(0,12).forEach(x=>L.push(`- ${x.p.producteur} / ${x.p.culture} : ${lbl(PRECO_TYPES,x.type)} — ${x.detail}`));
+  if(rows.length){L.push("");L.push("PRÉVISIONS RÉCOLTE");rows.forEach(p=>L.push(`- ${p.producteur} / ${p.culture} : ${p.recolte.debut?fmtDate(p.recolte.debut):"date ?"}${p.recolte.volume!=null?", "+p.recolte.volume+" t":""}${p.recolte.ecart?", "+p.recolte.ecart:""}`))}
+  if(window.bilanTextExtra){const x=bilanTextExtra(wk);if(x.length){L.push("");L.push(...x)}}
+  return L.join("\n")}
+
+function bindCardActions(root){
+  root.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>showTab(b.dataset.go));
+  root.querySelectorAll("[data-goplan]").forEach(b=>b.onclick=e=>{e.preventDefault();showTab("plan")});
+  root.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>{const p=passages.find(x=>x._id===b.dataset.edit);if(p)fillForm(p)});
+  root.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{const box=b.parentElement;const id=b.dataset.del;box.innerHTML=`<span class="confirm">Supprimer ce passage ? Ses actions resteront dans le plan. <button class="btn small danger" data-yes>Oui, supprimer</button><button class="btn small" data-no>Annuler</button></span>`;
+    box.querySelector("[data-no]").onclick=()=>renderAll();box.querySelector("[data-yes]").onclick=async()=>{try{await col.doc(id).delete();toast("Passage supprimé")}catch(e){writeErr(e)}}});
+}
+
+/* --- suivi préco --- */
+function renderSuivi(){
+  const body=$("#suiviBody");if(!loaded){body.innerHTML=`<p class="meta">Chargement…</p>`;return}
+  { const sp=$("#suiviPlans");const open=passages.filter(p=>p.suivi&&(p.suivi.date||(p.suivi.points||[]).length)&&((p.suivi.points||[]).some(x=>!x.fait)||(!(p.suivi.points||[]).length&&p.suivi.date>=today())));
+    const last={};passages.forEach(p=>{if(!last[p.producteur]||p.date>last[p.producteur])last[p.producteur]=p.date});
+    const L=open.filter(p=>!(last[p.producteur]>p.date&&!(p.suivi.points||[]).some(x=>!x.fait))).sort((a,b)=>(a.suivi.date||"9").localeCompare(b.suivi.date||"9"));
+    if(!typingIn("#suiviPlans"))sp.innerHTML=L.length?L.map(p=>`<article class="card ${p.suivi.date&&p.suivi.date<today()?"critique":"info"}"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><h3><a href="#producteurs" class="plink" data-fiche="${esc(p.producteur)}">${esc(p.producteur)}</a> — ${esc(p.culture)}</h3><div class="meta">Passage du ${fmtDate(p.date)}${p.parcelle?" · "+esc(p.parcelle):""}</div></div>${p.suivi.date?`<span class="pill ${p.suivi.date<today()?"critique":"info"}">${p.suivi.date<today()?"En retard · ":""}${fmtDate(p.suivi.date)}</span>`:""}</div>${suiviHTML(p,true)}${canWrite?`<div class="row" style="margin-top:8px"><button class="btn small primary" data-newfrom="${p._id}">Saisir le passage de suivi</button></div>`:""}</article>`).join(""):`<div class="empty">Aucun passage de suivi programmé. Renseignez « Prochain passage prévu » et les points à contrôler dans un passage.</div>`;
+    sp.querySelectorAll("[data-newfrom]").forEach(b=>b.onclick=()=>{const p=passages.find(x=>x._id===b.dataset.newfrom);if(!p)return;resetForm();$("#f_prod").value=p.producteur;$("#f_cult").value=p.culture;$("#f_parc").value=p.parcelle||"";$("#f_pole").value=p.pole||"Occitanie / Costières";$("#f_stade").value=p.stade||"";(p.serres||[]).forEach(x=>addSerre({nom:x.nom,culture:x.culture,stade:x.stade}));$("#f_prod").dispatchEvent(new Event("change"));$("#f_obs").value="Suivi du passage du "+fmtDate(p.date)+".";showTab("saisie")}) }
+  const f=$("#suiviFilter").value;
+  const items=passages.flatMap(p=>(p.precos||[]).map(x=>({...x,p}))).filter(x=>f==="all"||(f==="todo"?x.statut==="a_verifier":x.statut!=="a_verifier"));
+  if(!items.length){body.innerHTML=`<div class="empty">${f==="todo"?"Aucune préconisation en attente. Les préconisations ajoutées lors d'un passage apparaissent ici jusqu'à leur vérification.":"Rien à afficher."}</div>`;return}
+  items.sort((a,b)=>(a.p.date||"").localeCompare(b.p.date||""));
+  body.innerHTML=items.map(x=>{const age=Math.round((Date.now()-new Date(x.p.date+"T12:00:00"))/864e5);
+    return `<article class="card ${x.statut==="a_verifier"?(age>10?"critique":"vigilance"):x.statut==="efficace"?"ok":x.statut==="partiel"?"vigilance":"critique"}"><div class="list">
+    <div><h3>${esc(x.p.producteur)} — ${esc(x.p.culture)}</h3><div class="meta">Préconisé le ${fmtDate(x.p.date)}${x.p.parcelle?" · "+esc(x.p.parcelle):""} · <span class="mono">J+${age}</span></div>
+    <p style="margin:6px 0 0"><span class="pill acc">${esc(lbl(PRECO_TYPES,x.type))}</span> ${esc(x.detail)}</p></div>
+    <div class="verif-btns" data-pid="${x.p._id}" data-cid="${x.id}">${VERIF.map(([k,l])=>`<button class="btn small ${x.statut===k?"sel":""}" data-v="${k}" ${canWrite?"":"disabled"}>${l}</button>`).join("")}${x.statut!=="a_verifier"&&canWrite?`<button class="btn small" data-v="a_verifier">Remettre à vérifier</button>`:""}</div>
+    <div><label for="vn_${x.id}">Note de vérification</label><input id="vn_${x.id}" type="text" value="${esc(x.verifNote)}" placeholder="ex. population en baisse, pas de nouvelle tache" ${canWrite?"":"disabled"}></div>
+    ${x.verifDate?`<div class="meta">Vérifié le ${fmtDate(x.verifDate)}</div>`:""}</div></article>`}).join("");
+  body.querySelectorAll(".verif-btns button").forEach(b=>b.onclick=async()=>{const w=b.parentElement;const pid=w.dataset.pid,cid=w.dataset.cid;const p=passages.find(z=>z._id===pid);if(!p)return;
+    const note=(document.getElementById("vn_"+cid)||{}).value||"";const v=b.dataset.v;
+    const precos=(p.precos||[]).map(c=>c.id===cid?{...c,statut:v,verifNote:note,verifDate:v==="a_verifier"?"":today()}:c);
+    try{await col.doc(pid).update({precos});toast(v==="a_verifier"?"Remise à vérifier":"Vérification enregistrée")}catch(e){writeErr(e)}});
+}
+$("#suiviFilter").onchange=renderSuivi;
+
+/* --- historique --- */
+/* --- historique par espèce --- */
+const ESPECES=[["Salade",/salade|laitue|batavia|feuille de ch[eê]ne|fdc|sucrine|rougette|iceberg|brenniga|trophy|r[ée]gale|zembro|calibai|eiffel/i],["Épinard",/[ée]pinard/i],["Blette",/blette/i],["Mâche",/m[aâ]che/i],["Jeunes pousses",/jeunes? pousses?|mesclun|roquette/i],["Aromatiques",/aromatique|persil|coriandre|c[ée]bette/i],["Fraise",/fraise/i],["Tomate",/tomate/i],["Concombre",/concombre/i],["Courgette",/courgette/i],["Aubergine",/aubergine/i],["Poivron",/poivron/i],["Melon / pastèque",/melon|past[eè]que/i],["Courge / butternut",/butternut|\bcourges?\b/i],["Radis",/radis/i],["Haricot",/haricot/i],["Fenouil",/fenouil/i],["Céleri",/c[ée]leri/i],["Choux",/brocoli|chou[ -]?(fleur|rave|pointu|lisse)|pet[ -]?sa[iï]/i],["Pomme de terre",/pomme de terre/i]];
+const GROUPE_ESP={"Salade":["Salade"],"Fraise":["Fraise"],"Épinard / jeune pousse / blette":["Épinard","Blette","Jeunes pousses"],"Aromatique / cébette":["Aromatiques"]};
+function especesDe(txt){return ESPECES.filter(([,re])=>re.test(txt||"")).map(([n])=>n)}
+function especesPassage(p){const e=especesDe(p.culture);return e.length?e:["Non précisée"]}
+function especesAlerte(a){if(GROUPE_ESP[a.groupe]){const extra=especesDe(a.titre).filter(x=>!GROUPE_ESP[a.groupe].includes(x));const base=a.groupe==="Épinard / jeune pousse / blette"?(especesDe(a.titre+" "+a.texte).filter(x=>GROUPE_ESP[a.groupe].includes(x))):GROUPE_ESP[a.groupe];return [...new Set([...(base.length?base:GROUPE_ESP[a.groupe]),...extra])]}
+  const e=especesDe(a.titre+" "+(a.cibles||[]).join(" "));return e.length?e:["Toutes cultures"]}
+let curEsp="";try{curEsp=localStorage.getItem("tdc_esp")||""}catch(e){}
+function histItems(){const al=typeof alertes!=="undefined"?alertes:[];
+  return [...passages.map(p=>({k:"p",d:p.date,o:p,esp:especesPassage(p)})),...al.map(a=>({k:"a",d:a.date,o:a,esp:especesAlerte(a)}))]}
+function renderHist(){
+  const body=$("#histBody");if(!loaded){body.innerHTML=`<p class="meta">Chargement…</p>`;return}
+  const all=histItems();
+  if(!all.length){body.innerHTML=emptyState();$("#spList").innerHTML="";bindCardActions(body);return}
+  const cnt={};all.forEach(i=>i.esp.forEach(e=>{cnt[e]=cnt[e]||{n:0,crit:0};cnt[e].n++;if(i.k==="p"&&i.o.etat==="critique"&&i.d>=addDays(today(),-30))cnt[e].crit++}));
+  const order=[...ESPECES.map(([n])=>n),"Toutes cultures","Non précisée"].filter(n=>cnt[n]);
+  if(curEsp&&!cnt[curEsp])curEsp="";
+  $("#spList").innerHTML=`<button data-esp="" aria-pressed="${!curEsp}">Toutes <span class="n">${all.length}</span></button>`+order.map(n=>`<button data-esp="${esc(n)}" aria-pressed="${curEsp===n}">${cnt[n].crit?`<span class="dot" title="Parcelle critique ces 30 derniers jours"></span>`:""}${esc(n)} <span class="n">${cnt[n].n}</span></button>`).join("");
+  $("#spList").querySelectorAll("[data-esp]").forEach(b=>b.onclick=()=>{curEsp=b.dataset.esp;try{localStorage.setItem("tdc_esp",curEsp)}catch(e){};renderHist()});
+  const ty=$("#hType").value,fp=$("#hProd").value,fe=$("#hEtat").value,ft=$("#hTxt").value.trim().toLowerCase();
+  const niv={critique:"alerte",vigilance:"vigilance",ok:"info"};
+  const L=all.filter(i=>(!curEsp||i.esp.includes(curEsp))&&(!ty||i.k===ty)
+    &&(!fp||(i.k==="p"?i.o.producteur===fp:(i.o.producteurs||[]).includes(fp)))
+    &&(!fe||(i.k==="p"?i.o.etat===fe:i.o.niveau===niv[fe]))
+    &&(!ft||JSON.stringify(i.k==="p"?[i.o.producteur,i.o.culture,i.o.parcelle,i.o.observations,i.o.problemes,i.o.precos,(i.o.defauts||[]).map(d=>[lbl(DEF_TYPES,d.type),d.detail])]:[i.o.titre,i.o.texte,i.o.cibles,i.o.producteurs]).toLowerCase().includes(ft)))
+    .sort((x,y)=>(y.d||"").localeCompare(x.d||""));
+  // synthèse de l'espèce
+  const P=L.filter(i=>i.k==="p").map(i=>i.o),A=L.filter(i=>i.k==="a").map(i=>i.o);
+  const top=countBy([...P.flatMap(p=>(p.problemes||[]).filter(x=>x.type==="maladie"||x.type==="ravageur").map(x=>x.nom)),...A.flatMap(a=>a.cibles||[])],x=>x).slice(0,6);
+  const defs=countBy(P.flatMap(p=>p.defauts||[]),d=>lbl(DEF_TYPES,d.type)).slice(0,4);
+  $("#spSummary").innerHTML=`<div class="kpis"><div class="kpi"><b>${P.length}</b><span>Passages</span></div><div class="kpi"><b>${A.length}</b><span>Alertes</span></div><div class="kpi"><b>${new Set(P.map(p=>p.producteur)).size}</b><span>Producteurs suivis</span></div><div class="kpi crit"><b>${P.filter(p=>p.etat==="critique").length}</b><span>Passages critiques</span></div></div>
+   ${top.length||defs.length?`<div class="grid2">${top.length?`<div><h3>Problèmes les plus fréquents</h3><div style="margin-top:8px">${barsHTML(top,"rav")}</div></div>`:""}${defs.length?`<div><h3>Défauts constatés</h3><div style="margin-top:8px">${barsHTML(defs,"def")}</div></div>`:""}</div>`:""}`;
+  if(!L.length){body.innerHTML=`<div class="empty">Rien pour ${curEsp?esc(curEsp):"ces filtres"}.</div>`;return}
+  let h="",m="";L.forEach(i=>{const mm=new Date(i.d+"T12:00:00").toLocaleDateString("fr-FR",{month:"long",year:"numeric"});if(mm!==m){m=mm;h+=`<div class="month">${mm}</div>`}
+    h+=i.k==="p"?passageCard(i.o,false):(typeof alerteCard==="function"?alerteCard(i.o,true):"")});
+  body.innerHTML=h;bindCardActions(body);
+}
+["#hType","#hProd","#hEtat"].forEach(s=>$(s).onchange=renderHist);$("#hTxt").oninput=renderHist;
+
+function renderLists(){
+  const uniq=k=>[...new Set(passages.map(k).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"fr"));
+  const opt=a=>a.map(v=>`<option value="${esc(v)}">`).join("");
+  $("#dl_prod").innerHTML=opt([...new Set([...(typeof producteurs!=="undefined"?producteurs.map(p=>p.nom):[]),...passages.map(p=>p.producteur)].filter(Boolean))].sort((a,b)=>a.localeCompare(b,"fr")));$("#dl_parc").innerHTML=opt(uniq(p=>p.parcelle));$("#dl_cult").innerHTML=opt(uniq(p=>p.culture));
+  $("#dl_nom").innerHTML=opt([...new Set(["Mildiou","Oïdium","Botrytis","Alternaria","Cladosporiose","Sclérotinia","Bremia","Pythium","Tuta absoluta","Aleurodes","Pucerons","Thrips","Acariens","Noctuelles","Mouche mineuse","Punaises","Altises","Doryphores","Nématodes","Taupins","Limaces",...passages.flatMap(p=>(p.problemes||[]).map(x=>x.nom))])]);
+  const hp=$("#hProd"),cur=hp.value;hp.innerHTML=`<option value="">Tous</option>`+uniq(p=>p.producteur).map(v=>`<option ${v===cur?"selected":""}>${esc(v)}</option>`).join("");
+}
+function isTyping(){const a=document.activeElement;return a&&a.closest&&a.closest("#planBody,#suiviBody")&&(a.tagName==="TEXTAREA"||a.tagName==="INPUT")}
+function renderAll(){renderWeekSel();renderLists();renderBilan();renderSuivi();renderHist();if(window.renderExtra)renderExtra();if(!isTyping())renderPlan();else{const c=$("#cntPlan"),n=actions.filter(a=>a.statut!=="fait").length;c.textContent=n;c.hidden=!n}}
+function applyWrite(){document.querySelectorAll("#form input,#form select,#form textarea,#form button").forEach(el=>el.disabled=!canWrite);$("#newActBtn").hidden=!canWrite;
+  $("#fsPhotos").hidden=!assets;
+  if(!canWrite)banner("Accès en lecture seule : demandez un accès Contributeur pour répondre au plan d'action.");renderAll()}
+
+/* noms des auteurs */
+let nameT;function resolveNames(){clearTimeout(nameT);nameT=setTimeout(async()=>{if(!user)return;const ids=[...new Set([...passages,...actions,...reponses].map(x=>x.auteur).filter(id=>id&&!(id in names)))].slice(0,64);if(!ids.length)return;
+  try{const ps=await user.profiles(ids);ids.forEach(id=>names[id]=(ps&&ps[id]&&ps[id].name)||"");renderAll()}catch(e){}},300)}
+
+/* --- démarrage --- */
+function init(){
+  let t="bilan";try{t=localStorage.getItem("tdc_tab")||"bilan";svc=localStorage.getItem("tdc_svc")||"technique"}catch(e){}
+  document.querySelectorAll("#svc button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.svc===svc));
+  if(location.hash&&["bilan","saisie","plan","planning","alertes","producteurs","meteo","suivi","passages"].includes(location.hash.slice(1)))t=location.hash.slice(1);
+  showTab(t);resetForm();$("#fsPhotos").hidden=true;
+  try{const d=JSON.parse(localStorage.getItem("tdc_draft")||"null");if(d&&(d.producteur||d.culture)){fillForm({...d,_id:null});$("#formTitle").textContent="Nouveau passage (brouillon repris)"}}catch(e){}
+  renderAll();
+  if(!window.claude||!window.claude.use){banner("Connexion à la base partagée impossible.");loaded=true;renderAll();return}
+  (async()=>{
+    try{user=await claude.use("user")}catch(e){user=null}
+    if(user){try{myId=await user.id()}catch(e){}try{const c=await user.can("data.write");if(c===false)canWrite=false}catch(e){}
+      try{const me=await user.me();if(me&&me.name)$("#who").textContent=me.name}catch(e){}}
+    try{assets=await claude.use("assets")}catch(e){assets=null}
+    db=await claude.use("db");
+    if(!db){banner("Connectez-vous avec le code d'accès pour voir et saisir les passages.");loaded=true;canWrite=false;applyWrite();return}
+    col=db.collection("passages");acol=db.collection("actions");rcol=db.collection("reponses");
+    const fail=()=>{banner("Connexion aux données interrompue. Rechargez la page.");loaded=true;renderAll()};
+    let got=0;const ready=()=>{if(++got>=1)loaded=true};
+    col.orderBy("date","desc").limit(1000).onSnapshot(s=>{passages=s.docs.map(d=>({...d.data(),_id:d.id}));ready();renderAll();resolveNames()},fail);
+    acol.limit(1000).onSnapshot(s=>{actions=s.docs.map(d=>({...d.data(),_id:d.id}));renderAll();resolveNames()},fail);
+    rcol.limit(1000).onSnapshot(s=>{reponses=s.docs.map(d=>({...d.data(),_id:d.id}));if(!isTyping())renderPlan();resolveNames()},fail);
+    if(window.extraSubscribe)extraSubscribe(db);
+    applyWrite();
+  })();
+}
+</script>
+<script>
+/* ===== Producteurs, météo comparative, pluviométrie ===== */
+const DEFAULT_SITES=[{id:"saint-gilles",nom:"Saint-Gilles (Costières)",lat:43.68,lon:4.43},{id:"plaine-orientale",nom:"Plaine orientale (Corse)",lat:42.47,lon:9.5}];
+const DAILY="temperature_2m_max,temperature_2m_min,precipitation_sum,et0_fao_evapotranspiration";
+const MOIS=["Janv","Févr","Mars","Avr","Mai","Juin","Juil","Août","Sept","Oct","Nov","Déc"];
+let planning=[],alertes=[],alcol=null,alPhotos=[],producteurs=[],pluvio=[],meteoDocs={},sites=DEFAULT_SITES.slice(),pcol=null,plcol=null,mcol=null,sitesRef=null,curProd=null,editProdId=null;
+const N=new Date().getFullYear(),N1=N-1;
+const num=(v,d=0)=>v==null||isNaN(v)?"—":Number(v).toLocaleString("fr-FR",{maximumFractionDigits:d,minimumFractionDigits:d});
+const slug=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)||"site";
+function addDays(d,n){const x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function doy(d){const x=new Date(d+"T12:00:00");return Math.round((x-new Date(x.getFullYear(),0,1,12))/864e5)+1}
+const sameDoyDate=(d,year)=>{const x=new Date(d+"T12:00:00");x.setFullYear(year);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")};
+
+window.extraSubscribe=function(db){
+  pcol=db.collection("producteurs");plcol=db.collection("pluvio");mcol=db.collection("meteo");sitesRef=db.doc("config/sites");
+  pcol.limit(500).onSnapshot(s=>{producteurs=s.docs.map(d=>({...d.data(),_id:d.id}));renderAll()},()=>{});
+  plcol.orderBy("date","desc").limit(1000).onSnapshot(s=>{pluvio=s.docs.map(d=>({...d.data(),_id:d.id}));renderAll()},()=>{});
+  mcol.limit(300).onSnapshot(s=>{meteoDocs={};s.docs.forEach(d=>meteoDocs[d.id]=d.data());renderAll()},()=>{});
+  db.collection("planning").limit(500).onSnapshot(s=>{planning=s.docs.map(d=>({...d.data(),_id:d.id}));renderAll()},()=>{});
+  alcol=db.collection("alertes");alcol.orderBy("date","desc").limit(1000).onSnapshot(s=>{alertes=s.docs.map(d=>({...d.data(),_id:d.id}));renderAll()},()=>{});
+  sitesRef.onSnapshot(s=>{const d=s.exists&&s.data();if(d&&Array.isArray(d.list)&&d.list.length)sites=d.list;renderSiteSelects();renderSiteLines();renderAll()},()=>{});
+};
+function typingIn(sel){const a=document.activeElement;return a&&a.closest&&a.closest(sel)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)}
+window.renderExtra=function(){renderPlanning();renderAlertes();renderProd();renderMeteo();renderPluvio()};
+
+/* --- producteurs --- */
+function siteForProd(name){const f=producteurs.find(p=>p.nom===name);if(f&&f.siteMeteo&&sites.some(s=>s.id===f.siteMeteo))return f.siteMeteo;
+  const pole=(f&&f.pole)||((passages.find(p=>p.producteur===name)||{}).pole)||"";
+  if(/corse/i.test(pole)){const c=sites.find(s=>/corse|orientale/i.test(s.nom));if(c)return c.id}
+  return (sites[0]||{}).id}
+function prodSummary(name){const ps=passages.filter(p=>p.producteur===name);const last=ps[0];const acts=actions.filter(a=>a.producteur===name&&a.statut!=="fait");
+  const rain=pluvio.filter(r=>r.producteur===name&&String(r.date).startsWith(String(N))).reduce((s,r)=>s+(Number(r.mm)||0),0);
+  return {ps,last,acts,rain}}
+const ETAT_RANK={critique:0,vigilance:1,ok:2};
+function renderProd(force){
+  const list=$("#prodList");if(!list||(!force&&typingIn("#prodListWrap")))return;
+  if(curProd!=null){renderFiche();return}
+  $("#prodFiche").hidden=true;list.hidden=false;$("#prodListWrap").hidden=false;
+  if(!loaded){list.innerHTML=`<p class="meta">Chargement…</p>`;return}
+  const names=[...new Set([...producteurs.map(p=>p.nom),...passages.map(p=>p.producteur)].filter(Boolean))];
+  if(!names.length){list.innerHTML=`<div class="empty" style="grid-column:1/-1">Aucun producteur pour l'instant. Créez une fiche avec le bouton <b>Nouveau producteur</b>, ou saisissez un passage : le producteur apparaîtra ici automatiquement.</div>`;return}
+  const q=$("#prSearch").value.trim().toLowerCase(),pole=$("#prPole").value,sort=$("#prSort").value;
+  let rows=names.map(n=>{const f=producteurs.find(p=>p.nom===n);const s=prodSummary(n);return {n,f,...s,pole:(f&&f.pole)||(s.last&&s.last.pole)||""}})
+    .filter(r=>(!pole||r.pole===pole)&&(!q||JSON.stringify([r.n,r.f&&r.f.commune,r.f&&r.f.cultures,r.ps.map(p=>p.culture)]).toLowerCase().includes(q)));
+  rows.sort(sort==="nom"?(a,b)=>a.n.localeCompare(b.n,"fr"):sort==="etat"?(a,b)=>((ETAT_RANK[a.last&&a.last.etat]??3)-(ETAT_RANK[b.last&&b.last.etat]??3))||a.n.localeCompare(b.n,"fr"):(a,b)=>((b.last&&b.last.date)||"").localeCompare((a.last&&a.last.date)||""));
+  list.innerHTML=rows.length?rows.map(r=>`<button class="card prodcard ${r.last?r.last.etat:""}" data-open="${esc(r.n)}">
+    <div class="row" style="justify-content:space-between;align-items:flex-start"><h3 style="min-width:0">${esc(r.n)}</h3>${r.last?`<span class="pill ${r.last.etat}">${ETAT_LBL[r.last.etat]}</span>`:""}</div>
+    <div class="meta">${esc(r.pole||"Pôle non renseigné")}${r.f&&r.f.commune?" · "+esc(r.f.commune):""}${r.f?"":" · <b>sans fiche</b>"}</div>
+    <div class="meta" style="margin-top:6px">${r.last?`Dernier passage ${fmtDate(r.last.date)} · ${r.ps.length} passage(s)`:"Aucun passage"}${r.acts.length?` · <span style="color:var(--crit)">${r.acts.length} action(s) ouverte(s)</span>`:""}${r.rain?` · ${num(r.rain)} mm relevés en ${N}`:""}</div></button>`).join(""):`<div class="empty" style="grid-column:1/-1">Aucun producteur ne correspond.</div>`;
+  list.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openFiche(b.dataset.open));
+}
+function openFiche(name){curProd=name;showTab("producteurs");renderFiche()}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-fiche]");if(a){e.preventDefault();openFiche(a.dataset.fiche)}});
+["#prSearch","#prPole","#prSort"].forEach(s=>$(s).addEventListener(s==="#prSearch"?"input":"change",()=>renderProdList()));
+function renderProdList(){curProd=null;renderProd(true)}
+
+function renderFiche(){
+  const box=$("#prodFiche"),name=curProd;$("#prodList").hidden=true;$("#prodListWrap").hidden=true;box.hidden=false;
+  const f=producteurs.find(p=>p.nom===name);const {ps,acts,rain}=prodSummary(name);const last=ps[0];
+  const site=sites.find(s=>s.id===siteForProd(name));
+  const photos=ps.flatMap(p=>(p.photos||[]).map(x=>({...x,legende:(x.legende?x.legende+" · ":"")+fmtDate(p.date)}))).slice(0,24);
+  const defs=countBy(ps.flatMap(p=>p.defauts||[]),d=>lbl(DEF_TYPES,d.type)),probs=countBy(ps.flatMap(p=>p.problemes||[]).filter(x=>x.type==="maladie"||x.type==="ravageur"),x=>x.nom);
+  const rels=pluvio.filter(r=>r.producteur===name).slice(0,12);
+  box.innerHTML=`<div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="btn small" id="backProd">← Tous les producteurs</button>
+    <div class="row">${canWrite?`<button class="btn small" id="newPassFor">+ Passage</button><button class="btn small" id="editProd">${f?"Modifier la fiche":"Créer la fiche"}</button>`:""}</div></div>
+  <h2>${esc(name)}</h2><p class="sub">${esc((f&&f.pole)||(last&&last.pole)||"")}${f&&f.commune?" · "+esc(f.commune):""}${site?" · secteur météo "+esc(site.nom):""}</p>
+  ${f?`<div class="facts">${f.telephone?`<div><span>Téléphone</span><span class="sel" style="text-transform:none;letter-spacing:0;font-size:14px;color:var(--fg)">${esc(f.telephone)}</span></div>`:""}${f.email?`<div><span>E-mail</span><span class="sel" style="text-transform:none;letter-spacing:0;font-size:14px;color:var(--fg)">${esc(f.email)}</span></div>`:""}${f.surface!=null&&f.surface!==""?`<div><span>Surface</span>${num(f.surface,1)} ha</div>`:""}${f.cultures?`<div><span>Cultures</span>${esc(f.cultures)}</div>`:""}</div>
+    ${(f.parcelles||[]).length?`<div style="margin-top:10px"><span class="meta">PARCELLES</span><div class="chips">${f.parcelles.map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div></div>`:""}
+    ${f.notes?`<p style="margin:10px 0 0;white-space:pre-wrap">${esc(f.notes)}</p>`:""}`:`<div class="empty">Ce producteur n'a pas encore de fiche. Créez-la pour enregistrer ses coordonnées, ses parcelles et son secteur météo.</div>`}
+  <div class="kpis"><div class="kpi"><b>${ps.length}</b><span>Passages</span></div><div class="kpi ${last&&last.etat==="critique"?"crit":last&&last.etat==="vigilance"?"warn":""}"><b>${last?ETAT_LBL[last.etat]:"—"}</b><span>Dernier état${last?" · "+fmtDate(last.date):""}</span></div><div class="kpi ${acts.length?"crit":""}"><b>${acts.length}</b><span>Actions ouvertes</span></div><div class="kpi"><b>${num(rain)}</b><span>mm relevés en ${N}</span></div></div>
+  <section class="block grid2"><div><h3>Défauts récurrents</h3><div style="margin-top:8px">${barsHTML(defs,"def")}</div></div><div><h3>Maladies et ravageurs</h3><div style="margin-top:8px">${barsHTML(probs)}</div></div></section>
+  ${acts.length?`<section class="block"><h3>Actions ouvertes</h3><ul style="padding-left:18px">${acts.map(a=>`<li>[${esc(a.service)}] ${esc(a.titre)}${a.echeance?" — pour le "+fmtDate(a.echeance):""}${overdue(a)?' <span class="pill critique">En retard</span>':""}</li>`).join("")}</ul><button class="btn small" data-go="plan">Ouvrir le plan d'action</button></section>`:""}
+  ${photos.length?`<section class="block"><h3>Photos</h3><div class="photos">${photosHTML(photos,false)}</div></section>`:""}
+  ${(()=>{const al=alertes.filter(a=>(a.producteurs||[]).includes(name));return al.length?`<section class="block"><h3>Alertes techniques le concernant</h3><div class="list" style="margin-top:8px">${al.map(a=>alerteCard(a,true)).join("")}</div></section>`:""})()}
+  ${window.planFiche?planFiche(name):""}
+  <section class="block"><h3>Pluviométrie</h3>${rels.length?pluvioTable(rels,false):`<p class="meta">Aucun relevé. Ajoutez-en depuis un passage ou l'onglet Météo & pluie.</p>`}</section>
+  <section class="block"><h3>Historique des passages</h3><div class="list" style="margin-top:8px">${ps.length?ps.map(p=>passageCard(p,false)).join(""):`<p class="meta">Aucun passage enregistré.</p>`}</div></section>`;
+  bindCardActions(box);
+  $("#backProd").onclick=()=>{curProd=null;renderProdList();window.scrollTo(0,0)};
+  const np=$("#newPassFor");if(np)np.onclick=()=>{resetForm();$("#f_prod").value=name;const pole=(f&&f.pole)||(last&&last.pole);if(pole)$("#f_pole").value=pole;showTab("saisie")};
+  const ep=$("#editProd");if(ep)ep.onclick=()=>openProdForm(f||{nom:name,pole:(last&&last.pole)||""});
+}
+function openProdForm(f){editProdId=f._id||null;$("#prodFormTitle").textContent=editProdId?"Modifier la fiche":"Nouveau producteur";
+  $("#pf_nom").value=f.nom||"";$("#pf_pole").value=f.pole||"Occitanie / Costières";$("#pf_commune").value=f.commune||"";$("#pf_tel").value=f.telephone||"";$("#pf_mail").value=f.email||"";$("#pf_surf").value=f.surface??"";$("#pf_cult").value=f.cultures||"";$("#pf_parc").value=(f.parcelles||[]).join("\n");$("#pf_notes").value=f.notes||"";
+  renderSiteSelects();$("#pf_site").value=f.siteMeteo||siteForProd(f.nom||"")||"";
+  $("#prodForm").hidden=false;$("#prodForm").scrollIntoView({block:"start"});$("#pf_nom").focus()}
+$("#newProdBtn").onclick=()=>openProdForm({});
+$("#pfCancel").onclick=()=>{$("#prodForm").hidden=true};
+$("#prodForm").addEventListener("submit",async e=>{e.preventDefault();if(!pcol)return;
+  const nom=$("#pf_nom").value.trim();if(!nom)return;
+  if(!editProdId&&producteurs.some(p=>p.nom.toLowerCase()===nom.toLowerCase())){toast("Une fiche existe déjà pour ce nom");return}
+  const data={nom,pole:$("#pf_pole").value,commune:$("#pf_commune").value.trim(),telephone:$("#pf_tel").value.trim(),email:$("#pf_mail").value.trim(),surface:$("#pf_surf").value===""?null:Number($("#pf_surf").value),cultures:$("#pf_cult").value.trim(),parcelles:$("#pf_parc").value.split("\n").map(s=>s.trim()).filter(Boolean),siteMeteo:$("#pf_site").value,notes:$("#pf_notes").value.trim(),updatedAt:Date.now()};
+  try{if(editProdId){const {_id,...old}=producteurs.find(p=>p._id===editProdId)||{};await pcol.doc(editProdId).set({...old,...data})}else{await pcol.add({...data,createdAt:Date.now()})}
+    $("#prodForm").hidden=true;curProd=nom;toast("Fiche enregistrée")}catch(err){writeErr(err)}});
+
+/* --- secteurs --- */
+function renderSiteSelects(){const o=sites.map(s=>`<option value="${esc(s.id)}">${esc(s.nom)}</option>`).join("");
+  ["#mSite","#pf_site"].forEach(sel=>{const el=$(sel);if(!el)return;const v=el.value;el.innerHTML=o;if(v&&sites.some(s=>s.id===v))el.value=v});
+  try{const m=localStorage.getItem("tdc_msite");if(m&&sites.some(s=>s.id===m)&&!$("#mSite").dataset.touched)$("#mSite").value=m}catch(e){}}
+function renderSiteLines(){if(typingIn("#siteLines"))return;$("#siteLines").innerHTML="";sites.forEach(addSiteLine)}
+function addSiteLine(s={}){const el=document.createElement("div");el.className="siteline";el.dataset.id=s.id||"";
+  el.innerHTML=`<input type="text" placeholder="Nom du secteur" value="${esc(s.nom)}" aria-label="Nom"><input type="number" step="0.01" placeholder="Latitude" value="${s.lat??""}" aria-label="Latitude"><input type="number" step="0.01" placeholder="Longitude" value="${s.lon??""}" aria-label="Longitude"><button type="button" class="x" aria-label="Retirer">×</button>`;
+  el.querySelector(".x").onclick=()=>el.remove();$("#siteLines").appendChild(el)}
+$("#addSite").onclick=()=>addSiteLine();
+$("#saveSites").onclick=async()=>{if(!sitesRef)return;const list=[...$("#siteLines").children].map(l=>{const i=l.querySelectorAll("input");return {id:l.dataset.id||slug(i[0].value),nom:i[0].value.trim(),lat:Number(i[1].value),lon:Number(i[2].value)}}).filter(s=>s.nom&&!isNaN(s.lat)&&!isNaN(s.lon)&&s.lat&&s.lon);
+  if(!list.length){toast("Ajoutez au moins un secteur avec ses coordonnées");return}
+  try{await sitesRef.set({list,updatedAt:Date.now()});toast("Secteurs enregistrés")}catch(e){writeErr(e)}};
+$("#mSite").onchange=()=>{$("#mSite").dataset.touched="1";try{localStorage.setItem("tdc_msite",$("#mSite").value)}catch(e){};renderMeteo();renderImportLinks()};
+
+/* --- import Open-Meteo --- */
+function renderImportLinks(){const s=sites.find(x=>x.id===$("#mSite").value)||sites[0];if(!s)return;$("#impSiteName").textContent=s.nom;
+  const base=`latitude=${s.lat}&longitude=${s.lon}&daily=${DAILY}&timezone=Europe%2FParis`;const end=addDays(today(),-2);
+  $("#impLinks").innerHTML=`<a class="btn small" target="_blank" rel="noopener" href="https://archive-api.open-meteo.com/v1/archive?${base}&start_date=${N1}-01-01&end_date=${N1}-12-31">Année ${N1}</a>`+
+   `<a class="btn small" target="_blank" rel="noopener" href="https://archive-api.open-meteo.com/v1/archive?${base}&start_date=${N}-01-01&end_date=${end}">Année ${N} à ce jour</a>`+
+   `<a class="btn small" target="_blank" rel="noopener" href="https://api.open-meteo.com/v1/forecast?${base}&past_days=14&forecast_days=7">14 derniers jours + prévisions 7 j</a>`}
+$("#mFile").onchange=async()=>{const f=$("#mFile").files[0];$("#mFile").value="";if(f){$("#mPaste").value=await f.text();$("#importMsg").textContent="Fichier chargé, cliquez sur Importer."}};
+$("#mImport").onclick=async()=>{const msg=$("#importMsg");if(!mcol){msg.textContent="Base indisponible.";return}
+  let j;try{j=JSON.parse($("#mPaste").value)}catch(e){msg.textContent="Le texte collé n'est pas reconnu. Copiez toute la page affichée par le lien.";return}
+  const d=j&&j.daily;if(!d||!Array.isArray(d.time)){msg.textContent="Données journalières absentes du texte collé.";return}
+  const s=sites.find(x=>x.id===$("#mSite").value)||sites[0];
+  if(j.latitude!=null&&(Math.abs(j.latitude-s.lat)>0.3||Math.abs(j.longitude-s.lon)>0.3)){msg.textContent=`Ces données correspondent à un autre point (${j.latitude}, ${j.longitude}). Choisissez le bon secteur avant d'importer.`;return}
+  const t=today();const byYear={},prev={};
+  d.time.forEach((day,i)=>{const v=[d.temperature_2m_max?.[i],d.temperature_2m_min?.[i],d.precipitation_sum?.[i],d.et0_fao_evapotranspiration?.[i]].map(x=>x==null?null:Number(x));if(v.every(x=>x==null))return;
+    if(day>t){prev[day]=v}else{const y=day.slice(0,4);(byYear[y]=byYear[y]||{})[day]=v}});
+  const btn=$("#mImport");btn.disabled=true;msg.textContent="Import en cours…";let n=0;
+  try{for(const [y,days] of Object.entries(byYear)){const id=`${s.id}_${y}`;const old=(meteoDocs[id]&&meteoDocs[id].days)||{};await mcol.doc(id).set({site:s.id,year:Number(y),days:{...old,...days},updatedAt:Date.now()});n+=Object.keys(days).length}
+    if(Object.keys(prev).length){await mcol.doc(`${s.id}_prev`).set({site:s.id,days:prev,importedAt:Date.now()})}
+    msg.textContent=`${n} jour(s) importé(s)${Object.keys(prev).length?" et "+Object.keys(prev).length+" jour(s) de prévision":""} pour ${s.nom}.`;$("#mPaste").value=""}
+  catch(e){msg.textContent="Échec de l'import.";writeErr(e)}finally{btn.disabled=false}};
+
+/* --- calculs météo --- */
+function yearDays(siteId,y){return (meteoDocs[`${siteId}_${y}`]||{}).days||{}}
+function allDays(siteId){return {...yearDays(siteId,N1),...yearDays(siteId,N)}}
+function sumRange(days,from,to,idx){let s=0,c=0;for(const [d,v] of Object.entries(days)){if(d>=from&&d<=to&&v[idx]!=null){s+=v[idx];c++}}return {s,c}}
+function meanT(days,from,to){let s=0,c=0;for(const [d,v] of Object.entries(days)){if(d>=from&&d<=to&&v[0]!=null&&v[1]!=null){s+=(v[0]+v[1])/2;c++}}return c?s/c:null}
+function gdd(days,from,to){let s=0;for(const [d,v] of Object.entries(days)){if(d>=from&&d<=to&&v[0]!=null&&v[1]!=null)s+=Math.max(0,(v[0]+v[1])/2-10)}return s}
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r||1)));const n=r/p;return (n<=1?1:n<=2?2:n<=5?5:10)*p}
+const MONTH_DOY=[1,32,60,91,121,152,182,213,244,274,305,335];
+function svgLines(series,{xMax=366,unit=""}={}){
+  const W=640,H=230,L=46,R=14,T=12,B=26;const vals=series.flatMap(s=>s.pts.map(p=>p[1]));if(!vals.length)return "";
+  let lo=Math.min(0,...vals),hi=Math.max(1,...vals);const st=niceStep((hi-lo)/4);hi=Math.ceil(hi/st)*st;lo=Math.floor(lo/st)*st;
+  const x=v=>L+(v-1)/(xMax-1)*(W-L-R),y=v=>T+(hi-v)/(hi-lo||1)*(H-T-B);
+  let g="";for(let v=lo;v<=hi+1e-9;v+=st){g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${num(v)}${unit}</text>`}
+  MONTH_DOY.forEach((d,i)=>{g+=`<text x="${x(d+14)}" y="${H-8}" text-anchor="middle">${MOIS[i].slice(0,1)}</text>`});
+  const paths=series.map(s=>{if(!s.pts.length)return "";const dd=s.pts.map((p,i)=>(i?"L":"M")+x(p[0]).toFixed(1)+" "+y(p[1]).toFixed(1)).join(" ");const lp=s.pts[s.pts.length-1];
+    return `<path d="${dd}" fill="none" style="stroke:${s.color}" stroke-width="${s.w||2}" ${s.dash?'stroke-dasharray="4 3"':""}/><circle cx="${x(lp[0])}" cy="${y(lp[1])}" r="3.5" style="fill:${s.color}"/>`}).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img">${g}${paths}</svg>`}
+function svgBars(groups,colors,unit=""){
+  const W=640,H=220,L=46,R=10,T=12,B=26;const vals=groups.flatMap(g=>g.v.filter(v=>v!=null));const hiV=Math.max(1,...vals);const st=niceStep(hiV/4);const hi=Math.ceil(hiV/st)*st;
+  const gw=(W-L-R)/groups.length,bw=Math.min(16,(gw-6)/colors.length);const y=v=>T+(hi-v)/hi*(H-T-B);
+  let g="";for(let v=0;v<=hi+1e-9;v+=st)g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${num(v)}${unit}</text>`;
+  groups.forEach((gr,i)=>{const cx=L+gw*i+gw/2;const x0=cx-bw*colors.length/2;gr.v.forEach((v,k)=>{if(v==null)return;g+=`<rect x="${(x0+k*bw).toFixed(1)}" y="${y(v).toFixed(1)}" width="${(bw-2).toFixed(1)}" height="${Math.max(0,y(0)-y(v)).toFixed(1)}" rx="2" style="fill:${colors[k]}"><title>${esc(gr.l)} : ${num(v,1)}${unit}</title></rect>`});
+    g+=`<text x="${cx}" y="${H-8}" text-anchor="middle">${esc(gr.l)}</text>`});
+  return `<svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`}
+const delta=(a,b,unit,d=0)=>{if(a==null||b==null)return "";const df=a-b;return `<small class="${df>=0?"delta-up":"delta-down"}">${df>=0?"+":"−"}${num(Math.abs(df),d)}${unit} vs ${N1}${b?` (${df>=0?"+":"−"}${num(Math.abs(df/b*100))} %)`:""}</small>`};
+
+function renderMeteo(){
+  const body=$("#meteoBody");if(!body)return;renderSiteSelects();renderImportLinks();
+  const s=sites.find(x=>x.id===$("#mSite").value)||sites[0];if(!s){body.innerHTML="";return}
+  const dN=yearDays(s.id,N),dN1=yearDays(s.id,N1);const keysN=Object.keys(dN).sort();
+  if(!keysN.length&&!Object.keys(dN1).length){body.innerHTML=`<div class="empty">Pas encore de données météo pour <b>${esc(s.nom)}</b>. Ouvrez la rubrique <b>Mettre à jour les données météo</b> plus bas : importez l'année ${N1} une fois, puis l'année ${N} à ce jour.</div>`;$("#importBox").open=true;return}
+  const last=keysN[keysN.length-1]||`${N}-01-01`;const lastN1=sameDoyDate(last,N1);
+  const from30=addDays(last,-29),from30b=sameDoyDate(from30,N1);
+  const rN=sumRange(dN,`${N}-01-01`,last,2).s,rN1=sumRange(dN1,`${N1}-01-01`,lastN1,2).s;
+  const r30=sumRange(dN,from30,last,2).s,r30b=sumRange(dN1,from30b,lastN1,2).s;
+  const t30=meanT(dN,from30,last),t30b=meanT(dN1,from30b,lastN1);
+  const gN=gdd(dN,`${N}-01-01`,last),gN1=gdd(dN1,`${N1}-01-01`,lastN1);
+  const bh=r30-sumRange(dN,from30,last,3).s,bhb=r30b-sumRange(dN1,from30b,lastN1,3).s;
+  const cum=(days,y,until)=>{let c=0;return Object.keys(days).sort().filter(d=>d<=until).map(d=>{c+=days[d][2]||0;return [doy(d),c]})};
+  const wk=(days)=>{const m={};Object.entries(days).forEach(([d,v])=>{if(v[0]==null||v[1]==null)return;const w=Math.floor((doy(d)-1)/7);(m[w]=m[w]||[]).push((v[0]+v[1])/2)});return Object.keys(m).map(Number).sort((a,b)=>a-b).map(w=>[w*7+4,m[w].reduce((a,b)=>a+b,0)/m[w].length])};
+  const monthly=(days,y)=>MOIS.map((_,i)=>{const mm=String(i+1).padStart(2,"0");const r=sumRange(days,`${y}-${mm}-01`,`${y}-${mm}-31`,2);return r.c?r.s:null});
+  const mN=monthly(dN,N),mN1=monthly(dN1,N1);
+  const rel=MOIS.map((_,i)=>{const mm=`${N}-${String(i+1).padStart(2,"0")}`;const rs=pluvio.filter(r=>siteForProd(r.producteur)===s.id&&String(r.date).startsWith(mm));if(!rs.length)return null;const byP={};rs.forEach(r=>byP[r.producteur]=(byP[r.producteur]||0)+(Number(r.mm)||0));const v=Object.values(byP);return v.reduce((a,b)=>a+b,0)/v.length});
+  const hasRel=rel.some(v=>v!=null);
+  const prev=(meteoDocs[`${s.id}_prev`]||{});const prevDays=Object.keys(prev.days||{}).filter(d=>d>=today()).sort();
+  const updated=Math.max((meteoDocs[`${s.id}_${N}`]||{}).updatedAt||0,prev.importedAt||0);
+  body.innerHTML=`<p class="meta">Données ${esc(s.nom)} jusqu'au <b>${fmtDate(last)}</b>${updated?` · mises à jour le ${fmtTs(updated)}`:""}. Comparaison avec ${N1} à la même date.${(Date.now()-new Date(last+"T12:00:00"))/864e5>9?' <span class="pill vigilance">Données à mettre à jour</span>':""}</p>
+  <div class="kpis">
+    <div class="kpi"><b>${num(rN)} mm</b><span>Pluie depuis le 1er janv.</span>${delta(rN,rN1," mm")}</div>
+    <div class="kpi"><b>${num(r30)} mm</b><span>Pluie 30 derniers jours</span>${delta(r30,r30b," mm")}</div>
+    <div class="kpi"><b>${num(t30,1)} °C</b><span>T moyenne 30 jours</span>${delta(t30,t30b," °C",1)}</div>
+    <div class="kpi"><b>${num(gN)}</b><span>Degrés-jours base 10</span>${delta(gN,gN1,"")}</div>
+    <div class="kpi ${bh<-60?"crit":bh<0?"warn":""}"><b>${bh>=0?"+":""}${num(bh)} mm</b><span>Bilan hydrique 30 j (pluie − ETP)</span>${delta(bh,bhb," mm")}</div>
+  </div>
+  <section class="block"><h3>Pluie cumulée depuis le 1er janvier</h3><div class="chart">${svgLines([{pts:cum(dN1,N1,`${N1}-12-31`),color:"var(--muted)",w:1.5,dash:true},{pts:cum(dN,N,last),color:"var(--accent)",w:2.5}],{unit:""})}
+    <div class="legend"><span><i style="background:var(--accent)"></i>${N}</span><span><i style="background:var(--muted)"></i>${N1}</span><span class="meta">mm</span></div></div></section>
+  <section class="block"><h3>Pluie par mois</h3><div class="chart">${svgBars(MOIS.map((m,i)=>({l:m.slice(0,1),v:hasRel?[mN1[i],mN[i],rel[i]]:[mN1[i],mN[i]]})),hasRel?["var(--muted)","var(--accent)","var(--info)"]:["var(--muted)","var(--accent)"])}
+    <div class="legend"><span><i style="background:var(--accent)"></i>${N} (modèle)</span><span><i style="background:var(--muted)"></i>${N1} (modèle)</span>${hasRel?`<span><i style="background:var(--info)"></i>${N} pluviomètres producteurs (moyenne)</span>`:""}<span class="meta">mm</span></div></div></section>
+  <section class="block"><h3>Température moyenne par semaine</h3><div class="chart">${svgLines([{pts:wk(dN1),color:"var(--muted)",w:1.5,dash:true},{pts:wk(dN),color:"var(--accent)",w:2.5}],{unit:"°"})}
+    <div class="legend"><span><i style="background:var(--accent)"></i>${N}</span><span><i style="background:var(--muted)"></i>${N1}</span><span class="meta">°C, moyenne (min+max)/2</span></div></div></section>
+  ${prevDays.length?`<section class="block"><h3>Prévisions</h3><div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Jour</th><th>Min</th><th>Max</th><th>Pluie</th><th>ETP</th></tr></thead><tbody>${prevDays.map(d=>{const v=prev.days[d];return `<tr><td>${fmtDate(d)}</td><td class="mono">${num(v[1],1)}°</td><td class="mono">${num(v[0],1)}°</td><td class="mono">${v[2]?`<b>${num(v[2],1)} mm</b>`:"0"}</td><td class="mono">${num(v[3],1)}</td></tr>`}).join("")}</tbody></table></div><p class="meta">Prévision importée le ${fmtTs(prev.importedAt)}.</p></section>`:""}`;
+}
+
+/* --- pluviométrie --- */
+function relevePeriod(r){if(r.debut)return r.debut;const prev=pluvio.filter(x=>x.producteur===r.producteur&&x.date<r.date).sort((a,b)=>b.date.localeCompare(a.date))[0];return prev?addDays(prev.date,1):r.date}
+function pluvioTable(rows,withProd){return `<div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Relevé</th>${withProd?"<th>Producteur</th>":""}<th>Période</th><th>Pluviomètre</th><th>Modèle</th><th></th></tr></thead><tbody>${rows.map(r=>{const from=relevePeriod(r);const sid=siteForProd(r.producteur);const days=allDays(sid);const m=sumRange(days,from,r.date,2);
+  const nd=Math.round((new Date(r.date+"T12:00:00")-new Date(from+"T12:00:00"))/864e5)+1;const model=m.c>=nd?m.s:null;
+  return `<tr><td class="mono">${fmtDate(r.date)}</td>${withProd?`<td><a href="#producteurs" class="plink" data-fiche="${esc(r.producteur)}">${esc(r.producteur)}</a></td>`:""}<td class="meta">${from===r.date?"le jour même":"depuis le "+fmtDate(from)}</td><td class="mono"><b>${num(r.mm,1)} mm</b></td><td class="mono">${model==null?"—":num(model,1)+" mm"}${model!=null&&Math.abs(r.mm-model)>=10?` <span class="pill vigilance">écart ${num(r.mm-model,0)}</span>`:""}</td><td>${canWrite?`<button class="btn small danger" data-pldel="${r._id}" aria-label="Supprimer le relevé">×</button>`:""}</td></tr>`}).join("")}</tbody></table></div>`}
+function renderPluvio(){const body=$("#pluvioBody");if(!body)return;
+  if(!pluvio.length){body.innerHTML=`<p class="meta">Aucun relevé pour l'instant.</p>`;return}
+  const months={};pluvio.filter(r=>String(r.date).startsWith(String(N))).forEach(r=>{const m=Number(r.date.slice(5,7))-1;(months[r.producteur]=months[r.producteur]||Array(12).fill(null));months[r.producteur][m]=(months[r.producteur][m]||0)+(Number(r.mm)||0)});
+  const usedM=MOIS.map((_,i)=>Object.values(months).some(a=>a[i]!=null));
+  body.innerHTML=pluvioTable(pluvio.slice(0,30),true)+(Object.keys(months).length?`<h3 style="margin-top:18px">Cumuls mensuels ${N} par producteur</h3><div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Producteur</th>${MOIS.map((m,i)=>usedM[i]?`<th>${m}</th>`:"").join("")}<th>Total</th></tr></thead><tbody>${Object.entries(months).sort((a,b)=>a[0].localeCompare(b[0],"fr")).map(([p,a])=>`<tr><td>${esc(p)}</td>${a.map((v,i)=>usedM[i]?`<td class="mono">${v==null?"—":num(v)}</td>`:"").join("")}<td class="mono"><b>${num(a.reduce((s,v)=>s+(v||0),0))}</b></td></tr>`).join("")}</tbody></table></div>`:"");
+  body.querySelectorAll("[data-pldel]").forEach(b=>b.onclick=async()=>{if(b.dataset.armed){try{await plcol.doc(b.dataset.pldel).delete();toast("Relevé supprimé")}catch(e){writeErr(e)}}else{b.dataset.armed="1";b.textContent="Confirmer";setTimeout(()=>{b.dataset.armed="";b.textContent="×"},3000)}});
+}
+$("#pl_date").value=today();
+$("#pluvioForm").addEventListener("submit",async e=>{e.preventDefault();if(!plcol){toast("Base indisponible");return}
+  const r={date:$("#pl_date").value,producteur:$("#pl_prod").value.trim(),mm:Number($("#pl_mm").value),debut:$("#pl_deb").value||"",source:"releve",auteur:myId||"",createdAt:Date.now()};
+  if(!r.date||!r.producteur||isNaN(r.mm)){toast("Date, producteur et mm sont obligatoires");return}
+  if(r.debut&&r.debut>r.date){toast("La date de début doit précéder le relevé");return}
+  try{await plcol.add(r);$("#pl_mm").value="";$("#pl_deb").value="";toast("Relevé enregistré")}catch(err){writeErr(err)}});
+
+
+
+/* --- planning automne-hiver --- */
+const PL_WEEKS=[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+function campOf(dateStr){const y=+dateStr.slice(0,4),w=+isoWeek(dateStr).split("-S")[1];const y0=w>=32?y:y-1;return {camp:`${y0}-${y0+1}`,w}}
+function weekLabel(camp,w){const y=w>=32?+camp.slice(0,4):+camp.slice(5);return weekRange(`${y}-S${String(w).padStart(2,"0")}`)}
+const fmtV=v=>v>=10000?(v/1000).toFixed(0)+"k":v>=1000?(v/1000).toFixed(1).replace(".0","")+"k":String(Math.round(v));
+const uShort=u=>u==="pièces"?"pcs":u==="kg"?"kg":"pcs/b";
+function plDocs(camp,type){return planning.filter(d=>d.campagne===camp&&d.type===type)}
+function plLines(camp,type){return plDocs(camp,type).flatMap(d=>(d.lignes||[]).map(l=>({...l,producteur:d.producteur})))}
+const sumW=w=>Object.values(w||{}).reduce((a,b)=>a+b,0);
+function plSelects(){const camp=$("#plCamp").value;const L=[...plLines(camp,"prevision"),...plLines(camp,"realise")];
+  const esp=[...new Set(L.map(l=>l.espece))].sort((a,b)=>a==="Salade"?-1:b==="Salade"?1:a.localeCompare(b,"fr"));
+  const prods=[...new Set(L.map(l=>l.producteur))].sort((a,b)=>a.localeCompare(b,"fr"));
+  const keep=(el,opts,first)=>{const v=el.value;el.innerHTML=(first?`<option value="">${first}</option>`:"")+opts.map(o=>`<option ${o===v?"selected":""}>${esc(o)}</option>`).join("");if(v&&!opts.includes(v)&&!first)el.value=opts[0]||""};
+  keep($("#plEsp"),esp);keep($("#plProd"),prods);
+  const vue=$("#plVue").value,sel=vue==="esp"?$("#plEsp").value:$("#plProd").value;
+  const vars=[...new Set(L.filter(l=>vue==="esp"?l.espece===sel:l.producteur===sel).map(l=>l.variete))].sort((a,b)=>a.localeCompare(b,"fr"));keep($("#plVar"),vars,"Toutes");}
+["#plCamp","#plVue","#plEsp","#plProd","#plVar"].forEach(id=>$(id).addEventListener("change",()=>{if(id!=="#plVar")$("#plVar").value="";$("#plEspWrap").hidden=$("#plVue").value!=="esp";$("#plProdWrap").hidden=$("#plVue").value!=="prod";renderPlanning()}));
+function renderPlanning(){const body=$("#plBody");if(!body)return;
+  if(!planning.length){body.innerHTML=`<div class="empty">Aucun planning chargé. Les plannings des adhérents (fichier de planification hiver) apparaîtront ici, par espèce et par producteur.</div>`;return}
+  plSelects();const camp=$("#plCamp").value,vue=$("#plVue").value,sel=vue==="esp"?$("#plEsp").value:$("#plProd").value,fv=$("#plVar").value;
+  const filt=l=>(vue==="esp"?l.espece===sel:l.producteur===sel)&&(!fv||l.variete===fv);
+  const P=plLines(camp,"prevision").filter(filt),R=camp==="2025-2026"?plLines(camp,"realise").filter(filt):[];
+  const key=l=>(vue==="esp"?l.producteur+" · ":"")+l.variete+(l.categorie.startsWith("Salade")?" ("+(l.categorie==="Salade serre"?"serre":"plein champ")+")":"");
+  const rows={};P.forEach(l=>{const k=key(l);(rows[k]=rows[k]||{u:l.unite,p:{},r:{},prod:l.producteur});for(const[w,v] of Object.entries(l.semaines))rows[k].p[w]=(rows[k].p[w]||0)+v});
+  R.forEach(l=>{const k=key(l);(rows[k]=rows[k]||{u:l.unite,p:{},r:{},prod:l.producteur});for(const[w,v] of Object.entries(l.semaines))rows[k].r[w]=(rows[k].r[w]||0)+v});
+  const keys=Object.keys(rows).sort((a,b)=>a.localeCompare(b,"fr"));
+  const cur=campOf(today());const curW=cur.camp===camp?cur.w:null;
+  const units=[...new Set(keys.map(k=>rows[k].u))];
+  // KPIs semaine en cours + 4 suivantes
+  let kp="";if(curW!=null){const idx=PL_WEEKS.indexOf(curW),nxt=PL_WEEKS.slice(idx,idx+5);
+    kp=`<div class="kpis">${units.map(u=>{const t=keys.filter(k=>rows[k].u===u);const wk=t.reduce((a,k)=>a+(rows[k].p[curW]||0),0),n4=t.reduce((a,k)=>a+nxt.reduce((b,w)=>b+(rows[k].p[w]||0),0),0),tot=t.reduce((a,k)=>a+sumW(rows[k].p),0);
+      return `<div class="kpi"><b>${fmtV(wk)}</b><span>${uShort(u)} prévus S${curW}</span><small>${fmtV(n4)} sur S${nxt[0]}–S${nxt[nxt.length-1]} · ${fmtV(tot)} sur la campagne</small></div>`}).join("")}</div>`}
+  else if(camp==="2025-2026"){kp=`<div class="kpis">${units.map(u=>{const t=keys.filter(k=>rows[k].u===u);const p=t.reduce((a,k)=>a+sumW(rows[k].p),0),r=t.reduce((a,k)=>a+sumW(rows[k].r),0);
+      return `<div class="kpi ${p&&r/p<.7?"crit":p&&r/p<.9?"warn":""}"><b>${p?Math.round(r/p*100)+" %":"—"}</b><span>Réalisé / prévu (${uShort(u)})</span><small>${fmtV(r)} réalisés pour ${fmtV(p)} prévus</small></div>`}).join("")}</div>`}
+  if(!keys.length){body.innerHTML=kp+`<div class="empty">Rien de prévu pour cette sélection.</div>`;return}
+  const max=Math.max(1,...keys.flatMap(k=>[...Object.values(rows[k].p),...Object.values(rows[k].r)]));
+  const realMode=camp==="2025-2026";
+  const cell=(row,w)=>{const p=row.p[w]||0,r=row.r[w]||0;const v=realMode?r:p;if(!v&&!p)return `<td class="v${w===curW?" cur":""}"></td>`;
+    let bg;if(realMode&&p){const q=r/p;bg=q>=.9?"var(--ok-soft)":q>=.6?"var(--warn-soft)":"var(--crit-soft)"}else bg=`color-mix(in srgb, var(--ok) ${Math.round(8+Math.min(1,v/max)*55)}%, transparent)`;
+    return `<td class="v${w===curW?" cur":""}" style="background:${bg}" title="S${w} · ${esc(weekLabel(camp,w))}${realMode?` · prévu ${Math.round(p)} / réalisé ${Math.round(r)}`:""}">${v?fmtV(v):realMode?"0":""}</td>`};
+  const head=`<tr><th>${vue==="esp"?"Producteur · variété":"Variété"}</th>${PL_WEEKS.map(w=>`<th class="${w===curW?"cur":""}">S${w}</th>`).join("")}<th>${realMode?"Prévu":"Total"}</th>${realMode?"<th>Réalisé</th><th>%</th>":""}</tr>`;
+  let tb="";units.forEach(u=>{const ks=keys.filter(k=>rows[k].u===u);
+    ks.forEach(k=>{const r=rows[k],tp=sumW(r.p),tr=sumW(r.r);tb+=`<tr><td title="${esc(k)}">${vue==="esp"?`<a href="#producteurs" class="plink" data-fiche="${esc(r.prod)}">${esc(k.split(" · ")[0])}</a> · ${esc(k.split(" · ").slice(1).join(" · "))}`:esc(k)} <span class="u">${uShort(u)}</span></td>${PL_WEEKS.map(w=>cell(r,w)).join("")}<td class="v">${fmtV(tp)}</td>${realMode?`<td class="v">${fmtV(tr)}</td><td class="v">${tp?Math.round(tr/tp*100)+"%":"—"}</td>`:""}</tr>`});
+    if(ks.length>1){const tot={p:{},r:{}};ks.forEach(k=>{for(const w of PL_WEEKS){tot.p[w]=(tot.p[w]||0)+(rows[k].p[w]||0);tot.r[w]=(tot.r[w]||0)+(rows[k].r[w]||0)}});const tp=sumW(tot.p),tr=sumW(tot.r);
+      tb+=`<tr class="tot"><td>Total ${uShort(u)}</td>${PL_WEEKS.map(w=>`<td class="v${w===curW?" cur":""}">${(realMode?tot.r[w]:tot.p[w])?fmtV(realMode?tot.r[w]:tot.p[w]):""}</td>`).join("")}<td class="v">${fmtV(tp)}</td>${realMode?`<td class="v">${fmtV(tr)}</td><td class="v">${tp?Math.round(tr/tp*100)+"%":"—"}</td>`:""}</tr>`}});
+  const lg=realMode?`<p class="meta">Cases : volumes réalisés. Couleur : vert au moins 90 % du prévu, orange 60 à 90 %, rouge moins de 60 %. Survolez une case pour le détail.</p>`:`<p class="meta">Plus la case est foncée, plus le volume prévu est important. La semaine en cours est encadrée.</p>`;
+  body.innerHTML=kp+lg+`<div class="plwrap"><table class="pltbl"><thead>${head}</thead><tbody>${tb}</tbody></table></div>`;
+  bindCardActions(body);
+}
+/* fiche producteur */
+window.planFiche=function(name){const camp=campOf(today()).camp;const L=plLines(camp,"prevision").filter(l=>l.producteur===name);
+  const Rp=plLines("2025-2026","prevision").filter(l=>l.producteur===name),Rr=plLines("2025-2026","realise").filter(l=>l.producteur===name);
+  if(!L.length&&!Rr.length)return "";const cw=campOf(today()).w;const idx=PL_WEEKS.indexOf(cw),nxt=PL_WEEKS.slice(Math.max(0,idx),idx+5);
+  const rowsH=L.map(l=>{const n4=nxt.reduce((a,w)=>a+(l.semaines[w]||0),0),tot=sumW(l.semaines),ws=Object.keys(l.semaines).map(Number).sort((a,b)=>PL_WEEKS.indexOf(a)-PL_WEEKS.indexOf(b));
+    return `<tr><td>${esc(l.variete)}</td><td>${esc(l.categorie)}</td><td class="mono">S${ws[0]} → S${ws[ws.length-1]}</td><td class="mono">${fmtV(n4)} ${uShort(l.unite)}</td><td class="mono">${fmtV(tot)} ${uShort(l.unite)}</td></tr>`}).join("");
+  const pT={},rT={};Rp.forEach(l=>{pT[l.unite]=(pT[l.unite]||0)+sumW(l.semaines)});Rr.forEach(l=>{rT[l.unite]=(rT[l.unite]||0)+sumW(l.semaines)});
+  const n1=Object.keys({...pT,...rT}).map(u=>`${uShort(u)} : ${fmtV(rT[u]||0)} réalisés / ${fmtV(pT[u]||0)} prévus${pT[u]?` (${Math.round((rT[u]||0)/pT[u]*100)} %)`:""}`).join(" · ");
+  return `<section class="block"><div class="row" style="justify-content:space-between"><h3>Planning ${camp}</h3><button class="btn small" data-planprod="${esc(name)}">Voir le détail par semaine</button></div>
+   ${L.length?`<div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Variété</th><th>Type</th><th>Récolte prévue</th><th>S${nxt[0]}–S${nxt[nxt.length-1]}</th><th>Campagne</th></tr></thead><tbody>${rowsH}</tbody></table></div>`:`<p class="meta">Pas de planning ${camp} reçu pour ce producteur.</p>`}
+   ${n1?`<p class="meta" style="margin-top:6px">Campagne 2025-2026, ${n1}</p>`:""}</section>`};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-planprod]");if(b){$("#plVue").value="prod";$("#plEspWrap").hidden=true;$("#plProdWrap").hidden=false;$("#plCamp").value=campOf(today()).camp;plSelects();$("#plProd").value=b.dataset.planprod;$("#plVar").value="";showTab("planning");renderPlanning()}});
+/* rappel du planning sur un passage */
+window.planHint=function(p){if(!p.date||!planning.length)return "";const {camp,w}=campOf(p.date);const esp=especesPassage(p);
+  const L=plLines(camp,"prevision").filter(l=>l.producteur===p.producteur&&esp.includes(l.espece));if(!L.length)return "";
+  const idx=PL_WEEKS.indexOf(w),win=PL_WEEKS.slice(Math.max(0,idx),idx+4);
+  const parts=L.map(l=>{const v=win.reduce((a,x)=>a+(l.semaines[x]||0),0);return v?`${esc(l.variete)} ${fmtV(v)} ${uShort(l.unite)}`:""}).filter(Boolean);
+  const warn=p.recolte&&["retard","perte"].includes(p.recolte.ecart);
+  if(!parts.length&&!warn)return "";
+  return `<div class="plnote"${warn?' style="background:var(--warn-soft)"':""}><b>Planning ${camp}, S${win[0]}–S${win[win.length-1]} :</b> ${parts.length?parts.join(" · "):"aucun apport prévu sur ces semaines"}${warn?` — <b>écart signalé (${p.recolte.ecart==="perte"?"perte de volume":"retard"})</b>, à prévenir au commercial`:""}</div>`};
+/* bilan : volumes prévus */
+function planBilan(wk,svc){if(!planning.length||!["direction","commercial","achats"].includes(svc))return "";const [y,w]=wk.split("-S").map(Number);const camp=w>=32?`${y}-${y+1}`:`${y-1}-${y}`;
+  const L=plLines(camp,"prevision");if(!L.length)return "";const by={};L.forEach(l=>{const v=l.semaines[w]||0;if(!v)return;const k=l.espece+"|"+l.unite;by[k]=by[k]||{e:l.espece,u:l.unite,v:0,p:new Set()};by[k].v+=v;by[k].p.add(l.producteur)});
+  const rows=Object.values(by).sort((a,b)=>a.e.localeCompare(b.e,"fr"));if(!rows.length)return "";
+  const late=passages.filter(p=>p.semaine===wk&&p.recolte&&["retard","perte"].includes(p.recolte.ecart));
+  return `<section class="block"><div class="row" style="justify-content:space-between"><h3>Apports prévus au planning, semaine ${w}</h3><button class="btn small" data-go="planning">Ouvrir le planning</button></div>
+   <div class="tblwrap" style="margin-top:8px"><table><thead><tr><th>Espèce</th><th>Volume prévu</th><th>Producteurs</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.e)}</td><td class="mono">${fmtV(r.v)} ${uShort(r.u)}</td><td class="mono">${r.p.size}</td></tr>`).join("")}</tbody></table></div>
+   ${late.length?`<p class="plnote" style="background:var(--warn-soft)"><b>Écarts signalés cette semaine :</b> ${late.map(p=>`${esc(p.producteur)} / ${esc(p.culture)} (${p.recolte.ecart})`).join(", ")}</p>`:""}</section>`}
+
+/* --- alertes techniques --- */
+const AL_GROUPES=["Salade","Fraise","Épinard / jeune pousse / blette","Aromatique / cébette","Printemps-été","Toutes cultures"];
+const AL_CATS=[["sanitaire","Sanitaire"],["climat","Météo, climat, irrigation"],["technique","Conseil technique"],["essai","Variétés et essais"],["reunion","Réunion, formation"],["commande","Commande groupée"]];
+const AL_NIV={alerte:["critique","Alerte"],vigilance:["vigilance","Vigilance"],info:["info","Info / conseil"]};
+$("#al_groupe").innerHTML=AL_GROUPES.map(g=>`<option>${g}</option>`).join("");
+$("#al_cat").innerHTML=AL_CATS.map(([k,l])=>`<option value="${k}">${l}</option>`).join("");
+$("#alfG").innerHTML=`<option value="">Tous</option>`+AL_GROUPES.map(g=>`<option>${g}</option>`).join("");
+$("#alfC").innerHTML=`<option value="">Toutes</option>`+AL_CATS.map(([k,l])=>`<option value="${k}">${l}</option>`).join("");
+function alerteCard(a,compact){const n=AL_NIV[a.niveau]||AL_NIV.info;const long=(a.texte||"").length>320;
+  return `<article class="card ${n[0]}"><div class="al-head"><div style="min-width:0;flex:1"><h3>${esc(a.titre)}</h3>
+  <div class="meta">${fmtDate(a.date)} · ${esc(a.groupe||"")} · ${esc(lbl(AL_CATS,a.categorie))}${a.auteurNom?" · "+esc(a.auteurNom):""}</div></div><span class="pill ${n[0]}">${n[1]}</span></div>
+  ${(a.cibles||[]).length?`<div class="chips">${a.cibles.map(c=>`<span class="pill">${esc(c)}</span>`).join("")}</div>`:""}
+  ${a.texte?`<p class="al-text ${compact||long?"clamp":""}">${esc(a.texte)}</p>${compact||long?`<button class="linkbtn" data-more>Lire tout</button>`:""}`:""}
+  ${(a.producteurs||[]).length?`<p class="meta" style="margin:6px 0 0">Producteurs cités : ${a.producteurs.map(p=>`<a href="#producteurs" class="plink" data-fiche="${esc(p)}">${esc(p)}</a>`).join(", ")}</p>`:""}
+  ${(a.photos||[]).length?`<div class="photos">${photosHTML(compact?a.photos.slice(0,4):a.photos,false)}</div>`:""}
+  ${!compact&&canWrite?`<div class="row" style="margin-top:8px"><button class="btn small danger" data-aldel="${a._id}">Supprimer</button></div>`:""}</article>`}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-more]");if(b){const p=b.previousElementSibling;p.classList.toggle("clamp");b.textContent=p.classList.contains("clamp")?"Lire tout":"Réduire"}});
+function renderAlertes(){const body=$("#alBody");if(!body||typingIn("#alForm"))return;
+  const g=$("#alfG").value,c=$("#alfC").value,n=$("#alfN").value,t=$("#alfT").value.trim().toLowerCase();
+  const L=alertes.filter(a=>(!g||a.groupe===g)&&(!c||a.categorie===c)&&(!n||a.niveau===n)&&(!t||JSON.stringify([a.titre,a.texte,a.cibles,a.producteurs]).toLowerCase().includes(t)));
+  $("#alCount").textContent=alertes.length?`${L.length} alerte(s) sur ${alertes.length}`:"";
+  if(!alertes.length){body.innerHTML=`<div class="empty">Aucune alerte pour l'instant. Les messages envoyés aux groupes de culture (pucerons, chenilles, météo, réunions…) se publient ici avec le bouton Nouvelle alerte, et remontent dans le bilan de la semaine.</div>`;return}
+  let h="",m="";L.forEach(a=>{const mm=new Date(a.date+"T12:00:00").toLocaleDateString("fr-FR",{month:"long",year:"numeric"});if(mm!==m){m=mm;h+=`<div class="month">${mm}</div>`}h+=alerteCard(a,false)});
+  body.innerHTML=h||`<div class="empty">Aucune alerte ne correspond aux filtres.</div>`;
+  body.querySelectorAll("[data-aldel]").forEach(b=>b.onclick=async()=>{if(b.dataset.armed){try{await alcol.doc(b.dataset.aldel).delete();toast("Alerte supprimée")}catch(e){writeErr(e)}}else{b.dataset.armed="1";b.textContent="Confirmer la suppression";setTimeout(()=>{b.dataset.armed="";b.textContent="Supprimer"},3000)}});
+}
+["#alfG","#alfC","#alfN"].forEach(s=>$(s).onchange=renderAlertes);$("#alfT").oninput=renderAlertes;
+function renderAlPhotos(){$("#alPhGrid").innerHTML=photosHTML(alPhotos,true);$("#alPhGrid").querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{alPhotos.splice(+b.dataset.rm,1);renderAlPhotos()});$("#alPhGrid").querySelectorAll("input[data-cap]").forEach(i=>i.oninput=()=>{alPhotos[+i.dataset.cap].legende=i.value})}
+$("#newAlBtn").onclick=()=>{const f=$("#alForm");f.hidden=!f.hidden;if(!f.hidden){$("#al_date").value=today();$("#al_titre").focus()}};
+$("#alCancel").onclick=()=>{$("#alForm").reset();alPhotos=[];renderAlPhotos();$("#alForm").hidden=true};
+$("#al_photo").onchange=async e=>{const files=[...e.target.files];e.target.value="";for(const f of files){const slot={id:"",legende:""};alPhotos.push(slot);renderAlPhotos();try{slot.id=await uploadPhoto(f)}catch(err){alPhotos.splice(alPhotos.indexOf(slot),1);photoErr(err)}renderAlPhotos()}};
+$("#alForm").addEventListener("submit",async e=>{e.preventDefault();if(!alcol)return;if(alPhotos.some(p=>!p.id)){toast("Attendez la fin de l'envoi des photos");return}
+  const split=v=>v.split(",").map(x=>x.trim()).filter(Boolean);const d=$("#al_date").value;
+  const a={date:d,semaine:isoWeek(d),groupe:$("#al_groupe").value,categorie:$("#al_cat").value,niveau:$("#al_niv").value,titre:$("#al_titre").value.trim(),texte:$("#al_texte").value.trim(),cibles:split($("#al_cibles").value),producteurs:split($("#al_prods").value),photos:alPhotos.filter(p=>p.id),source:"app",auteur:myId||"",createdAt:Date.now()};
+  if(!a.titre){toast("Donnez un titre à l'alerte");return}
+  try{await alcol.add(a);$("#alForm").reset();alPhotos=[];renderAlPhotos();$("#alForm").hidden=true;toast("Alerte publiée")}catch(err){writeErr(err)}});
+const SVC_AL={achats:a=>a.categorie==="commande",commercial:a=>a.niveau!=="info"&&(a.categorie==="sanitaire"||a.categorie==="climat"),qualite:a=>a.categorie==="sanitaire"};
+window.bilanExtra=function(wk,svc){return planBilan(wk,svc)+bilanAlertes(wk,svc)};
+function bilanAlertes(wk,svc){const W=alertes.filter(a=>a.semaine===wk&&(!SVC_AL[svc]||SVC_AL[svc](a)));
+  if(!W.length)return svc==="technique"||svc==="direction"?`<section class="block"><h3>Alertes techniques de la semaine</h3><p class="meta">Aucune alerte publiée cette semaine.</p></section>`:"";
+  return `<section class="block"><div class="row" style="justify-content:space-between"><h3>Alertes techniques de la semaine</h3><button class="btn small" data-go="alertes">Toutes les alertes</button></div><div class="list" style="margin-top:8px">${W.map(a=>alerteCard(a,true)).join("")}</div></section>`};
+window.bilanTextExtra=function(wk){const W=alertes.filter(a=>a.semaine===wk);if(!W.length)return [];return ["ALERTES TECHNIQUES ENVOYÉES AUX GROUPES",...W.map(a=>`- [${a.groupe}] ${(AL_NIV[a.niveau]||AL_NIV.info)[1]} : ${a.titre}`)]};
+renderSiteSelects();renderSiteLines();
+document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init();
+</script>
+<script>
+/* ===== Dictée vocale de tournée : enregistrement + répartition dans le formulaire ===== */
+(function(){
+const nz=s=>String(s||"").normalize("NFC").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’`]/g,"'").replace(/œ/g,"oe");
+const cap=s=>{s=String(s||"").trim().replace(/\s+/g," ");return s?s[0].toUpperCase()+s.slice(1):s};
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const plus=(base,n)=>{const d=new Date(base+"T12:00:00");d.setDate(d.getDate()+n);return iso(d)};
+const NUMW={un:1,une:1,premier:1,deux:2,trois:3,quatre:4,cinq:5,six:6,sept:7,huit:8,neuf:9,dix:10,onze:11,douze:12,treize:13,quatorze:14,quinze:15,seize:16,"dix-sept":17,"dix-huit":18,"dix-neuf":19,vingt:20,trente:30};
+const NUMRX="\\d+[a-z]?|"+Object.keys(NUMW).sort((a,b)=>b.length-a.length).join("|");
+const toN=w=>/^\d/.test(w)?w:String(NUMW[w]||w);
+const JOURS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+const MOISN=["janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre","novembre","decembre"];
+
+/* --- dates relatives --- */
+function relDate(t,base){t=nz(t);let m;
+  if(/apres[- ]demain/.test(t))return plus(base,2);
+  if(/\bdemain\b/.test(t))return plus(base,1);
+  if(m=t.match(new RegExp("\\b(?:dans|d'ici|sous|sur|apres)\\s+(?:les?\\s+)?("+NUMRX+")\\s+(jours?|semaines?|mois)\\b")))return plus(base,+toN(m[1])*(/^s/.test(m[2])?7:/^m/.test(m[2])?30:1));
+  if(m=t.match(new RegExp("\\b("+NUMRX+")\\s+jours\\b")))return plus(base,+toN(m[1]));
+  if(/semaine (prochaine|pro\b|d'apres)/.test(t))return plus(base,7);
+  if(/fin de (la )?semaine/.test(t)){const d=new Date(base+"T12:00:00");let k=(5-d.getDay()+7)%7||7;return plus(base,k)}
+  if(m=t.match(new RegExp("\\ble\\s+("+NUMRX+"|1er)\\s*(?:("+MOISN.join("|")+"))?\\b"))){const day=m[1]==="1er"?1:+toN(m[1]);if(day>=1&&day<=31){const b=new Date(base+"T12:00:00");let d;
+      if(m[2]){d=new Date(b.getFullYear(),MOISN.indexOf(m[2]),day,12);if(d<b)d.setFullYear(d.getFullYear()+1)}else{d=new Date(b.getFullYear(),b.getMonth(),day,12);if(d<b)d.setMonth(d.getMonth()+1)}
+      return iso(d)}}
+  if(m=t.match(/\b(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)\b/)){const d=new Date(base+"T12:00:00");let k=(JOURS.indexOf(m[1])-d.getDay()+7)%7||7;return plus(base,k)}
+  if(/fin du mois/.test(t)){const d=new Date(base+"T12:00:00");return iso(new Date(d.getFullYear(),d.getMonth()+1,0,12))}
+  return ""}
+
+/* --- dictionnaires --- */
+const CULTS=[["salades?","Salade"],["laitues?","Laitue"],["batavias?","Batavia"],["feuilles? de chene","Feuille de chêne"],["romaines?","Romaine"],["sucrines?","Sucrine"],["lollos?","Lollo"],["mesclun","Mesclun"],["jeunes? pousses?","Jeunes pousses"],["roquette","Roquette"],["epinards?","Épinard"],["blettes?","Blette"],["mache","Mâche"],["tomates?","Tomate"],["concombres?","Concombre"],["courgettes?","Courgette"],["courges?|butternut","Courge"],["aubergines?","Aubergine"],["poivrons?","Poivron"],["piments?","Piment"],["fraises?|fraisiers?","Fraise"],["radis","Radis"],["cebettes?|oignons? blancs?","Cébette"],["oignons?","Oignon"],["persil","Persil"],["coriandre","Coriandre"],["basilic","Basilic"],["aneth","Aneth"],["ciboulette","Ciboulette"],["menthe","Menthe"],["choux?|brocolis?","Chou"],["fenouils?","Fenouil"],["melons?","Melon"],["pasteques?","Pastèque"],["haricots?","Haricot"],["carottes?","Carotte"],["poireaux?","Poireau"],["navets?","Navet"],["betteraves?","Betterave"],["ail\\b","Ail"],["artichauts?","Artichaut"],["celeris?","Céleri"]];
+const STADE_RX=[[/fin de culture|arrach|en fin\b|termine/,"Fin de culture"],[/en recolte|en coupe|recolte en cours|on recolte|ils recoltent|recoltes? (a )?commence/,"Récolte"],[/grossissement|grossi/,"Grossissement"],[/nouaison|noue/,"Nouaison"],[/floraison|en fleurs?|fleurit/,"Floraison"],[/plantation|vient d'etre plante|juste plante|repiqu|plante (cette|la) semaine|semis|seme/,"Plantation"],[/vegetati|en croissance|pousse bien|reprise/,"Végétatif"]];
+const PESTS=[
+ ["maladie","Mildiou","mildiou"],["maladie","Oïdium","oidium|blanc"],["maladie","Botrytis","botrytis|pourriture grise"],["maladie","Alternaria","alternaria|alternariose"],["maladie","Cladosporiose","cladospori\\w*"],["maladie","Sclérotinia","sclerotini\\w*"],["maladie","Bremia","bremia"],["maladie","Pythium","pythium"],["maladie","Rhizoctone","rhizocton\\w*"],["maladie","Fusariose","fusari\\w*"],["maladie","Anthracnose","anthracnose"],["maladie","Rouille","rouille"],["maladie","Septoriose","septori\\w*"],["maladie","Stemphylium","stemphylium"],["maladie","Virose","virus|virose|mosaique|tswv|tomv"],["maladie","Bactériose","bacteri\\w*"],["maladie","Phytophthora","phytophthora|phytophtora"],["maladie","Verticilliose","verticilli\\w*"],["maladie","Corky root","corky root|racines? liegeuses?"],
+ ["ravageur","Pucerons","pucerons?"],["ravageur","Aleurodes","aleurodes?|mouches? blanches?"],["ravageur","Thrips","thrips"],["ravageur","Acariens","acariens?|tetranyques?|araignees? rouges?"],["ravageur","Tuta absoluta","tuta( absoluta)?"],["ravageur","Noctuelles / chenilles","noctuelles?|chenilles?|heliothis"],["ravageur","Mouche mineuse","mineuses?"],["ravageur","Punaises","punaises?|nezara"],["ravageur","Altises","altises?"],["ravageur","Doryphores","doryphores?"],["ravageur","Nématodes","nematodes?"],["ravageur","Taupins","taupins?"],["ravageur","Limaces","limaces?|escargots?"],["ravageur","Cochenilles","cochenilles?"],["ravageur","Drosophila suzukii","drosophiles?|suzukii"],["ravageur","Cicadelles","cicadelles?"],["ravageur","Vers gris","vers? gris"],["ravageur","Rongeurs","campagnols?|mulots?|rats?|souris"],["ravageur","Sangliers","sangliers?"],["ravageur","Oiseaux","oiseaux|corbeaux|pigeons"],["ravageur","Mouche du semis","mouches? (des? )?semis"],
+ ["auxiliaire","Macrolophus","macrolophus"],["auxiliaire","Encarsia","encarsia"],["auxiliaire","Eretmocerus","eretmocerus"],["auxiliaire","Coccinelles","coccinelles?"],["auxiliaire","Chrysopes","chrysopes?"],["auxiliaire","Syrphes","syrphes?"],["auxiliaire","Aphidius","aphidius"],["auxiliaire","Aphidoletes","aphidoletes"],["auxiliaire","Phytoseiulus","phytoseiulus"],["auxiliaire","Amblyseius","amblyseius|swirskii|cucumeris"],["auxiliaire","Orius","orius"],["auxiliaire","Nesidiocoris","nesidiocoris"],["auxiliaire","Trichogrammes","trichogrammes?"],
+ ["carence","Tipburn","tip ?burn|necrose marginale|brulure (de|des) bords?"],["carence","Nécrose apicale","cul noir|necrose apicale"],["carence","Carence","carences?"],["carence","Chlorose","chlorose|jaunissement"],
+ ["adventice","Adventices","adventices?|mauvaises? herbes?|enherbe\\w*|pourpier|chiendent|liseron|souchet|amarante|morelle"]];
+const PESTRX=PESTS.map(([t,l,r])=>[t,l,new RegExp("\\b(?:"+r+")\\b")]);
+const NEG=/\b(pas|plus|aucun|aucune|sans|zero|ras)\b(\s+\S+){0,2}\s*$/;
+const DEFS=[["eclatement",/eclat|fendu|fentes?|craquel/],["montaison",/montaison|monte(nt)? en graine|montee/],["pourriture",/pourri|moisi/],["blessure",/blessure|choc|grele|meurtri/],["deformation",/deform|difforme|tordu|creux/],["insecte",/piqure|morsure|trous? (sur|dans) (les )?(fruits|feuilles)/],["brulure",/coup de soleil|brulure|brule|grille/],["calibre",/calibre|trop petit|trop gros/],["coloration",/coloration|mal colore|decolor/]];
+const PRECO_T=[["lacher",/lach|lacher|introdui|auxiliaire|macrolophus|encarsia|aphidius|orius|amblyseius|swirskii|phytoseiulus|trichogramme/],["traitement",/trait|pulveris|appliqu|bouillie|cuivre|soufre|spinosad|bacillus|\bbt\b|huile|savon|neem|purin|insecticide|fongicide|produit|uab/],["irrigation",/arros|irrig|\beau\b|goutte|tensio|bassin|asperg/],["fertilisation",/fertili|engrais|vinasse|fumure|azote|potasse|compost|amende|bouchon|apport/],["travail",/desherb|bin(er|age)|travail du sol|bache|paill|fauch|tond|broy|sarcl/],["prophylaxie",/effeuill|nettoy|sortir|enlever|evacu|arrach|aer|ouvr|ferm|desinfect|prophyla|elimin|filet/]];
+const PRECO_TRIG=/\b(il faut|faut|faudrait|preconis\w*|conseill\w*|recommand\w*|a prevoir|prevoir|je (lui )?(ai )?dit de|on va)\b|\b(traiter|lacher|appliquer|pulveriser|aerer|arroser|irriguer|desherber|biner|effeuiller|fertiliser|apporter|poser|sortir|enlever|nettoyer|baisser|augmenter|reduire|ouvrir|fermer|pailler|bacher)\b/;
+const SUIVI_RX=/\b(prochain passage|prochaine visite|repass\w*|je reviens|revenir|on revient|revoir|retour (le|dans|la|au)|on se revoit|plan de suivi|suivi)\b/;
+const POINT_RX=/\b(verifier|controler|recompter|compter|regarder si|voir si|surveiller|s'assurer|checker|suivre)\b/;
+const ACT_RX=/\b(action|a faire|doit|doivent|devra|devront|prevenir|appeler|commander|changer|reparer|remplacer|livrer|envoyer|organiser|caler|transmettre|faire remonter)\b/;
+const SVC_RX=[["Commercial",/commercia/],["Qualité",/qualite/],["Direction",/direction|directeur|la dir\b/],["Achats / planif",/achat|planif|appro/],["Station / conditionnement",/station|conditionnement/],["Technique",/technique|technicienne|ophelie/],["Producteur",/producteur|il doit|elle doit|ils doivent/]];
+const BLOQ_RX=/bloquant|ca bloque|\bbloque\b|manque de (main|personnel|bras|eau|monde)|main d'oeuvre|en panne|panne|dechire|casse|plus d'eau/;
+const SPLIT=/(?<!\b(?:belle|bonne|faible|forte|grosse|legere|petite|tres|une|la|le|les|de|du|des|d'une|en|sans)\s)(?=\b(?:et puis|puis|ensuite|par contre|mais|sinon|il faut|il faudrait|je preconise|on preconise|je conseille|preconisation|a faire|action|prochain passage|prochaine visite|je repasse|on repasse|verifier|controler|le producteur doit|il doit|cote recolte|pour la recolte|recolte prevue|debut de recolte|point bloquant|niveau sol|niveau climat|cote climat|cote sol|au niveau|sol|aeration|les portes|portes|climat|vigueur|belle vigueur|bonne vigueur|quelques|(?:forte |grosse |legere |petite )?attaque|presence|pluvio\w*|le commercial|la qualite|la direction|la station|le service|les achats|le producteur|\d+ ?(?:%|pour ?cent)|il y a|on a|pas de|ras|rien a signaler)\b)/;
+const MARK_RX=new RegExp("\\b(tunnel|tunnels|serre|serres|chapelle|multi-?chapelle|abri|bloc|parcelle|planche|bi-?tunnel)\\s+(?:n(?:°|o|umero)?\\s*)?("+NUMRX+")\\b","g");
+
+function prodList(){const L=new Set();(typeof producteurs!=="undefined"?producteurs:[]).forEach(p=>p.nom&&L.add(p.nom));(typeof passages!=="undefined"?passages:[]).forEach(p=>p.producteur&&L.add(p.producteur));return [...L]}
+const ALIAS=[[/\bandy\b|duplissy/,"Source du Bois"],[/\b(m\.?|monsieur|madame|mme|les) jean\b/,"EC Production"],[/\bchardon\b/,"Terre des Chardons"],[/christophe mathieu|\bpimpoune\b|charenton/,"Pimpoune"]];
+const STOP=new Set(["earl","scea","gaec","sarl","sas","les","des","del","ex","production","productions","bio","terre","source","mas","sud","saint","legumes","pomme","pommes","grenades","jean","andre","dumont","thomas"]);
+function matchProd(t){const L=prodList();for(const [rx,k] of ALIAS){if(rx.test(t)){const p=L.find(n=>nz(n).includes(nz(k)));if(p)return p}}
+  let best=null,bs=0;for(const n of L){const toks=nz(n).split(/[^a-z0-9-]+/).filter(w=>w.length>=4&&!STOP.has(w));let s=0;for(const w of toks)if(new RegExp("\\b"+w.replace(/-/g,"[- ]?")+"\\b").test(t))s+=w.length;if(s>bs){bs=s;best=n}}
+  return best}
+function cultsIn(t){const out=[];for(const [r,l] of CULTS)if(new RegExp("\\b(?:"+r+")").test(t)&&!out.includes(l))out.push(l);if(out.some(x=>["Laitue","Batavia","Feuille de chêne","Romaine","Sucrine","Lollo"].includes(x))){const i=out.indexOf("Salade");if(i>=0)out.splice(i,1)}if(out.includes("Courgette")){const i=out.indexOf("Courge");if(i>=0&&!/\bcourges?\b/.test(t))out.splice(i,1)}return out}
+function stadeIn(t){for(const [r,l] of STADE_RX)if(r.test(t))return l;return ""}
+function etatIn(t){if(/critique|grave|catastroph|perdu|foutu|tres attaque|forte attaque|urgent|degats? importants?|explos/.test(t))return "critique";if(/vigilance|a surveiller|attention|debut d|quelques|leger|legere|moyen|a suivre/.test(t))return "vigilance";if(/\bras\b|rien a signaler|propre|\bsains?\b|saine|nickel|tres beau|tres belle|impeccable|tout va bien/.test(t))return "ok";return ""}
+function intens(t){if(/\bfort|beaucoup|enorme|grosse|massi|tres attaque|explos|important|generalis|partout|infest/.test(t))return 3;if(/faible|quelques|debut|leger|legere|\bpeu\b|traces?|isole|ponctuel/.test(t))return 1;return 2}
+const ORD={ok:0,vigilance:1,critique:2};const worst=(a,b)=>ORD[b||"ok"]>ORD[a||"ok"]?b:a;
+
+/* --- analyse locale (sans connexion) --- */
+function parseLocal(text,base){
+  const raw=String(text||"").normalize("NFC").replace(/\s+/g," ").trim();const T=nz(raw);
+  const r={producteur:"",date:"",pole:"",culture:"",stade:"",etat:"",pluie:null,serres:[],problemes:[],defauts:[],precos:[],actions:[],suivi:{date:"",objectif:"",points:[]},recolte:{debut:"",volume:null,ecart:"",qualite:""},bloquant:"",observations:""};
+  r.producteur=matchProd(T)||"";if(!r.producteur){const m=raw.match(/\bchez\s+((?:[A-ZÉÈ][\w'-]+\s?){1,3})/);if(m)r.producteur=m[1].trim()}
+  if(/\bhier\b/.test(T))r.date=plus(base,-1);
+  if(/corse|capic|aleria|linguizzetta|plaine orientale|bastia/.test(T))r.pole="Corse (CAPIC)";
+  /* segments par serre */
+  const REFV=/\b(verifier|controler|surveiller|recompter|compter|regarder|traiter|lacher|repasser|desherber|arroser|aerer|effeuiller|nettoyer)\b/;
+  const marks=[...T.matchAll(MARK_RX)].filter(m=>{const back=T.slice(0,m.index).split(/[.;!?]/).pop().trim().split(/\s+/).slice(-4).join(" ");return !REFV.test(back)});const segs=[];let pend=[];
+  marks.forEach((m,i)=>{const nom=cap(m[1].replace(/s$/,"").replace(/-/g,""))+" "+toN(m[2]).toUpperCase();const st=m.index+m[0].length,en=i+1<marks.length?marks[i+1].index:T.length;
+    const body=T.slice(st,en),bodyR=raw.slice(st,en);pend.push(nom);
+    if(body.replace(/\b(et|le|la|les|du|de|au|aux|puis|ou|n°|numero)\b/g,"").replace(/[\s,.;]/g,"").length<6&&i+1<marks.length)return;
+    segs.push({noms:pend,start:m.index,body,bodyR});pend=[]});
+  const head=marks.length?T.slice(0,marks[0].index):T;
+  const serreMap={};
+  /* découpe en propositions avec la serre associée */
+  const clauses=[];
+  const cut=(t,tr,serre)=>{let pos=0;const parts=t.split(/[.;!?\n]+|,\s+(?=\S)/);let off=0;
+    for(const p of parts){const at=t.indexOf(p,off);off=at+p.length;const pr=tr.slice(at,at+p.length);
+      const sub=p.split(SPLIT);let o2=0;for(const s of sub){const a2=p.indexOf(s,o2);o2=a2+s.length;const sr=pr.slice(a2,a2+s.length).trim();if(s.trim().length>2){const rm=s.match(new RegExp(MARK_RX.source));const ref=rm?cap(rm[1].replace(/s$/,"").replace(/-/g,""))+" "+toN(rm[2]).toUpperCase():"";clauses.push({n:s.trim(),r:sr.replace(/^[,\s]+|[,\s]+$/g,"").replace(/\s+(et|ou|puis|mais|donc|alors)$/i,""),serre:ref&&ref!==serre?ref:serre,ref,home:serre})}}}};
+  cut(head,raw.slice(0,head.length),null);
+  for(const s of segs){cut(s.body,s.bodyR,s.noms.join(" + "));for(const n of s.noms){serreMap[n]=serreMap[n]||{nom:n,culture:"",stade:"",etat:"",plante:"",climat:"",sol:"",sanitaire:"",_t:""};serreMap[n]._t+=" "+s.body}}
+  const pre=c=>c.serre&&!c.ref?c.serre+" : ":"";const preA=c=>c.ref?c.ref+" : ":"";
+  const add=(o,k,v)=>{o[k]=o[k]?o[k]+" ; "+v:v};
+  for(const c of clauses){const t=c.n,orig=cap(c.r.replace(/^(et puis|et|puis|ensuite|alors|donc|mais|par contre|sinon)\s+/i,""));
+    let used=false;
+    /* plan de suivi */
+    if(SUIVI_RX.test(t)){const d=relDate(t,base);if(d&&!r.suivi.date)r.suivi.date=d;const obj=orig.replace(/^(le |au )?(prochain passage|prochaine visite)\s*(sera|prevu|prévu|:)?\s*/i,"");if(!r.suivi.objectif&&obj.length>12&&!/^(dans|d'ici|lundi|mardi|mercredi|jeudi|vendredi|semaine)/i.test(obj))r.suivi.objectif=cap(obj);used=true}
+    if(POINT_RX.test(t)){r.suivi.points.push(pre(c)+orig);used=true}
+    /* récolte */
+    const isRec=/recolte (prevue|prevu|debut|demarr|commence|estim|a partir|dans)|debut (de )?(la )?recolte|volume|tonnes?|\d+\s*(t|kg|kilos?)\b|declass|categorie|\bcat\b|en avance|en retard|retard de recolte|cote recolte|pour la recolte/.test(t);
+    if(isRec){
+      if(/debut|demarr|commence|premiere|prevue|a partir/.test(t)){const d=relDate(t,base);if(d)r.recolte.debut=d}
+      let m=t.match(/(\d+(?:[.,]\d+)?)\s*(tonnes?|t)\b/);if(m)r.recolte.volume=+m[1].replace(",",".");else if(m=t.match(/(\d+(?:[.,]\d+)?)\s*(kilos?|kg)\b/))r.recolte.volume=Math.round(+m[1].replace(",",".")/100)/10;
+      if(/en avance|\bavance\b/.test(t))r.recolte.ecart="avance";else if(/retard/.test(t))r.recolte.ecart="retard";else if(/perte|perdu|manque de volume|baisse/.test(t))r.recolte.ecart="perte";else if(/conforme|dans les temps|comme prevu/.test(t))r.recolte.ecart="conforme";
+      if(/declass/.test(t))r.recolte.qualite="Déclassement probable";else if(/categorie (2|deux|ii)\b|\bcat (2|ii)\b/.test(t))r.recolte.qualite="Cat II";else if(/extra|categorie (1|une|i)\b|\bcat (1|i)\b|belle qualite|bonne qualite/.test(t))r.recolte.qualite="Extra / Cat I";
+      used=true}
+    /* pluviométrie */
+    {const m=t.match(/(\d+(?:[.,]\d+)?)\s*(mm|millimetres?)\b/);if(m&&/pluvio|pluie|tombe|plu\b/.test(t)){r.pluie=+m[1].replace(",",".");used=true}}
+    /* point bloquant */
+    if(BLOQ_RX.test(t)){const b=cap(orig.replace(/^(le )?point bloquant\s*(c'est|:|est)?\s*/i,""));r.bloquant=r.bloquant?r.bloquant+" ; "+preA(c)+b:preA(c)+b;used=true}
+    /* problèmes sanitaires */
+    const isPrecoC=PRECO_TRIG.test(t)||POINT_RX.test(t)||SUIVI_RX.test(t);let pests=0;if(!isPrecoC)for(const [ty,lab,rx] of PESTRX){const m=t.match(rx);if(!m)continue;if(NEG.test(t.slice(0,m.index)))continue;
+      if(ty==="maladie"&&lab==="Oïdium"&&/\bblanc\b/.test(m[0])&&!/\b(du|le|de) blanc\b/.test(t))continue;
+      pests++;const nom=lab+(c.serre?" ("+c.serre+")":"");if(!r.problemes.some(p=>p.nom===nom))r.problemes.push({type:ty,nom,intensite:ty==="auxiliaire"?2:intens(t)})}
+    /* défauts */
+    const pm=t.match(/(\d+)\s*(%|pour ?cents?)/);const strong=/eclat|fendu|fente|montaison|monte(nt)? en graine|pourri|moisi|blessure|grele|coup de soleil|deform|piqure|creux/.test(t);
+    if(pm||strong||/defaut|declass/.test(t)){let ty="";for(const [k,rx] of DEFS)if(rx.test(t)){ty=k;break}
+      if(ty||!pests&&pm&&/fruit|legume|feuille|plant|salade|tete|declass|defaut|touche/.test(t)){r.defauts.push({type:ty||"autre",detail:pre(c)+orig,pct:pm?Math.min(100,+pm[1]):null});used=true}}
+    /* actions / préconisations */
+    let svc="";for(const [s,rx] of SVC_RX)if(rx.test(t)){svc=s;break}
+    const isPreco=PRECO_TRIG.test(t);const isAct=ACT_RX.test(t)||(svc&&svc!=="Producteur"&&svc!=="Technique");
+    if(isAct&&(!isPreco||svc&&svc!=="Producteur")){r.actions.push({titre:preA(c)+orig.replace(/^(action|a faire|à faire)\s*:?\s*/i,"").replace(/^(le producteur|il|elle) (doit|devra)\s+/i,""),service:svc||"Producteur",echeance:relDate(t,base)});used=true}
+    else if(isPreco&&!/^(verifier|controler|surveiller)/.test(t)){let ty="autre";for(const [k,rx] of PRECO_T)if(rx.test(t)){ty=k;break}
+      r.precos.push({type:ty,detail:pre(c)+cap(orig.replace(/^(il (faut|faudrait)( qu'il| que le producteur| que)?|je (lui )?(ai dit de|préconise|preconise|conseille|recommande)( de| d')?|on (préconise|preconise|conseille|va)( de| d')?|préconisation\s*:?|preconisation\s*:?)\s*/i,""))});used=true}
+    /* champs serre */
+    if(c.serre){for(const n of c.serre.split(" + ")){const s=serreMap[n];if(!s)continue;
+      if(used&&!pests)continue;
+      if(pests||PESTRX.some(x=>x[2].test(t))||/sanitaire|maladie|ravageur|\bras\b|propre|\bsain/.test(t))add(s,"sanitaire",orig);
+      else if(/aer|ouver|ferm|porte|humidite ambiante|hygro|condensation|chaleur|chaud|froid|temperature|ombrag|blanchi|climat|ventil|gel\b/.test(t))add(s,"climat",orig);
+      else if(/\bsol\b|sec\b|seche|humide|irrig|arros|goutte|tensio|battance|compact|motte|ressuy|engorg/.test(t))add(s,"sol",orig);
+      else if(!SUIVI_RX.test(t))add(s,"plante",orig)}}
+  }
+  /* finalise les serres */
+  for(const s of Object.values(serreMap)){const t=s._t;delete s._t;const cu=cultsIn(t);s.culture=cu.join(", ");s.stade=stadeIn(t);
+    let e=etatIn(t);const own=new RegExp("[(+ ]"+s.nom.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"[)+ ]");for(const p of r.problemes)if(p.type!=="auxiliaire"&&own.test(p.nom))e=worst(e||"ok",p.intensite>=3?"critique":"vigilance");
+    s.etat=e||"ok";r.serres.push(s)}
+  if(!r.serres.length){r.culture=cultsIn(T).join(", ");r.stade=stadeIn(T)}
+  let ge=etatIn(head);for(const s of r.serres)ge=worst(ge,s.etat);if(!r.serres.length)for(const p of r.problemes)if(p.type!=="auxiliaire")ge=worst(ge||"ok",p.intensite>=3?"critique":"vigilance");r.etat=ge||"";
+  return r}
+
+/* --- analyse par Claude (version en ligne) --- */
+let sampleP=null;const getSample=()=>sampleP||(sampleP=(async()=>{try{return window.claude&&await window.claude.use("sample")}catch(e){return null}})());
+async function parseClaude(text,base){const sample=await getSample();if(!sample||!sample.json)return null;
+  const prods=prodList();
+  const prompt=`Tu aides la technicienne d'une coopérative de fruits et légumes bio (UNI-VERT) à saisir un compte rendu de tour de culture dicté à voix haute. Répartis la dictée dans les champs du formulaire.
+
+Date du passage (aujourd'hui) : ${base}. Calcule les dates relatives ("lundi", "dans 8 jours", "semaine prochaine") à partir de cette date, au format AAAA-MM-JJ.
+Producteurs connus (utilise le nom EXACT de la liste si on le reconnaît, même partiellement ou par le prénom ; "Andy" = Source du Bois, "M. Jean" = EC Production, "Chardon" = Terre des Chardons, "Christophe Mathieu" = Pimpoune) :
+${prods.join(" | ")}
+
+Règles :
+- N'invente rien : laisse "" , null ou [] pour ce qui n'est pas dit.
+- Une fiche "serres" par serre/tunnel/chapelle/parcelle citée, nom normalisé ("Tunnel 3", "Serre 2", "Chapelle 1"). Plante = vigueur, couleur, développement ; climat = aération, température, humidité ; sol = humidité, irrigation, structure ; sanitaire = maladies et ravageurs vus (ou "RAS").
+- "pas de pucerons" n'est PAS un problème. Les auxiliaires vus vont dans problemes avec type "auxiliaire".
+- Préconisations = ce qui est conseillé au producteur (traitement, lâcher, irrigation…). Actions = tâches confiées à un service de la coopérative ou au producteur avec une échéance.
+- Points de suivi = ce qu'il faudra vérifier au prochain passage.
+- Précède les détails liés à une serre par son nom ("Tunnel 3 : …").
+- etat : "ok" (RAS), "vigilance" ou "critique".
+
+Réponds UNIQUEMENT avec ce JSON :
+{"producteur":"","date":"","pole":"Occitanie / Costières|Corse (CAPIC)|","culture":"","stade":"Plantation|Végétatif|Floraison|Nouaison|Grossissement|Récolte|Fin de culture|","etat":"ok|vigilance|critique","pluie_mm":null,
+"serres":[{"nom":"Tunnel 3","culture":"","stade":"","etat":"ok","plante":"","climat":"","sol":"","sanitaire":""}],
+"problemes":[{"type":"maladie|ravageur|auxiliaire|carence|adventice|autre","nom":"Pucerons","intensite":1,"serre":"Tunnel 3"}],
+"defauts":[{"type":"${DEF_TYPES.map(x=>x[0]).join("|")}","detail":"","pct":null}],
+"precos":[{"type":"${PRECO_TYPES.map(x=>x[0]).join("|")}","detail":""}],
+"actions":[{"titre":"","service":"${SERVICES.join("|")}","echeance":""}],
+"suivi":{"date":"","objectif":"","points":[""]},
+"recolte":{"debut":"","volume_t":null,"ecart":"|avance|conforme|retard|perte","qualite":"|Extra / Cat I|Cat II|Déclassement probable"},
+"bloquant":"","observations":"ce qui ne rentre dans aucun champ, en une ou deux phrases"}
+(intensite : 1 faible, 2 moyenne, 3 forte)
+
+Dictée :
+"""${text}"""`;
+  const j=await sample.json(prompt);if(!j||typeof j!=="object")throw {code:"invalid_json"};
+  const S=v=>typeof v==="string"?v.trim():"";const D=v=>/^\d{4}-\d{2}-\d{2}$/.test(S(v))?S(v):"";const A=v=>Array.isArray(v)?v:[];const ok=(v,L,d)=>L.includes(v)?v:d;
+  const ET=["ok","vigilance","critique"];
+  const prod=S(j.producteur);const exact=prods.find(n=>nz(n)===nz(prod))||prods.find(n=>prod&&nz(n).includes(nz(prod)))||prod;
+  return {producteur:exact,date:D(j.date),pole:ok(j.pole,["Occitanie / Costières","Corse (CAPIC)"],""),culture:S(j.culture),stade:ok(j.stade,STADES,""),etat:ok(j.etat,ET,""),pluie:typeof j.pluie_mm==="number"?j.pluie_mm:null,
+    serres:A(j.serres).map(s=>({nom:S(s.nom),culture:S(s.culture),stade:ok(s.stade,STADES,""),etat:ok(s.etat,ET,"ok"),plante:S(s.plante),climat:S(s.climat),sol:S(s.sol),sanitaire:S(s.sanitaire)})).filter(s=>s.nom||s.culture),
+    problemes:A(j.problemes).map(p=>({type:ok(p.type,PROB_TYPES.map(x=>x[0]),"autre"),nom:S(p.nom)+(S(p.serre)&&!S(p.nom).includes(S(p.serre))?" ("+S(p.serre)+")":""),intensite:[1,2,3].includes(+p.intensite)?+p.intensite:2})).filter(p=>p.nom),
+    defauts:A(j.defauts).map(d=>({type:ok(d.type,DEF_TYPES.map(x=>x[0]),"autre"),detail:S(d.detail),pct:typeof d.pct==="number"?d.pct:null})).filter(d=>d.detail),
+    precos:A(j.precos).map(p=>({type:ok(p.type,PRECO_TYPES.map(x=>x[0]),"autre"),detail:S(p.detail)})).filter(p=>p.detail),
+    actions:A(j.actions).map(a=>({titre:S(a.titre),service:ok(a.service,SERVICES,"Producteur"),echeance:D(a.echeance)})).filter(a=>a.titre),
+    suivi:{date:D(j.suivi&&j.suivi.date),objectif:S(j.suivi&&j.suivi.objectif),points:A(j.suivi&&j.suivi.points).map(S).filter(Boolean)},
+    recolte:{debut:D(j.recolte&&j.recolte.debut),volume:j.recolte&&typeof j.recolte.volume_t==="number"?j.recolte.volume_t:null,ecart:ok(j.recolte&&j.recolte.ecart,["avance","conforme","retard","perte"],""),qualite:ok(j.recolte&&j.recolte.qualite,["Extra / Cat I","Cat II","Déclassement probable"],"")},
+    bloquant:S(j.bloquant),observations:S(j.observations)}}
+
+/* --- remplissage du formulaire --- */
+function apply(r,text,keepRaw){const hit=[];const set=(sel,v)=>{const el=$(sel);if(!el||v==null||v==="")return;el.value=v;hit.push(el)};
+  if(r.date)set("#f_date",r.date);
+  if(r.producteur){set("#f_prod",r.producteur);$("#f_prod").dispatchEvent(new Event("change"))}
+  if(r.pole)set("#f_pole",r.pole);
+  if(r.culture&&!$("#f_cult").value)set("#f_cult",r.culture);
+  if(r.stade&&!$("#f_stade").value)set("#f_stade",r.stade);
+  if(r.pluie!=null)set("#f_pluie",r.pluie);
+  /* serres : on complète une serre déjà saisie du même nom, sinon on en ajoute une */
+  for(const s of r.serres){const ex=[...$("#serreList").children].find(el=>nz(el.querySelector('[data-f="nom"]').value)===nz(s.nom));
+    if(ex){for(const k of ["culture","stade","etat","plante","climat","sol","sanitaire"]){const i=ex.querySelector(`[data-f="${k}"]`);if(!s[k])continue;if(k==="etat"){i.value=worst(i.value,s[k]);ex.className="serre "+i.value}else if(k==="stade"||!i.value)i.value=s[k];else if(!i.value.includes(s[k]))i.value+=" ; "+s[k];hit.push(i)}}
+    else{addSerre(s);hit.push($("#serreList").lastElementChild)}}
+  r.problemes.forEach(p=>{addProbLine(p);hit.push($("#probLines").lastElementChild)});
+  r.defauts.forEach(p=>{addDefLine(p);hit.push($("#defLines").lastElementChild)});
+  r.precos.forEach(p=>{addPrecoLine(p);hit.push($("#precoLines").lastElementChild)});
+  r.actions.forEach(p=>{addActLine(p);hit.push($("#actLines").lastElementChild)});
+  if(r.suivi.date)set("#f_suiviDate",r.suivi.date);
+  if(r.suivi.objectif&&!$("#f_suiviObj").value)set("#f_suiviObj",r.suivi.objectif);
+  if(r.suivi.points.length){const cur=$("#f_suiviPts").value.trim();set("#f_suiviPts",(cur?cur+"\n":"")+r.suivi.points.join("\n"))}
+  const rc=r.recolte;if(rc.debut)set("#f_recDeb",rc.debut);if(rc.volume!=null)set("#f_vol",rc.volume);if(rc.ecart)set("#f_ecart",rc.ecart);if(rc.qualite)set("#f_qual",rc.qualite);
+  if(r.bloquant){const cur=$("#f_bloq").value.trim();set("#f_bloq",cur?cur+" ; "+r.bloquant:r.bloquant)}
+  const obs=[r.observations,keepRaw?"Dictée : "+text.trim():""].filter(Boolean).join("\n");if(obs){const cur=$("#f_obs").value.trim();set("#f_obs",(cur?cur+"\n":"")+obs)}
+  /* état général = le plus grave */
+  let e=(document.querySelector("input[name=etat]:checked")||{}).value||"ok";e=worst(e,r.etat||"ok");for(const s of r.serres)e=worst(e,s.etat);const rad=document.querySelector(`input[name=etat][value="${e}"]`);if(rad)rad.checked=true;
+  hit.forEach(el=>{el.classList.add("vox-hit");setTimeout(()=>el.classList.remove("vox-hit"),4000)});
+  $("#form").dispatchEvent(new Event("input"));
+  const n=(k,s,p)=>k?k+" "+(k>1?p:s):"";
+  return [r.producteur&&"producteur",n(r.serres.length,"serre","serres"),n(r.problemes.length,"observation sanitaire","observations sanitaires"),n(r.defauts.length,"défaut","défauts"),n(r.precos.length,"préconisation","préconisations"),n(r.actions.length,"action","actions"),(r.suivi.date||r.suivi.points.length)&&"plan de suivi",(rc.debut||rc.volume!=null||rc.ecart||rc.qualite)&&"récolte",r.bloquant&&"point bloquant",r.pluie!=null&&"pluviomètre"].filter(Boolean)}
+
+/* --- interface --- */
+const box=document.createElement("fieldset");box.id="voxBox";box.className="vox";
+box.innerHTML=`<legend>🎙 Dictée de la tournée</legend>
+<p class="meta" style="margin:0 0 8px">Racontez le passage à voix haute : producteur, chaque tunnel (culture, stade, plante, climat, sol, sanitaire), défauts, préconisations, actions par service, prochain passage et points à vérifier. L'application range ensuite chaque information dans sa case.</p>
+<div class="row"><button type="button" class="btn primary vox-mic" id="voxMic" aria-pressed="false"><span class="vox-dot"></span><span id="voxMicL">Démarrer la dictée</span></button>
+<button type="button" class="btn" id="voxFill">Remplir le formulaire</button><button type="button" class="btn small" id="voxClear">Effacer</button></div>
+<div class="meta" id="voxState" role="status" style="margin-top:6px"></div>
+<textarea id="voxText" rows="5" placeholder="Le texte dicté s'affiche ici. Si le micro de l'application ne démarre pas, touchez cette zone puis le micro 🎤 du clavier du téléphone et parlez. Exemple : « Chez Delorme. Tunnel 3 salade batavia en récolte, belle vigueur, quelques pucerons, il faut lâcher des Aphidius. Tunnel 4 tomate nouaison, 10 % de fruits éclatés, sol trop humide. Le commercial doit prévenir le client d'un retard de récolte. Prochain passage jeudi, vérifier les pucerons tunnel 3. »" style="margin-top:6px"></textarea>
+<div class="row" style="margin-top:6px"><label class="meta" style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0"><input type="checkbox" id="voxKeep" checked style="width:auto"> Garder le texte dicté dans « Observations libres »</label></div>
+<div class="vox-res" id="voxRes" hidden></div>`;
+const form=$("#form");form.parentNode.insertBefore(box,form);
+const ta=$("#voxText"),st=$("#voxState"),mic=$("#voxMic");
+try{ta.value=localStorage.getItem("tdc_vox")||""}catch(e){}
+ta.addEventListener("input",()=>{try{localStorage.setItem("tdc_vox",ta.value)}catch(e){}});
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,on=false,interim="",lastFinal="";
+if(!SR){st.textContent="Micro intégré non disponible sur ce navigateur : utilisez le micro 🎤 du clavier dans la zone de texte.";}
+function setOn(v){on=v;mic.classList.toggle("rec",v);mic.setAttribute("aria-pressed",v);$("#voxMicL").textContent=v?"Arrêter la dictée":"Démarrer la dictée"}
+function appendTxt(s){s=s.trim();if(!s||s===lastFinal)return;lastFinal=s;ta.value=(ta.value.trim()?ta.value.trim()+(/[.!?]$/.test(ta.value.trim())?" ":". "):"")+cap(s);ta.dispatchEvent(new Event("input"))}
+mic.onclick=()=>{
+  if(!SR){ta.focus();st.textContent="Touchez le micro 🎤 du clavier pour dicter, puis « Remplir le formulaire ».";return}
+  if(on){setOn(false);try{rec.stop()}catch(e){}return}
+  rec=new SR();rec.lang="fr-FR";rec.continuous=true;rec.interimResults=true;
+  rec.onresult=e=>{interim="";for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)appendTxt(x[0].transcript);else interim+=x[0].transcript}st.textContent=interim?"… "+interim:"Enregistrement en cours — parlez normalement.";};
+  rec.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed"||e.error==="audio-capture"){setOn(false);st.textContent="Micro bloqué ici. Touchez la zone de texte puis le micro 🎤 du clavier pour dicter (ou autorisez le micro dans le navigateur).";ta.focus()}else if(e.error==="network"){setOn(false);st.textContent="La reconnaissance vocale du navigateur demande internet. Utilisez le micro 🎤 du clavier."}};
+  rec.onend=()=>{if(on){try{rec.start()}catch(e){setOn(false)}}else{if(interim)appendTxt(interim);interim="";st.textContent="Dictée arrêtée. Relisez le texte puis touchez « Remplir le formulaire »."}};
+  try{rec.start();setOn(true);st.textContent="Enregistrement en cours — parlez normalement."}catch(e){st.textContent="Impossible de démarrer le micro : utilisez le micro 🎤 du clavier.";ta.focus()}};
+$("#voxClear").onclick=()=>{ta.value="";lastFinal="";ta.dispatchEvent(new Event("input"));$("#voxRes").hidden=true;st.textContent=""};
+$("#voxFill").onclick=async()=>{const text=ta.value.trim();if(!text){toast("Dictez ou écrivez d'abord le compte rendu");return}
+  if(on){setOn(false);try{rec.stop()}catch(e){}}
+  const btn=$("#voxFill");btn.disabled=true;const base=$("#f_date").value||today();let r=null,how="analyse locale";
+  try{if(await getSample()){st.textContent="Claude range la dictée dans le formulaire…";try{r=await parseClaude(text,base);if(r)how="analyse par Claude"}catch(e){const c=e&&e.code;st.textContent=c==="not_granted"?"Analyse par Claude refusée : analyse locale utilisée.":c==="rate_limited"?"Limite d'utilisation de Claude atteinte : analyse locale utilisée.":"Claude indisponible : analyse locale utilisée.";r=null}}
+    if(!r)r=parseLocal(text,base);
+    const got=apply(r,text,$("#voxKeep").checked);
+    const res=$("#voxRes");res.hidden=false;res.innerHTML=got.length?`<b>Formulaire rempli (${how})</b> : ${esc(got.join(", "))}. Les cases remplies sont surlignées : vérifiez-les, corrigez si besoin, puis enregistrez le passage.`:`<b>Rien n'a pu être rangé automatiquement</b> (${how}). ${$("#voxKeep").checked?"Le texte a été placé dans « Observations libres ».":""}`;
+    if(!st.textContent.startsWith("Claude ")&&!st.textContent.startsWith("Analyse")&&!st.textContent.startsWith("Limite"))st.textContent="";else if(how==="analyse par Claude")st.textContent="";
+    if($("#voxKeep").checked){ta.value="";lastFinal=""}try{localStorage.removeItem("tdc_vox")}catch(e){}
+    const first=document.querySelector(".vox-hit");if(first)first.scrollIntoView({behavior:"smooth",block:"center"});
+  }catch(err){console.error(err);toast("Analyse impossible, le texte reste disponible")}finally{btn.disabled=false}};
+window.voxParseLocal=parseLocal;
+})();
+</script>
+<script>
+/* ===== Barre d'outils de la version partagée ===== */
+(function(){
+  const bar=document.createElement("div");bar.className="localbar";
+  bar.innerHTML=`<span class="pill" id="lbStatus" title="État de la connexion à la base partagée">Connexion…</span>
+   <input id="lbName" type="text" placeholder="Votre nom (signature)" aria-label="Votre nom (signature)" style="width:170px;padding:4px 8px;font-size:13px">
+   <button class="btn small" id="lbSave" type="button" title="Télécharge une copie JSON de toutes les données">Sauvegarde</button>
+   <button class="btn small" id="lbOut" type="button">Déconnexion</button>`;
+  const top=document.querySelector(".top-in");top.insertBefore(bar,top.querySelector("nav.tabs"));
+  const st=document.getElementById("lbStatus");
+  const show=s=>{const m={ok:["ok","Données partagées"],connexion:["","Connexion…"],"hors-ligne":["vigilance","Hors ligne — reconnexion…"],erreur:["critique","Erreur de synchronisation"]}[s]||["",s];
+    st.className="pill "+m[0];st.style.background="";st.style.color="";st.textContent=m[1]};
+  show(window.tdcStatus?tdcStatus():"connexion");window.addEventListener("tdc-status",e=>show(e.detail));
+  try{document.getElementById("lbName").value=localStorage.getItem("tdc_nom")||""}catch(e){}
+  document.getElementById("lbName").addEventListener("change",e=>{const n=e.target.value.trim();localSetName(n);const w=document.getElementById("who");if(w)w.textContent=n});
+  document.getElementById("lbSave").onclick=()=>{localBackup();toast("Sauvegarde téléchargée")};
+  document.getElementById("lbOut").onclick=()=>{if(confirm("Se déconnecter de la base partagée ?"))tdcLogout()};
+  /* météo : mise à jour automatique (internet requis) */
+  const box=document.querySelector("#importBox .steps");
+  if(box){const d=document.createElement("div");d.innerHTML=`<b>Mise à jour automatique</b><div class="row" style="margin-top:6px"><button class="btn primary small" type="button" id="mAuto">Télécharger les données du secteur</button><span class="meta" id="mAutoMsg">Récupère l'année précédente, l'année en cours et les prévisions en une fois.</span></div>`;box.prepend(d);
+    document.getElementById("mAuto").onclick=async()=>{const msg=document.getElementById("mAutoMsg");const links=[...document.querySelectorAll("#impLinks a")].map(a=>a.href);let ok=0;
+      for(const u of links){msg.textContent="Téléchargement "+(ok+1)+"/"+links.length+"…";try{const r=await fetch(u);if(!r.ok)throw new Error(r.status);document.getElementById("mPaste").value=await r.text();await document.getElementById("mImport").onclick();ok++}catch(e){msg.textContent="Échec du téléchargement ("+e.message+"). Vérifiez la connexion internet.";return}}
+      msg.textContent="Données météo à jour ("+ok+" fichiers).";};
+    document.getElementById("importBox").open=false;}
+})();
+</script>
+</body>
+</html>
